@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, NexT" />
+  <meta name="keywords" content="Java架构," />
 
 
 
@@ -84,20 +84,17 @@
 
 
 
-<meta name="description" content="Java系统WebService：Spring与CXF的集成WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。
-WebService的实现基本原理就是选">
+<meta name="description" content="使用CXF集成在Spring项目里以完成WebService搭建">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java系统WebService：Spring与CXF的集成">
 <meta property="og:url" content="http://jinhaoplus.top/2016/02/03/Java系统WebService：Spring与CXF的集成/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java系统WebService：Spring与CXF的集成WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。
-WebService的实现基本原理就是选">
+<meta property="og:description" content="使用CXF集成在Spring项目里以完成WebService搭建">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg">
-<meta property="og:updated_time" content="2016-10-07T08:16:34.000Z">
+<meta property="og:updated_time" content="2016-10-07T08:23:07.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java系统WebService：Spring与CXF的集成">
-<meta name="twitter:description" content="Java系统WebService：Spring与CXF的集成WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。
-WebService的实现基本原理就是选">
+<meta name="twitter:description" content="使用CXF集成在Spring项目里以完成WebService搭建">
 <meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg">
 
 
@@ -278,6 +275,25 @@ WebService的实现基本原理就是选">
             </time>
           </span>
 
+          
+            <span class="post-category" >
+              &nbsp; | &nbsp;
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+              
+                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
+                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
+                    <span itemprop="name">JavaWeb</span>
+                  </a>
+                </span>
+
+                
+                
+
+              
+            </span>
           
 
           
@@ -472,6 +488,12 @@ public class WeatherServiceImpl implements WeatherService{
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java架构/" rel="tag">#Java架构</a>
+          
+        </div>
+      
 
       
         <div class="post-nav">
@@ -565,7 +587,21 @@ public class WeatherServiceImpl implements WeatherService{
           </div>
 
           
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
 
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
           
 
         </nav>
