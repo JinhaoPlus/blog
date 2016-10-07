@@ -1,0 +1,763 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="#Core Java Volume 1 Key Points #
+##chap6##
+###接口和抽象类的概念###接口和抽象类是Java继承链的基础，其区别也较为明显，在Java语言的设计中，允许接口的多实现，但不允许抽象类的多继承，这样做符合简洁明了的面向对象设计思路：也就是说类只可以简单地拥有唯一父模型（抽象类），但是可以拥有多种不同的特征（接口）,这样的设计大大简化了Java的面向对象逻辑">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Core-Java-Volume1-Key-Points">
+<meta property="og:url" content="http://yoursite.com/2016/02/19/Core-Java-Volume1-Key-Points-Ch6/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="#Core Java Volume 1 Key Points #
+##chap6##
+###接口和抽象类的概念###接口和抽象类是Java继承链的基础，其区别也较为明显，在Java语言的设计中，允许接口的多实现，但不允许抽象类的多继承，这样做符合简洁明了的面向对象设计思路：也就是说类只可以简单地拥有唯一父模型（抽象类），但是可以拥有多种不同的特征（接口）,这样的设计大大简化了Java的面向对象逻辑">
+<meta property="og:updated_time" content="2016-10-07T05:09:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Core-Java-Volume1-Key-Points">
+<meta name="twitter:description" content="#Core Java Volume 1 Key Points #
+##chap6##
+###接口和抽象类的概念###接口和抽象类是Java继承链的基础，其区别也较为明显，在Java语言的设计中，允许接口的多实现，但不允许抽象类的多继承，这样做符合简洁明了的面向对象设计思路：也就是说类只可以简单地拥有唯一父模型（抽象类），但是可以拥有多种不同的特征（接口）,这样的设计大大简化了Java的面向对象逻辑">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/02/19/Core-Java-Volume1-Key-Points-Ch6/"/>
+
+  <title> Core-Java-Volume1-Key-Points | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Core-Java-Volume1-Key-Points
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-02-19T13:00:36+08:00" content="2016-02-19">
+              2016-02-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/19/Core-Java-Volume1-Key-Points-Ch6/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/19/Core-Java-Volume1-Key-Points-Ch6/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>#Core Java Volume 1 Key Points #</p>
+<p>##chap6##</p>
+<p>###接口和抽象类的概念###<br>接口和抽象类是Java继承链的基础，其区别也较为明显，在Java语言的设计中，允许接口的多实现，但不允许抽象类的多继承，这样做符合简洁明了的面向对象设计思路：也就是说类只可以简单地拥有唯一父模型（抽象类），但是可以拥有多种不同的特征（接口）,这样的设计大大简化了Java的面向对象逻辑。</p>
+<p>除此之外呢，它们还有这样的区别：<br>接口为了保证其描述特征的特性，只允许描述成员方法的特征（返回值、方法名、参数），不对成员方法做具体实现，而且在接口内部不允许使用私有属性和方法，究其根本，都是因为作为描述特征的接口不应该具有个性化的属性和方法；而抽象类像类一样，没有这样的限制，但是一般使用缺省的方法来统一定义模型的方法，所以方法体要么是空，要么是通用性较高的默认情况。</p>
+<p>另外，在编码风格上，我们应该尽量给接口起名为形容词或副词，以贴近其是对类特征描述的本质，在JDK中这样的风格处处可见，比如大多数的接口会被以able结尾以说明实现这样的接口可以获得某些能力，比如实现Comparable接口可以获得被比较的能力，进而在对象数组中可以使用Arrays.sort方法来排序。而抽象类像类一样使用名词来定名，另外可以在尾部加上诸如helper，handler来说明其作用。</p>
+<p>###克隆###<br>clone是Object这一通用父类的方法，这个方法是protected类型的，因此在用户编写的代码里是不能直接使用的。这个方法的目的为了实现对象的克隆，理论上讲，也就是复制一份完全相同的对象给我们使用。刚刚说了由于它是protected类型的，因此需要在我们使用的需要拷贝的对象的类里重写这个方法并把权限设为public的才行，不仅如此，为了类型检查的原因，我们还需要实现Cloneable这个marker接口（无方法接口）。这样做显然很繁琐，而且由于浅拷贝的问题，还很容易出错，因为很有可能拷贝出的新对象中某些子对象不是拷贝而仍然是引用。下面是个这样的例子：</p>
+<pre><code>class Email implements Cloneable{
+    private String info;
+    public Email(String info) {
+        this.info = info;
+    }
+
+    public String getInfo() {
+        return info;
+    }
+    public void setInfo(String info) {
+        this.info = info;
+    }
+    @Override
+    protected Object clone() throws CloneNotSupportedException {
+        // TODO Auto-generated method stub
+        return super.clone();
+    }
+}
+class People implements Cloneable {
+    private String name;
+    private Email rocking2013@hotmail.com;
+
+
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public Email getMail() {
+        return rocking2013@hotmail.com;
+    }
+    public void setMail(Email rocking2013@hotmail.com) {
+        this.rocking2013@hotmail.com = rocking2013@hotmail.com;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;People [name=&quot; + name + &quot;, rocking2013@hotmail.com=&quot; + rocking2013@hotmail.com.getInfo() + &quot;]&quot;;
+    }
+    @Override
+    public People clone() throws CloneNotSupportedException {
+        // TODO Auto-generated method stub
+        People people = (People) super.clone();
+        return people;
+    }
+}
+public class JustTest {
+    public static void main(String[] args) throws InterruptedException {
+        People people1 = new People();
+        people1.setName(&quot;xiaoming&quot;);
+        people1.setMail(new Email(&quot;xm@gmail.com&quot;));
+        People people2 = new People();
+        try {
+            people2 = (People) people1.clone();
+            System.out.println(people1);
+            System.out.println(people2);
+            System.out.println(&quot;--------------------------------------&quot;);
+            people1.getMail().setInfo(&quot;hi@gmail.com&quot;);
+            System.out.println(people1);
+            System.out.println(people2);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><p>run：</p>
+<pre><code>People [name=xiaoming, rocking2013@hotmail.com=xm@rowin2013@gmail.com.com]
+People [name=xiaoming, rocking2013@hotmail.com=xm@rowin2013@gmail.com.com]
+--------------------------------------
+People [name=xiaoming, rocking2013@hotmail.com=hi@rowin2013@gmail.com.com]
+People [name=xiaoming, rocking2013@hotmail.com=hi@rowin2013@gmail.com.com]
+</code></pre><p>这就是浅拷贝带来的问题，直接使用父类定义的clone就是会有这样的问题。</p>
+<p>所以需要再重写的clone方法里对这样的问题进行修改：</p>
+<pre><code>@Override
+    public People clone() throws CloneNotSupportedException {
+        // TODO Auto-generated method stub
+        People people = (People) super.clone();
+        //people.setMail((Email) rocking2013@hotmail.com.clone());
+        return people;
+    }
+</code></pre><p>###内部类###</p>
+<p>在面向对象系统中，我们的类是对象的模板，接口表示类的特征，每个类拥有自己的成员变量和成员方法，对象拥有自己所属类的成员变量和成员方法，对象之间互相调用，通过方法来实现信息沟通并执行相应的功能。一切在运行时层面上其实就是这样，我们在代码层面可以保持和运行时层面相同的编码规则，这样做可以使得代码简洁有力，在编写和运行的过程中保持一致性。然而事实是任何一门语言都会在代码层面加入一些特性，注入语法特性，使得编码看起来更紧凑、编写更简单，但是破坏了这种代码层面和运行时层面的一致性。内部类就是这样一个情况，内部类的出现虽然在运行时会被拆分为独立的临时类，但是在代码层面加深了对代码的理解难度，所以很难说其优弊殊胜。</p>
+<p>下面是个最简单的说明其用法的例子：</p>
+<pre><code>public class Outer {
+    private String info=&quot;hello world&quot;;
+    public class Inner{
+        public void func(){
+            System.out.println(info);
+        }
+    }
+    public static void main(String[] args) {
+        Outer outer = new Outer();
+        Inner inner = outer.new Inner();
+        inner.func();
+    }
+}
+</code></pre><p>这个例子我们可以看出来，这里的内部类可以“看做”是Outer的一个成员，所以这样写就的内部类也叫作成员内部类，成员内部类可以直接使用外部类的成员和方法，而外部类则需要构造内部类的对象才能使用内部类。之所以说是“看做”，是因为在实际运行时内部类会被编译成一个临时类而脱离外部类，我们可以试试看：</p>
+<pre><code>$ javac Outer.java
+</code></pre><p>编译后可以得到两个class文件：Outer.class和Outer$Inner.class，后者就是拆分好了的内部类class，所以在运行时可以使其和一般情况一样。<br>我们进一步分析其真身：</p>
+<pre><code>$ javap Outer
+    Compiled from &quot;Outer.java&quot;
+    public class Outer extends java.lang.Object{
+        public Outer();
+        public static void main(java.lang.String[]);
+        static java.lang.String access$000(Outer);
+    }
+
+$ javap Outer\$Inner
+Compiled from &quot;Outer.java&quot;
+public class Outer$Inner extends java.lang.Object{
+    final Outer this$0;
+    public Outer$Inner(Outer);
+    public void func();
+}
+</code></pre><p>我们可以看到内部类的临时独立生成类的初始化方法中带有外部类类型的参数，这样就能够保证内部类可以完整访问外部类成员变量和成员方法。</p>
+<p>那么我们为什么要使用这种看起来就不清不楚的内部类呢？我的理解是有些类实际上非常简单，单独列出对整个系统意义不大，而且和某些类关系非常大，所以就直接把这个类放入和其关系大的类之中以形成内部类，这样在代码层面看起来更加简洁，但也不影响运行时的正确性。</p>
+<p>除了上述的成员内部类外，还有局部内部类（内部类位于方法体内，这种内部类的作用域仅限于方法内部）、匿名内部类（不对内部类进行显式定义而直接在使用时顺带定义），但是无论是哪一种，其运行时都会被独立拆分并像一般情况那样运行。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/03/Spring-cxf-integration/" rel="next" title="Spring-cxf-integration">
+                <i class="fa fa-chevron-left"></i> Spring-cxf-integration
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2016/02/25/MVC框架/" rel="prev" title="MVC框架">
+                MVC框架 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/02/19/Core-Java-Volume1-Key-Points-Ch6/"
+           data-title="Core-Java-Volume1-Key-Points" data-url="http://yoursite.com/2016/02/19/Core-Java-Volume1-Key-Points-Ch6/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

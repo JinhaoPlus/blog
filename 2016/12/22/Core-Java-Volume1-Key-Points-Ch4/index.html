@@ -1,0 +1,773 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="开篇Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Core-Java-Volume1-Key-Points-Ch4">
+<meta property="og:url" content="http://yoursite.com/2016/12/22/Core-Java-Volume1-Key-Points-Ch4/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="开篇Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘">
+<meta property="og:updated_time" content="2016-10-07T05:08:39.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Core-Java-Volume1-Key-Points-Ch4">
+<meta name="twitter:description" content="开篇Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2016/12/22/Core-Java-Volume1-Key-Points-Ch4/"/>
+
+  <title> Core-Java-Volume1-Key-Points-Ch4 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Core-Java-Volume1-Key-Points-Ch4
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-22T13:08:04+08:00" content="2016-12-22">
+              2016-12-22
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/22/Core-Java-Volume1-Key-Points-Ch4/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/22/Core-Java-Volume1-Key-Points-Ch4/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>开篇<br>Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。这个博客将以原书中的章节为分割，大概会是每章一篇，持续更新，每篇的内容也不会一次全部写完，视我个人对问题的理解和我的阅读进度而定。</p>
+</blockquote>
+<p>另外，我们从本书第一卷第四章开始，因为前三章无外乎就是在讲述历史和环境配置，我认为和我们的主题不大相关。</p>
+<p>#Core Java Volume 1#</p>
+<p>##chap4##</p>
+<p>###java类和包的访问权限###<br>public，private等这些访问控制标识对java的类和包来说都是可用的，而且在类中的属性和方法、包中的方法来说访问权限上的定义也是共通的：</p>
+<ul>
+<li>public属性和方法：这些方法的访问权限是公开的，也就是说所有的类内部和外部对象都可以访问这些公开的属性和方法；</li>
+<li>public类：这些类的访问权限是公开的，也就是说在包内的类和包外的类都可以访问这些公开的类；</li>
+<li>private属性和方法：这些方法是类私有的，也就是说只能被类内部所访问；</li>
+<li>private类：这些类的访问权限是私有的，也就是说只能被包内部所访问。 </li>
+</ul>
+<p>###究竟什么是CLASSPATH###<br>顾名思义，classpath指的是类路径，也就是jvm在搜寻class二进制文件时搜寻的目录，在这个目录中如果找到需要的class文件则去执行，我们可以通过执行前为java命令设置－classpath参数或者直接设置CLASSPATH系统环境变量的形式去定义这个类路径，jvm就会去这个指定的路径下搜寻需要的class文件。<br>这个例子说明这个问题：<br>我们可以在系统环境变量配置文件中这样配置java的CLASSPATH：</p>
+<pre><code>export CLASSPATH=&quot;.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&quot;
+</code></pre><p>这样的配置文件等同于在java命令中的 -classpath参数：</p>
+<pre><code>java -classpath .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar Test
+</code></pre><p>这样配置CLASSPATH环境变量或使用-classpath参数之后，jvm在寻找程序中使用的不包含在当前类中的类时就会去这些路径下寻找，比如说程序中使用了不包含在当前类中的com.rocking.People类(People类通过importcom.rocking.＊引入的)，那么就会依照类路径中指示的路径去寻找：<br>压缩入$JAVA_HOME/lib/dt.jar中的com/rocking/People.class（jdk提供的系统级jar包）<br>压缩入$JAVA_HOME/lib/tools.jar的com/rocking/People.class<br>./com/rocking/People.class（当前路径.拼接上class的全路径名）</p>
+<pre><code>package com.rocking;
+
+public class People{
+    private String name;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+}
+
+import com.rocking.People;
+
+public class Test {
+    public static void main(String[] args) {
+        People people = new People();       
+    }
+}
+</code></pre><p>最重要的一点是，我们上面的讨论都是在jvm寻找class文件的过程中，而非javac编译器寻找待编译的java source文件的过程中，在编译中，我们必须通过package定义当前类所在的包（或者不明确定义直接使用default package），需要导入外部类时import相应包，只有这样才能通过编译。类路径只是让jvm能够通过配置好的全路径名找到所需的外部类。</p>
+<p>###setter的不可靠性###<br>理论上我们将域属性设置为private的目的是为了不让程序能够轻易地访问和修改到这个对象私有的属性，而只能通过该类定义的public的getter和setter方法去访问和修改。但是这并不是完全可靠的，程序仍然可以通过一些灵巧的办法在某些合适的情况下获取和更改这些私有的属性值。</p>
+<p>setter的不可靠性，其实只要能够确定这个私有属性的引用，是完全可以直接做更改的，当然前提是获取到这个引用，比如通过getter拿到这个属性的引用。这是一个例子：</p>
+<pre><code>class Secret{
+    private StringBuffer secret = new StringBuffer(&quot;A Secret&quot;);
+    public StringBuffer getSecret() {
+        return secret;
+    }
+    public void setSecret(StringBuffer secret) {
+        this.secret = secret;
+    }
+}
+public class TestClass {
+    public static void main(String[] args) {
+        Secret secret = new Secret();
+        StringBuffer saidSecret = secret.getSecret();
+        saidSecret.append(&quot;:broken&quot;);
+        System.out.println(secret.getSecret());
+    }
+}
+</code></pre><p>当然。这个例子其实是个特例，因为我们获取到的私有属性的引用是StringBuffer类型，是可修改内容的引用，但是如果是String类型的secret，那么我们就没办法这样绕过setter去修改了，因为String类型的引用是不允许修改原值的。</p>
+<p>###private的访问权限###</p>
+<p>我们都知道的是private属性是私有的，那么到底是对象私有的还是类私有的呢？答案是后者，我们可以在类定义的内部访问私有属性，即使这个属性是其他对象的，只要是同类的即可，虽然我们很少这么使用，但是这却深刻地说明java中的访问权限在类的范畴上。下面说明了这样一个问题：</p>
+<pre><code>class Secret {
+    private String secret;
+    public String getSecret() {
+        return secret;
+    }
+    public void setSecret(String secret) {
+        this.secret = secret;
+    }
+    public void readOtherSecret(Secret otherSecret) {
+        System.out.println(otherSecret.secret);
+    }
+}
+public class TestClass {
+    public static void main(String[] args) {
+        Secret secret1 = new Secret();
+        secret1.setSecret(&quot;secret A&quot;);
+        Secret secret2 = new Secret();
+        secret2.setSecret(&quot;secret B&quot;);
+        secret1.readOtherSecret(secret2);
+        secret2.readOtherSecret(secret1);
+    }
+}
+</code></pre><p>###static究竟是什么意思###</p>
+<p>static的本意是静态的，在java里面这个静态的意思是指存在于静态的类中的，而非程序开跑之后运行时的动态对象的，所以static的域属性也好，方法也好，都是指那些存在于类中的域属性和方法，虽然该类对应的对象中也存在static域属性和方法的拷贝，但是属于类的，对于它们的影响将会影响到整个类，换言之这些影响将会产生在所有的类对象中。<br>static的方法只能访问static的域属性，这个是怎么来的呢？其实就是因为static属性是属于整个类的，所以static的方法就不应该影响特定的对象的属性，在实现上说这个方法的隐式参数是不含有非static的方法的指向当前对象的this引用的，因此不能在static方法中访问非static属性。</p>
+<p>###java的方法参数传递###</p>
+<p>在C++中被反复向初学者讨论的一个问题就是swap函数的效果，如果参数是值传递的，则最终传入的两个值是不会被交换的，如果是指针（引用）传递的，那么最终传入的两个引用是会被交换的，那么java中的方法参数传递是哪种情况呢？答案是前者，即值传递，又叫做拷贝实参传递，即运行在方法中的形式参数是传递给方法的真实参数的拷贝，而非直接传入实际参数的指针。<br>下面的例子说明了这个问题：</p>
+<pre><code>class Some{
+    private String someThing;
+    public String getSomeThing() {
+        return someThing;
+    }
+    public void setSomeThing(String someThing) {
+        this.someThing = someThing;
+    }
+    public Some(String someThing) {
+        super();
+        this.someThing = someThing;
+    }
+}
+public class TestClass {
+    public static void swap(Some some1,Some some2){
+        Some temp = some1;
+        some2 = some1;
+        some1 = temp;
+    }
+    public static void main(String[] args) {
+        Some some1 = new Some(&quot;1&quot;);
+        Some some2 = new Some(&quot;2&quot;);
+        swap(some1, some2);
+        System.out.println(some1.getSomeThing());
+        System.out.println(some2.getSomeThing());
+    }
+}
+</code></pre><p>###类和对象初始化###</p>
+<p>我们都知道的是对象的初始化会引发类的初始化，初始化实现的方法也很多，最一般的初始化方法用于对象创建时对域属性的初始化，稍微少见的类的静态代码块用于对static静态域属性进行初始化，而初始化代码块则用于对象的域属性（包括static域属性）进行初始化，那么一般而言，初始化的顺序是怎样的呢？<br>首先执行静态代码块初始化static类静态域属性用于在整个类及其对象共享；<br>其次执行初始化代码块初始化域属性以完成对对象的个性化的域属性的初始化；<br>最后执行对象的初始化方法以完成进一步的域属性的初始化。</p>
+<pre><code>class Some{
+    private String someThing;
+    private static String staticSomeThing;
+    static
+    {
+        staticSomeThing = &quot;static&quot;;
+        System.out.println(&quot;static block triggered&quot;);
+    }
+    {
+        someThing = &quot;some&quot;;
+        System.out.println(&quot;init block triggered&quot;);
+    }
+    public String getSomeThing() {
+        return someThing;
+    }
+    public void setSomeThing(String someThing) {
+        this.someThing = someThing;
+    }
+    public Some(String someThing) {
+        this.someThing = someThing;
+        System.out.println(&quot;init method triggered&quot;);
+    }
+}
+public class TestClass {
+    public static void main(String[] args) {
+        Some some1 = new Some(&quot;1&quot;);
+    }
+}
+</code></pre><p>未完成。。。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/02/25/MVC框架/" rel="next" title="MVC框架">
+                <i class="fa fa-chevron-left"></i> MVC框架
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/22/Core-Java-Volume1-Key-Points-Ch4/"
+           data-title="Core-Java-Volume1-Key-Points-Ch4" data-url="http://yoursite.com/2016/12/22/Core-Java-Volume1-Key-Points-Ch4/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
