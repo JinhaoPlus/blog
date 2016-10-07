@@ -1,0 +1,832 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第一篇。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程基础">
+<meta property="og:url" content="http://jinhaoplus.top/2015/09/30/Java多线程基础/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第一篇。">
+<meta property="og:updated_time" content="2016-10-07T09:54:40.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java多线程基础">
+<meta name="twitter:description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第一篇。">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://jinhaoplus.top/2015/09/30/Java多线程基础/"/>
+
+  <title> Java多线程基础 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java多线程基础
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-30T15:22:13+08:00" content="2015-09-30">
+              2015-09-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/30/Java多线程基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/30/Java多线程基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第一篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java多线程：Java多线程基础"><a href="#Java多线程：Java多线程基础" class="headerlink" title="Java多线程：Java多线程基础"></a>Java多线程：Java多线程基础</h1><h2 id="感性地理解一下什么是线程？"><a href="#感性地理解一下什么是线程？" class="headerlink" title="感性地理解一下什么是线程？"></a><strong>感性地理解一下什么是线程？</strong></h2><p>线程这个概念其实是比较抽象的，虽然依照教科书上的说法：</p>
+<blockquote>
+<p>进程是从系统获取资源的最小单位，线程是程序执行的最小单位。程序是静态存在于磁盘上的一段文本，进程运行这段文本记录的命令。</p>
+</blockquote>
+<p>也就是说，进程从系统那里获取到了一定的CPU占用时间片、内存单元和IO等等资源，然后线程将这些资源利用起来执行程序，线程执行程序是什么意思呢？就是把程序记录的那些命令逐条依序一步步在CPU上运作，数据在内存、IO上流转，将命令执行完。<br>这个层级的概念存在于OS上，OS的调度抽象层级并不是那么直观，如果我们在说明白一点，在做底层的计算机组成原理实验的时候，在我们接好连线后硬件就具有了处理数据的能力，只要扳动不同的开关就可以将数据读写在不同的芯片上，我们的程序也许是为了完成数据流转写在纸上的扳动不同开关的序列，所以程序是属于IO级别的，然后我们依照纸上的命令序列实际上手去扳动不同的开关执行的就是这段程序，所以我们自己充当的角色就是进程，最终就得出了这样的结论：进程“执行”程序。至于线程呢，可以看作是进程在执行过程中的策略，比如说在一个人扳动开关的时候就是单进程单线程，如果是两个人扳动开关就是单进程多线程，如果两个人能配合起来扳动开关就是多线程同步，所以线程和进程之间并非互斥的概念，而是相容的概念，如果有线程就一定有进程，一个进程包含了至少一个的线程。</p>
+<h2 id="创建线程的方法"><a href="#创建线程的方法" class="headerlink" title="创建线程的方法"></a><strong>创建线程的方法</strong></h2><p>1.创建直接创建Thread的子类，重写run()方法；</p>
+<pre><code>class MyThread extends Thread {
+    @Override
+    public void run() {
+        System.out.println(&quot;This is my thread&quot;);
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        MyThread thread = new MyThread();
+        thread.start();
+    }
+}
+</code></pre><p>2.创建一个线程执行类实现Runnable接口，在这个执行类里实现Runnable的run()方法，创建该执行类的对象后，用此执行类对象初始化新线程，启动新线程时即执行这个执行对象的run()方法；</p>
+<pre><code>class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(&quot;This is my thread&quot;);
+    }
+}
+
+public class Test {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new MyRunnable());
+        thread.start();
+    }
+}
+</code></pre><p>3.通过线程工厂用工厂模式来创建新线程，新建工厂类继承ThreadFactory类重写newThread()方法，通过指定实现了Runnable接口的执行类来创建与之对应的线程；</p>
+<pre><code>public class ThreadFactoryDemo {
+
+    public static void main(String[] args) {
+        ThreadFactory factory = new ThreadFactory() {
+
+            @Override
+            public Thread newThread(Runnable r) {
+                // TODO Auto-generated method stub
+                return new Thread(r);
+            }
+        };
+        factory.newThread(new Runnable() {
+
+            @Override
+            public void run() {
+                System.out.println(&quot;in runnable.&quot;);
+
+            }
+        }).start();
+    }
+
+}
+</code></pre><p>注意：只有调用Thread类的Start方法，才能真正地在一个独立的线程中执行代码，直接调用Thread类的run方法，并不能启动一个新的线程，代码是在调用者线程中执行的。</p>
+<p>那么主线程的run()方法在哪里呢？任何java程序的main执行入口担当着启动主线程的作用，只要进入了main函数就执行了主线程，因此整个main函数里的内容就是主线程的run()方法。</p>
+<h2 id="线程究竟执行哪个run-方法"><a href="#线程究竟执行哪个run-方法" class="headerlink" title="线程究竟执行哪个run()方法"></a><strong>线程究竟执行哪个run()方法</strong></h2><p>当线程同时具有可执行对象实现的run()方法和线程重写的run()方法时，启动线程时究竟执行哪个run()方法呢？<br>结果是如果只定义了可执行对象的run()方法则执行这个run()方法，如果只重写了线程的run()方法则执行这个run()方法，如果两个方法都有则执行线程重写的run()方法。</p>
+<pre><code>public class Test {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+
+            @Override
+            public void run() {
+                System.out.println(&quot;Runnable.run()&quot;);
+
+            }
+        }) {
+            @Override
+            public void run() {
+                // TODO Auto-generated method stub
+                System.out.println(&quot;Thread.run()&quot;);
+            }
+        };
+        thread.start();
+    }
+}
+</code></pre><h2 id="线程的休眠"><a href="#线程的休眠" class="headerlink" title="线程的休眠"></a><strong>线程的休眠</strong></h2><p>使用Thread类的sleep()方法或者使用TimeUnit的相关方法来休眠线程，休眠的意思是资源仍被占用，但是线程保留原来的状态没有活动；</p>
+<pre><code>public class ThreadSleep {
+    public static void main(String[] args) {
+        Thread th = new Thread(new Runnable() {
+            public void run() {
+                for (int i = 0; i &lt; 10; i++) {
+                    try {
+                        // Thread.sleep(500);
+                        TimeUnit.SECONDS.sleep(1);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+
+        });
+        th.start();
+    }
+}
+</code></pre><h2 id="线程中断"><a href="#线程中断" class="headerlink" title="线程中断"></a><strong>线程中断</strong></h2><p>线程中断的意思是线程停止当前的运行状态让出资源结束生命周期，当外界想要一个线程中断时需要调用它的interrupted()方法，调用后不是直接就可以中断这个线程，而是将线程的interrupted标记位赋为1，如果要线程要响应这个中断则定期需要检查这个标记，检查到被中断标记后自己退出执行状态。</p>
+<pre><code>public class ThreadInterruptDemo {
+    public static void main(String[] args) throws InterruptedException {
+        Thread thread = new Thread() {
+            @Override
+            public void run() {
+                while (true) {
+                    System.out.println(&quot;running&quot;);
+                    if (isInterrupted())
+                        return;
+                }
+            }
+        };
+        thread.start();
+        Thread.sleep(2000);
+        thread.interrupt();
+    }
+}
+</code></pre><h2 id="线程定时任务"><a href="#线程定时任务" class="headerlink" title="线程定时任务"></a><strong>线程定时任务</strong></h2><p>线程要实现定时任务的话可以使用Runnable的实现类TimerTask，此类需要重写run()方法以完成具体需要进行的定时任务。然后由定时器Timer来调度，使用Timer的schedle()方法相当于启动这个定时任务线程。</p>
+<pre><code>public class TimerTaskDemo {
+    public static void main(String[] args) {
+
+        TimerTask task = new TimerTask() {
+            private int counter = 0;
+
+            @Override
+            public void run() {
+                System.out.println(counter + &quot;:invoked!&quot;);
+                counter++;
+            }
+        };
+        Timer timer = new Timer();
+        // 过2秒钟后首次运行，以后每隔3秒运行一次
+        timer.schedule(task, 2000, 3000);
+    }
+}
+</code></pre><h2 id="线程运行过程中的异常处理"><a href="#线程运行过程中的异常处理" class="headerlink" title="线程运行过程中的异常处理"></a><strong>线程运行过程中的异常处理</strong></h2><p>线程的run()方法中是不允许直接抛出异常的，也就是说不能有这样的写法：run() throws Exception ,原因在于在线程的运行过程中应该最大限度地保持正常工作，因此除了一些不可预知的运行时异常，不应该主动抛出受控异常。如果非要在run()方法里处理抛出的异常，则应该定义一个实现了UncaughtExceptionHandler的类，然后指定这个类的对象在重写的uncaughtException()方法里去处理抛出的异常。另外一种方法是，将这个线程加入一个线程组，在线程组里重写uncaughtException()方法来处理抛出的异常，这时线程组的作用相当于实现了UncaughtExceptionHandler的类。</p>
+<p>1.使用handler对象处理异常：</p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) {
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                throw new RuntimeException(&quot;格式错误&quot;);
+            }
+        });
+        thread.setUncaughtExceptionHandler(new MyHandler());
+        thread.start();
+    }
+}
+
+class MyHandler implements UncaughtExceptionHandler {
+    @Override
+    public void uncaughtException(Thread t, Throwable e) {
+        System.out.println(t.getName() + &quot;:&quot; + e.getMessage());
+
+    }
+}
+</code></pre><p>2.使用线程组处理异常：</p>
+<pre><code>public class ThreadGroupDemo {
+    public static void main(String[] args) {
+        ThreadGroup threadGroup1 = new ThreadGroup(&quot;group1&quot;) {
+            public void uncaughtException(Thread t, Throwable e) {
+                System.out.println(t.getName() + &quot;: &quot; + e.getMessage());
+            }
+        };
+        Thread thread1 = new Thread(threadGroup1, new Runnable() {
+            public void run() {
+                throw new RuntimeException(&quot;测试异常&quot;);
+            }
+        });
+
+        thread1.start();
+    }
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/19/黑客与画家/" rel="next" title="黑客与画家">
+                <i class="fa fa-chevron-left"></i> 黑客与画家
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/30/Java多线程同步与synchronized/" rel="prev" title="Java多线程同步与synchronized">
+                Java多线程同步与synchronized <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/09/30/Java多线程基础/"
+           data-title="Java多线程基础" data-url="http://jinhaoplus.top/2015/09/30/Java多线程基础/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">30</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">1</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:rocking2013@hotmail.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java多线程：Java多线程基础"><span class="nav-number">1.</span> <span class="nav-text">Java多线程：Java多线程基础</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#感性地理解一下什么是线程？"><span class="nav-number">1.1.</span> <span class="nav-text">感性地理解一下什么是线程？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#创建线程的方法"><span class="nav-number">1.2.</span> <span class="nav-text">创建线程的方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程究竟执行哪个run-方法"><span class="nav-number">1.3.</span> <span class="nav-text">线程究竟执行哪个run()方法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的休眠"><span class="nav-number">1.4.</span> <span class="nav-text">线程的休眠</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程中断"><span class="nav-number">1.5.</span> <span class="nav-text">线程中断</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程定时任务"><span class="nav-number">1.6.</span> <span class="nav-text">线程定时任务</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程运行过程中的异常处理"><span class="nav-number">1.7.</span> <span class="nav-text">线程运行过程中的异常处理</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
