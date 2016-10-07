@@ -92,15 +92,15 @@
 <meta property="og:site_name" content="new JinhaoPlus()">
 <meta property="og:description" content="WebMVC和Spring MVC框架WebMVC的基本任务我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。
 1.servlet时期：">
-<meta property="og:image" content="http://yoursite.com/img/bVsZrc">
-<meta property="og:image" content="http://yoursite.com/img/bVsZrd">
-<meta property="og:image" content="http://yoursite.com/img/bVsZre">
-<meta property="og:updated_time" content="2016-09-03T04:48:39.000Z">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jlsln0vij30m808kq3n.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jltf876jj30m80bt0tt.jpg">
+<meta property="og:updated_time" content="2016-10-07T04:54:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="MVC框架">
 <meta name="twitter:description" content="WebMVC和Spring MVC框架WebMVC的基本任务我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。
 1.servlet时期：">
-<meta name="twitter:image" content="http://yoursite.com/img/bVsZrc">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg">
 
 
 
@@ -313,14 +313,14 @@
         <h1 id="WebMVC和Spring-MVC框架"><a href="#WebMVC和Spring-MVC框架" class="headerlink" title="WebMVC和Spring MVC框架"></a>WebMVC和Spring MVC框架</h1><h2 id="WebMVC的基本任务"><a href="#WebMVC的基本任务" class="headerlink" title="WebMVC的基本任务"></a>WebMVC的基本任务</h2><p>我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。<br>在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。</p>
 <p>1.servlet时期：Web请求通过前端的html页面提交到后台servlet，servlet对请求进行处理、运行相关逻辑，通过输出html语句生成展示处理结果的页面回到前端，用户和系统之间的交互建立在繁琐的Web页面的生成基础上。<br>2.jsp（Java Server Page）时期：Web请求通过前端的jsp页面提交到后台逻辑的servlet或者jsp处理单元（jsp页面和servlet没有本质区别，前者执行的时候是会被编译成后者的），后台处理后处理结果放入相应的http请求数据保存区，再将这个Web请求转发到某个事先写就的jsp页面，jsp页面把需要的数据写入到自身并展示出来（在服务器后台实际上还有这样自动完成的步骤：编译成临时servlet，再通过输出html语句生成展示处理结果的页面回到前端）。这样系统的后台是建立在功能不甚清晰的servlet和jsp处理单元之上的。<br>3.servlet＋jsp时期：这是MVC思想在Web开发中的起点。servlet只被当作后台处理单元，而jsp页面只被当作前台展示和交互页面而不参与后台逻辑处理。Web请求通过jsp页面提交到后台，后台servlet则负责处理逻辑，后台处理后处理结果放入相应的http请求数据保存区，再将这个Web请求转发到某个事先写就的jsp页面，jsp页面把需要的数据写入到自身并展示出来。和jsp时期虽然看似相同，但是由于清楚划分了servlet的controller控制器作用、jsp的view视图的作用，（当然在后台还有model数据模型），使得Web开发能够结构化地进行，系统层次也更为清晰。</p>
 <p>那么我们来说明一下究竟什么是Web的MVC架构（当然除了在Web领域，大多数的用户系统交互中都会有MVC架构的影子）。M（Model数据模型）V（View视图）C（Controller），是Web应用的开发策略和Web应用实际运行的基本模型，大体说来就是这样的过程：请求通过V发送到后端C，C接收到请求后选择适当的M进行数据处理，处理完毕后C选择合适的V进行展现。<br>这个模型称为JSP Model2，是MVC模型的基本原理，如下图所示：</p>
-<p><img src="/img/bVsZrc" alt="clipboard.png"></p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg" alt=""></p>
 <h2 id="Spring-MVC框架的区别和优势"><a href="#Spring-MVC框架的区别和优势" class="headerlink" title="Spring MVC框架的区别和优势"></a>Spring MVC框架的区别和优势</h2><p>如上所述的基本MVC框架看起来已经满足我们的一半需求了，那么我们所说的使用包括像Spring MVC这样的WebMVC框架有什么好处呢？</p>
 <p>在JSP Model 2 这个经典WebMVC模型里面，我们的serlet和Web请求是一一映射的并且硬配置在Web应用的配置文件中的，因此系统的需求增加导致映射关系的增加再导致Web应用本身的体积增加，缺乏一般性、易管理性和可重用性。这样的问题势必会增加系统的维护难度。<br>所以，使用一个集中控制器对Web请求进行分析并且选择合适的逻辑处理Controller来处理Web请求，将硬编码在配置文件中的映射关系写在这个集中Controller中，这种做法仍然会使得硬编码的问题，只不过是把硬编码转向了集中Controller中。</p>
 <p>Spring MVC在Web请求和我们所说的这个控制器Controller之间使用了一个非常关键的节点－－前置控制器（Front Controller），前置控制器的作用是接收所有的Web请求并将请求派发到不同的页面控制器（Page Controller），而页面控制器就是我们前面所说的这种一般意义上的Controller，亦即真正进行后段页面处理逻辑的控制器。由于引入了新的映射处理器、页面渲染器等，存在于JSP Model 2的耦合和硬编码问题能够得以解决，另外加上Spring自身的IOC特性，可以将组件在容器启动的时候就注入，实现组件的初始化前置。<br>如下图所示为Spring MVC的模型情况：</p>
-<p><img src="/img/bVsZrd" alt="clipboard.png"></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jlsln0vij30m808kq3n.jpg" alt=""></p>
 <h2 id="Spring-MVC框架的IOC加载原理"><a href="#Spring-MVC框架的IOC加载原理" class="headerlink" title="Spring MVC框架的IOC加载原理"></a>Spring MVC框架的IOC加载原理</h2><p>Spring MVC结合Spring自身的特性和WebMVC的模型，能够将Web应用的开发实现得更简洁轻快，使得可复用性得到更好的发展。下面是Spring MVC的几个重要角色：</p>
 <p>DispatcherServlet（前置控制器）：将Web请求统一发送至此，把请求发送至HandlerMapping<br>HandlerMapping（映射处理器）：接收请求并分析请求-处理器映射关系，把请求发送到Controller<br>Controller（页面控制器）：接收被派发的请求，真正处理业务逻辑，并将处理数据发往ViewSolver<br>ViewResolver（视图配发器）：统一的视图配发器和具体的视图模版技术无关，按照视图配发器的配置项将数据添加到指定视图模版技术的View中<br>View（视图）：真正展现数据的页面视图<br>这些角色参与整个WebMVC的流程如图所示：</p>
-<p><img src="/img/bVsZre" alt="clipboard.png"></p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jltf876jj30m80bt0tt.jpg" alt=""></p>
 <p>在知晓了这些角色之后我们再来说SpringMVC的这些角色在Web容器中的初始化过程，在这里我们使用一个相对有通用性的例子来说明其中非常重要的组件：</p>
 <h3 id="ROOT-WebApplicationContext-和-ContextLoaderListener"><a href="#ROOT-WebApplicationContext-和-ContextLoaderListener" class="headerlink" title="ROOT WebApplicationContext 和 ContextLoaderListener"></a>ROOT WebApplicationContext 和 ContextLoaderListener</h3><p>像所有的Spring IOC容器启动注入业务组件一样，Spring MVC框架也有一个主要的IOC容器用于加载注入组件，这个IOC容器就是顶层的ROOT WebApplicationContext，它通过默认位置在/WEB-INF路径下的applicationContext作为配置文件来进行加载，加载的契机当然在Web应用启动的时候，因此我们需要在作为这个Web应用的整体描述文件web.xml定义一个监听器ContextLoaderListerner，监听器在Web应用启动之后加载ROOT WebApplicationContext，加载的WebApplicationContext中主要会注入DAO、Services和数据源这些业务对象。</p>
 <h3 id="Spring-WebApplicationContext-和-DispatcherServlet"><a href="#Spring-WebApplicationContext-和-DispatcherServlet" class="headerlink" title="Spring WebApplicationContext 和 DispatcherServlet"></a>Spring WebApplicationContext 和 DispatcherServlet</h3><p>在SpringMVC架构中加入了一个为SpringWeb应用层组件打造的IOC容器，我们不妨称之为Spring WebApplicationContext，这个IOC容器是ROOT WebApplicationContext的子容器，换言之，它是可以访问到父容器中的注入对象的，也因此，其中注入的页面控制器对象Controller可以注入父容器中已经注入的Services和DAO对象。同样的，我们需要在web.xml中定义一个前置控制器servlet DispatcherServlet来接管所有符合定义的Web请求，并通过默认位置在/WEB-INF路径下的<servlet-name>-servlet作为配置文件来加载Spring WebApplicationContext，这个IOC容器存在的意义在于区分ROOT IOC和Spring IOC的职责需要，主要注入Controller，HandlerMapping，ViewResolver等SpringWeb层服务组件。</servlet-name></p>
