@@ -309,19 +309,28 @@
       
         
           
-          Mac环境变量小记
-什么是环境变量呢？
-
-计算机系统本身就有很多内部命令，比如cd、ls这样的shell命令，本质上这些命令都是一些存放在系统特定目录下的程序文件，系统找到这些文件后去执行这些程序，那么在shell中使用这些命令时系统如何去寻找这些命令的位置呢 ？系统也不是神，它必须得知道哪些地方是它需要去搜索寻找这些shell命令程序文件的地方，所以有一些默认的位置是确定下来的系统会寻找的位置，比如说/bin, /usr/bin，系统会在这些目录里寻找shell里出现的命令，找到后就会执行文件中写的程序。
-那么对于第三方的程序呢，比如java，在安装这些程序之后如果想要在shell中使用这些程序呢？我们就得告诉系统我们的shell命令对应放在哪些目录里，这样系统就可以根据我们的提示去这些目录下寻找相应的文件、执行其中的程序，那么，我们完成这种提示的方法就是在系统特定位置加入文件来作为环境变量的存放文件，系统会在加载环境变量文件后知晓我们输入的shell命令对应的文件位置，实现第三方程序shell命令的寻找。
-无论是OS X，还是Windows和Linux，环境变量起到的作用都是类似。
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/08/09/Mac环境变量小记/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+            <h1 id="Mac环境变量小记"><a href="#Mac环境变量小记" class="headerlink" title="Mac环境变量小记"></a>Mac环境变量小记</h1><ul>
+<li>什么是环境变量呢？</li>
+</ul>
+<p>计算机系统本身就有很多内部命令，比如cd、ls这样的shell命令，本质上这些命令都是一些存放在系统特定目录下的程序文件，系统找到这些文件后去执行这些程序，那么在shell中使用这些命令时系统如何去寻找这些命令的位置呢 ？系统也不是神，它必须得知道哪些地方是它需要去搜索寻找这些shell命令程序文件的地方，所以有一些默认的位置是确定下来的系统会寻找的位置，比如说/bin, /usr/bin，系统会在这些目录里寻找shell里出现的命令，找到后就会执行文件中写的程序。</p>
+<p>那么对于第三方的程序呢，比如java，在安装这些程序之后如果想要在shell中使用这些程序呢？我们就得告诉系统我们的shell命令对应放在哪些目录里，这样系统就可以根据我们的提示去这些目录下寻找相应的文件、执行其中的程序，那么，我们完成这种提示的方法就是在系统特定位置加入文件来作为环境变量的存放文件，系统会在加载环境变量文件后知晓我们输入的shell命令对应的文件位置，实现第三方程序shell命令的寻找。</p>
+<p>无论是OS X，还是Windows和Linux，环境变量起到的作用都是类似。</p>
+<ul>
+<li>环境变量配置实例</li>
+</ul>
+<p>我们以mysql为例来说明一下Mac下环境变量的配置方法。</p>
+<p>下载mysql的包解压(或者安装)并将其根目录命名为mysql，最终移动到/usr/local目录下(或者安装到这个路径下)。<br>这个路径下的程序文件是不为系统shell所知的，因为我们系统的默认几个路径并不包括这个路径，因此如果这时在shell里输入mysql命令是无效的：</p>
+<pre><code>Jinhao-Mac:~ jinhao$ mysql
+-bash: mysql: command not found
+</code></pre><p>因此，我们得先个办法来让系统知晓我们想要加入shell的命令的存放位置，亦即创建我们环境变量的文件：.bash_profile(.表示隐藏文件)：</p>
+<pre><code>Jinhao-Mac:~ jinhao$ touch .bash_profile
+</code></pre><p>向其中加入我们的环境变量，也就是我们shell命令所处的路径：</p>
+<pre><code>export PATH=&quot;/usr/local/mysql/bin:$PATH&quot;
+</code></pre><p>意思是导入一个环境变量路径”/usr/local/mysql/bin:$PATH”到PATH变量中去，shell搜索的时候会去这个变量中保护的路径下面搜寻mysql文件是否存在，如果存在就执行mysql指令，这样就完成了这个第三方程序的shell命令执行过程。</p>
+<p>除此以外，想要配置某些程序在终端中打开也可以做类似的配置，只要让shell知晓我们的命令所在的位置就好，比如设置Sublime Text在终端中直接打开的环境变量：</p>
+<pre><code>export PATH=&quot;/Applications/Sublime Text.app/Contents/SharedSupport/bin:$PATH&quot;
+</code></pre>
+          
         
       
     </div>
@@ -420,9 +429,9 @@
       
         
           
-          转载自：http://blog.csdn.net/chenyiming_1990/article/details/9476181
-先看一下两段代码：
-char* toStr()   
+            <p>转载自：<br><a href="http://blog.csdn.net/chenyiming_1990/article/details/9476181" target="_blank" rel="external">http://blog.csdn.net/chenyiming_1990/article/details/9476181</a></p>
+<p>先看一下两段代码：</p>
+<pre><code>char* toStr()   
 {  
     char *s = &quot;abcdefghijkl&quot;;  
     return s;  
@@ -433,8 +442,8 @@ int main()
     cout &lt;&lt; toStr() &lt;&lt; endl;  
     return 0;  
 }  
-和
-char* toStr()   
+</code></pre><p>和</p>
+<pre><code>char* toStr()   
 {  
     char s[] = &quot;abcdefghijkl&quot;;  
     return s;  
@@ -444,16 +453,84 @@ int main()
     cout &lt;&lt; toStr() &lt;&lt; endl;  
     return 0;  
 }  
-前一段代码打印出来是字符串，而后一段代码打印出来就是乱码。记得学C语言的时候讲到，字符串是被当做字符数组来处理的。所以字符数组名就相当于指向首地址的指针。那么
+</code></pre><p>前一段代码打印出来是字符串，而后一段代码打印出来就是乱码。记得学C语言的时候讲到，字符串是被当做字符数组来处理的。所以字符数组名就相当于指向首地址的指针。那么</p>
+<ol>
+<li>char *s = “abcdefghijkl”;</li>
+<li>char s[] = “abcdefghijkl”;<br>这两种表达式似乎是一样的，可是为什么程序结果会不一样呢？原因就是没有对内存分配了解好。当然现在的C语言教材不会讲到的。<br>解释：<br>程序的意思比较简单，不用解释。<br>第一种表达式，指针s是局部变量，他的作用域是函数toStr内。它将其指向的地址返回，返回之后s即被销毁，庆幸s指向的地址被返回了回来。最终打印正确。<br>第二种表达式，那么我们会问第二种与第一种的区别在哪，为何错？原因就是第一种指针s虽然是局部变量，被分配在栈空间，作用域是函数内部，但其指向的内容”abcdefghijkl”是常量，被分配在程序的常量区。直到整个程序结束才被销毁。而第二种，s是一数组，分配到栈空间，”abcdefghijkl”作为数组各个元素被放到数组中，一旦函数退出，栈中这块内存就被释放。虽然返回一个地址，可是已经失去它的意义了。</li>
+</ol>
+<p>通过以上例子，我们来学习学习内存分配的问题吧。</p>
+<p>首先，需要搞清楚：变量的类型和它的存储类别是两个概念。<br>数据类型和内存管理没有直接的关系。</p>
+<p>一、一个由C/C++编译的程序占用的内存分为以下几个部分：<br>1、栈区（stack）—由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。<br>2、堆区（heap）—一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收。注意它与数据结构中的堆是两回事，分配方式倒是类似于链表，呵呵。<br>3、全局区（静态区）（static），全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。  程序结束后由系统释放。<br>4、文字常量区—常量字符串就是放在这里的。程序结束后由系统释放<br>5、程序代码区—存放函数体的二进制代码。</p>
+<p>二、例子程序<br>这是一个前辈写的，非常详细</p>
+<pre><code>//main.cpp    
+int a = 0; //全局初始化区  
+char *p1; //全局未初始化区  
 
-char *s = “abc
-          ...
+main()  
+{  
+    int b; //栈  
+    char s[] = &quot;abc&quot;; //栈  
+    char *p2; //栈  
+    char *p3 = &quot;123456&quot;; //123456\\0在常量区，p3在栈上。  
+    static int c =0;//全局（静态）初始化区  
+    p1 = (char *)malloc(10);      
+    p2 = (char *)malloc(20);//分配得来得10和20字节的区域就在堆区。  
+    strcpy(p1, &quot;123456&quot;); //123456\\0放在常量区，编译器可能会将它与p3所指向的&quot;123456&quot;优化成一个地方。        
+}   
+</code></pre><p>这下就对程序的内存分配理解更深入了吧。</p>
+<p>其实包括其他编程语言，Java等，他们都有所谓的栈空间和堆空间以及常量区，我们经常写完程序之后发现莫名的错误，或者内存被慢慢吞噬，这都是这方面的原因。</p>
+<p>以下是堆和栈的理论知识 </p>
+<ul>
+<li>2.1申请方式</li>
+</ul>
+<p>stack: 由系统自动分配。 例如，声明在函数中一个局部变量 int b; 系统自动在栈中为b开辟空间<br>heap: 需要程序员自己申请，并指明大小，在c中malloc函数<br>如p1 = (char <em>)malloc(10);<br>在C++中用new运算符<br>如p2 = (char </em>)malloc(10);<br>但是注意p1、p2本身是在栈中的。 </p>
+<ul>
+<li>2.2 申请后系统的响应</li>
+</ul>
+<p>栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。<br>堆：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，<br>      会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。 </p>
+<ul>
+<li>2.3申请大小的限制</li>
+</ul>
+<p>栈：在Windows下,栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在 WINDOWS 下，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。<br>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。<br>所以在程序中自动变量数组（函数内部）不能很大，因为栈（这就是我们通常说的程序的堆栈段，大数组发生段溢出）的大小有限，而可以申请为全局变量，因为那是分配在静态区，大小不受限制。</p>
+<ul>
+<li>2.4申请效率的比较：</li>
+</ul>
+<p>栈由系统自动分配，速度较快。但程序员是无法控制的。<br>堆是由new分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.<br>另外，在WINDOWS下，最好的方式是用VirtualAlloc分配内存，他不是在堆，也不是在栈是直接在进程的地址空间中保留一快内存，虽然用起来最不方便。但是速度快，也最灵活 </p>
+<ul>
+<li>2.5堆和栈中的存储内容</li>
+</ul>
+<p>栈： 在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址，然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。<br>当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。<br>堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。 </p>
+<ul>
+<li>2.6存取效率的比较</li>
+</ul>
+<p>char s1[] = “aaaaaaaaaaaaaaa”;<br>char *s2 = “bbbbbbbbbbbbbbbbb”;<br>aaaaaaaaaaa是在运行时刻赋值的；<br>而bbbbbbbbbbb是在编译时就确定的；<br>但是，在以后的存取中，在栈上的数组比指针所指向的字符串(例如堆)快。<br>比如： </p>
+<pre><code>#include &lt;stdio.h&gt; 
+void main() 
+{ 
+char a = 1; 
+char c[] = &quot;1234567890&quot;; 
+char *p =&quot;1234567890&quot;; 
+a = c[1]; 
+a = p[1]; 
+return; 
+} 
+</code></pre><p>对应的汇编代码 </p>
+<pre><code>10: a = c[1]; 
+00401067 8A 4D F1 mov cl,byte ptr [ebp-0Fh] 
+0040106A 88 4D FC mov byte ptr [ebp-4],cl 
+11: a = p[1]; 
+0040106D 8B 55 EC mov edx,dword ptr [ebp-14h] 
+00401070 8A 42 01 mov al,byte ptr [edx+1] 
+00401073 88 45 FC mov byte ptr [ebp-4],al 
+</code></pre><p>第一种在读取时直接就把字符串中的元素读到寄存器cl中，而第二种则要先把指针值读到edx中，在根据edx读取字符，显然慢了。 </p>
+<p>补充：<br>自动变量、静态变量和全局变量</p>
+<ul>
+<li>自动变量的关键字auto默认缺省，我们创建的大多数变量都是这种类型，创建后存储在栈内存中；</li>
+<li>静态变量关键字为static，它与自动变量的区别在于存储在内存静态区中，因此生命周期与程序一致，在程序结束时才会释放。</li>
+<li>全局变量一般放在各函数之外，因此其生命周期也是随程序结束而释放，存储在全局区中（全局区和静态区实际是同一块区域）。和静态变量的区别在于，虽然二者存储位置相同、生命周期都是伴随程序至结束，但是静态变量的作用域和一般的自动变量相同，在作用不到的范围里静态变量虽然仍然在内存里，但是不能访问，而全局变量在整个程序中都可以被访问。</li>
+</ul>
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/04/26/C语言的内存分配/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+          
         
       
     </div>
@@ -552,32 +629,144 @@ char *s = “abc
       
         
           
-          工厂模式和“万能”工厂类
-需要构造一个类的对象，我们通常会用new的方法来构造:
-
-A a = new A();
-
-但是如果随着这个对象被创建的同时还必须进行其他相对复杂的操作，那么在新建构造一个对象代码就显得非常复杂，这个复杂的代码通常还需要每一次都复写，大大增加了冗余。
-
-因此我们构造了生产这个类对应对象的工厂，用工厂的方法来生产对象。比如：我们需要在构造一个对象时并不知道这个对象中的某个字段的确切值，该值保存在配置文件中，所以每次构造对象都要进行配置文件的读取，依据配置文件中的内容来确定这个对象中该字段的信息，这个过程如果直接使用new来实现将会造成大量代码的冗余，大量冗余存在于配置文件的加载和读取，不妨把它封装成工厂类，在工厂类内部实现配置文件的加载和读取。
-
-有如下配置文件：/src/config.properties:
-
-ImportantString = OK
-
-有如下预创建的对象所属类：/src/A.java:
-
-public class A {
+            <h1 id="工厂模式和“万能”工厂类"><a href="#工厂模式和“万能”工厂类" class="headerlink" title="工厂模式和“万能”工厂类"></a>工厂模式和“万能”工厂类</h1><blockquote>
+<p>需要构造一个类的对象，我们通常会用new的方法来构造:</p>
+</blockquote>
+<pre><code>A a = new A();
+</code></pre><blockquote>
+<p>但是如果随着这个对象被创建的同时还必须进行其他相对复杂的操作，那么在新建构造一个对象代码就显得非常复杂，这个复杂的代码通常还需要每一次都复写，大大增加了冗余。</p>
+</blockquote>
+<p>因此我们构造了生产这个类对应对象的工厂，用工厂的方法来生产对象。<br>比如：我们需要在构造一个对象时并不知道这个对象中的某个字段的确切值，该值保存在配置文件中，所以每次构造对象都要进行配置文件的读取，依据配置文件中的内容来确定这个对象中该字段的信息，这个过程如果直接使用new来实现将会造成大量代码的冗余，大量冗余存在于配置文件的加载和读取，不妨把它封装成工厂类，在工厂类内部实现配置文件的加载和读取。</p>
+<blockquote>
+<p>有如下配置文件：/src/config.properties:</p>
+</blockquote>
+<pre><code>ImportantString = OK
+</code></pre><blockquote>
+<p>有如下预创建的对象所属类：/src/A.java:</p>
+</blockquote>
+<pre><code>public class A {
     private String Aname;
     public void Ashout(){
-        Sy
-          ...
+        System.out.println(&quot;I am &quot;+Aname+&quot;,hahaha !&quot;);
+    }
+    public String getAname() {
+        return Aname;
+    }
+    public void setAname(String aname) {
+        Aname = aname;
+    }
+}
+</code></pre><blockquote>
+<p>有如下测试文件：/src/Test.java:</p>
+</blockquote>
+<pre><code>public class Test{
+    public static void main(String[] args) {
+        A a = AFactory.getA();
+        a.Ashout();
+    }
+}
+</code></pre><p>则可以构造工厂类来生产该类的对象，生产过程中加载读取配置文件并将配置文件中的重要字段赋值给创建出的对象，并返回这个创建出的对象。</p>
+<blockquote>
+<p>如下工厂类文件：/src/AFactory.java:</p>
+</blockquote>
+<pre><code>public class AFactory {
+    private static Properties properties = null;
+    private static String ANameToGet;
+    private AFactory() {
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/04/07/工厂模式和“万能”工厂类/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+    }
+    static{
+        try {
+            properties = new Properties();
+            properties.load(new FileReader(AFactory.class.getClassLoader().getResource(&quot;config.properties&quot;).getPath()));
+            ANameToGet = properties.getProperty(&quot;ImportantString&quot;);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    public static A getA(){
+        A a = new A();
+        a.setAname(ANameToGet);
+        return a;
+    }
+}
+</code></pre><p>我们可以发现，通过工厂类的包装，在调用工厂类方法构造对象时可以十分轻松地完成任务，而后面的其他任务则交由工厂类的静态代码块完成。</p>
+<blockquote>
+<p>那么什么是万能工厂类呢？万能当然不是指能完成一切的工厂，而是说在很多情况下，我们可能需要构造各种类的对象，而这些对象在构造过程中可能也会完成很多跟构造相分离的相对复杂的任务，这些任务可能会导致前台代码冗余，而恰恰我们要构造的这些对象虽然分属不同的类却有结构相同的代码，这是我们不妨使用泛型来进一步解决这个问题。</p>
+</blockquote>
+<p>以上面的例子为基础，我们需要两个类，在这两个类的对象的创建过程中都必须要检查配置文件中的一对Key是否相等，相等的Key才能允许对象的创建，<br>否则不允许创建，这个过程中如果在new之前直接做判断逻辑，将会导致大量的代码冗余，因为每个类的对象创建前都要进行相同的判断。因此我们考虑<br>把这部分代码写入工厂类，再生产过程前进行判断，过程封装进工厂类。<br>但是由于我们两个类的对象的生成实现过程类似，因此不需要分别写工厂，而是统一地写一个泛型化的工厂，依据传进的类的类型利用Class.forName(className).newInstance()来创建新的对象。</p>
+<blockquote>
+<p>有如下配置文件：/src/config.properties:</p>
+</blockquote>
+<pre><code>Key1 = RightKey
+Key2 = RightKey
+</code></pre><blockquote>
+<p>有如下预创建的对象所属类：/src/A.java:</p>
+</blockquote>
+<pre><code>public class A {
+}
+</code></pre><blockquote>
+<p>/src/B.java:</p>
+</blockquote>
+<pre><code>public class B {
+}
+</code></pre><blockquote>
+<p>有如下测试文件：/src/Test.java:</p>
+</blockquote>
+<pre><code>public class Test{
+    public static void main(String[] args) {
+        A a = CommonFactory.getInstance();
+        B b = CommonFactory.getInstance();
+    }
+}
+</code></pre><p>则可以构造工厂类来生产该类的对象，生产过程中加载读取配置文件并将判断配置文件中的Key以确定对象是否能正常生成，如果可以返回这个创建出的对象。</p>
+<blockquote>
+<p>如下工厂类文件：/src/CommonFactory.java:</p>
+</blockquote>
+<pre><code>public class CommonFactory {
+    private static Properties properties = null;
+    private static String Key1;
+    private static String Key2;
+    static boolean no;
+    private CommonFactory() {
+    }
+    static{
+        try {
+            properties = new Properties();
+            properties.load(new FileReader(CommonFactory.class.getClassLoader().getResource(&quot;config.properties&quot;).getPath()));
+            Key1 = properties.getProperty(&quot;Key1&quot;);
+            Key2 = properties.getProperty(&quot;Key2&quot;);
+            no = Key1.equals(Key2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    public static &lt;T&gt; T getInstance(Class&lt;T&gt; clazz){
+        try {
+            String className = clazz.getName();
+            if(no){
+                T t = (T) Class.forName(className).newInstance();
+                System.out.println(className+&quot; Object Astablished Successfully&quot;);
+                return t;
+            }
+            else
+            {
+                System.out.println(className+&quot; Object Astablished failed&quot;);
+                return null;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+    }
+}
+</code></pre>
+          
         
       
     </div>
@@ -676,9 +865,9 @@ public class A {
       
         
           
-          继承、装饰和动态代理修改对象既有方法如何来改变一个对象的中的既有方法呢？
-比如如下代码：
-class Dog{
+            <h2 id="继承、装饰和动态代理修改对象既有方法"><a href="#继承、装饰和动态代理修改对象既有方法" class="headerlink" title="继承、装饰和动态代理修改对象既有方法"></a>继承、装饰和动态代理修改对象既有方法</h2><p><strong>如何来改变一个对象的中的既有方法呢？</strong></p>
+<p>比如如下代码：</p>
+<pre><code>class Dog{
     public void bark(){
         System.out.println(&quot;bark:Wolf-Wolf&quot;);
     }
@@ -695,17 +884,108 @@ public class TestInherit {
     }
 
 }
-我们的目的是将狗叫bark()这个方法改造成另一种实现，这个过程可以有下述的几种方法来实现：
-1. 继承Java继承是Java作为面向对象的基础之一，可以用子类方法复写（override）父类方法
-class Dog{
-    public 
-          ...
+</code></pre><p><strong>我们的目的是将狗叫bark()这个方法改造成另一种实现，这个过程可以有下述的几种方法来实现：</strong></p>
+<h3 id="1-继承"><a href="#1-继承" class="headerlink" title="1. 继承"></a>1. 继承</h3><p>Java继承是Java作为面向对象的基础之一，可以用子类方法复写（override）父类方法</p>
+<pre><code>class Dog{
+    public void bark(){
+        System.out.println(&quot;bark:Wolf-Wolf&quot;);
+    }
+    public void eat(){
+        System.out.println(&quot;eat:BonesBones&quot;);
+    }
+}
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/04/05/继承、装饰和动态代理修改对象既有方法/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+class InhDog extends Dog{
+    public void bark() {
+        System.out.println(&quot;bark:WangWangWang&quot;);
+    }
+}
+
+public class TestInherit {
+    public static void main(String[] args) {
+        Dog dog = new InhDog();
+        dog.bark();
+        dog.eat();
+    }
+}
+</code></pre><p>InhDog继承Dog后生成的dog对象拥有Dog的类型却具有InhDog的方法，调用其bark()方法时会调用子类复写的方法，这个过程也是Java多态性的体现。</p>
+<pre><code>Dog dog = new InhDog();
+</code></pre><p>这一句执行使，调用InhDog的构造方法，构造的对象在内存中保存的方法和属性都是子类具有的，用Dog父类去接使得这个对象变量的类型是父类Dog类型。</p>
+<p>继承修改的方法虽然简单，但是一个已经生成的对象是不能使用继承来进行这个方法修改的，因为对象已经生成，它的方法就是父类的方法，不能把它转成子类并进而使用子类方法的。即如果对象已经生成，那么没办法使用继承的办法来改变想要改变的方法。</p>
+<h3 id="2-装饰"><a href="#2-装饰" class="headerlink" title="2. 装饰"></a>2. 装饰</h3><pre><code>interface Animal{
+    public void bark();
+    public void eat();
+}
+
+class Dog implements Animal{
+    public void bark(){
+        System.out.println(&quot;bark:Wolf-Wolf&quot;);
+    }
+    public void eat(){
+        System.out.println(&quot;eat:BonesBones&quot;);
+    }
+}
+
+class DecDog implements Animal{
+    private Animal animal = null;
+    public DecDog(Animal animal){
+        this.animal = animal;
+    }    
+    public void bark() {
+        System.out.println(&quot;bark:WangWangWang&quot;);
+    }
+    public void eat() {
+        animal.eat();
+    }
+}
+
+public class DecTest {
+    public static void main(String[] args) {
+        Dog dog = new Dog();
+        Animal animal = new DecDog(dog);
+        animal.eat();
+        animal.bark();
+    }
+}
+</code></pre><p>装饰的实质是将一个类A封装在另一个类B内部，然后用B类来构造A类，而且A,B都实现同一接口，然后A类控制实现不同的方法，如果要对B类方法进行特殊修饰就重写该方法，如果不需要就直接使用B的方法。<br>这个办法是可以在对象已生成的情况下改变方法的，但是需要对实现的接口进行重新填补抽象方法，抽象方法很多时增加了代码的冗余。</p>
+<h3 id="3-动态代理"><a href="#3-动态代理" class="headerlink" title="3. 动态代理"></a>3. 动态代理</h3><pre><code>interface Animal{
+    public void bark();
+    public void eat();
+}
+
+class Dog implements Animal{
+    public void bark(){
+        System.out.println(&quot;bark:Wolf-Wolf&quot;);
+    }
+    public void eat(){
+        System.out.println(&quot;eat:BonesBones&quot;);
+    }
+}
+
+public class ProxyTest {
+    public static void main(String[] args) {
+        final Dog dog = new Dog();
+        Animal animal = (Animal) Proxy.newProxyInstance(Dog.class.getClassLoader(), Dog.class.getInterfaces(), new InvocationHandler()
+        {
+
+            public Object invoke(Object proxy, Method method, Object[] args)
+                    throws Throwable {
+                    if(&quot;bark&quot;.equals(method.getName())){
+                        System.out.println(&quot;bark:WangWangWang&quot;);
+                        return null;
+                    }
+                    else{
+                        return method.invoke(dog, args);
+                    }
+            }
+        });
+        animal.bark();
+        animal.eat();
+    }
+}
+</code></pre><p>动态代理的意思是利用代理类来承接原类中的某些方法，本例中使用 Proxy.newProxyInstance方法来创建一个Dog类的代理类实例，代理中定义的invoke方法在每次调用到代理类生成的对象的方法时都会回去访问该函数，比如利用创建出的animal对象的方法bark()时就会去访问InvocationHandler()中的invoke方法，并执行invoke方法。在本例中，虽然和装饰办法一样都采用了Animal类型的animal对象，但是不需要复写其他的抽象方法，只需要把需要复写的方法单独写出即可，其他方法只需要用原来的方法就好。可以看出，在创建好对象后，这个办法是最省力的。</p>
+
+          
         
       
     </div>
@@ -804,8 +1084,8 @@ class Dog{
       
         
           
-          局部变量申请栈空间时的入栈顺序运行环境：ubuntu 14.04(32bit)编译环境：gcc
-Source Code:
+            <h1 id="局部变量申请栈空间时的入栈顺序"><a href="#局部变量申请栈空间时的入栈顺序" class="headerlink" title="局部变量申请栈空间时的入栈顺序"></a>局部变量申请栈空间时的入栈顺序</h1><p>运行环境：ubuntu 14.04(32bit)<br>编译环境：gcc</p>
+<pre><code>Source Code:
 
 {stack_test.c}
 
@@ -821,14 +1101,71 @@ int main(int argc, char *argv[])
   strcpy(buffer_one, &quot;one&quot;);
   strcpy(buffer_two, &quot;two&quot;);
   printf(&quot;[BEFORE] buffer_two is at %p and contains \&apos;%s\&apos;\n&quot;, buffer_two, buffer_two);
-  printf(&quot;[BEFORE] buffer_one is at %p and contains \&apos;%s\&apos;\n&quot;, buffer_on
-          ...
+  printf(&quot;[BEFORE] buffer_one is at %p and contains \&apos;%s\&apos;\n&quot;, buffer_one, buffer_one);
+  printf(&quot;[BEFORE] value is at %p and is %d (0x%08x)\n\n&quot;, &amp;value, value, value);
+  return 0;
+}
+</code></pre><p> <strong>- 第一组对比：在栈溢出保护机制下的编译和没有溢出保护机制下的编译的入栈顺序的对比：</strong></p>
+<p>局部变量在源代码中是：<br>  char buffer_one[8], buffer_two[8];<br>  int value = 5;</p>
+<p>栈溢出保护机制下的编译：</p>
+<pre><code>$ gcc -g -o so stack_test.c 
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2015/03/29/局部变量申请栈空间时的入栈顺序/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+$ ./so
+[BEFORE] buffer_two is at 0xbfa12fb4 and contains &apos;two&apos;
+[BEFORE] buffer_one is at 0xbfa12fac and contains &apos;one&apos;
+[BEFORE] value is at 0xbfa12fa8 and is 5 (0x00000005)
+</code></pre><p>可以看出来为变量创建创建的栈顺序依次是：buffer_two,buffer_one,value;</p>
+<p>没有溢出保护机制下的编译：</p>
+<pre><code>$ gcc -fno-stack-protector -g -o so stack_test.c
+
+$ ./so
+[BEFORE] buffer_two is at 0xbf9a1530 and contains &apos;two&apos;
+[BEFORE] buffer_one is at 0xbf9a1538 and contains &apos;one&apos;
+[BEFORE] value is at 0xbf9a152c and is 5 (0x00000005)
+</code></pre><p>可以看出来为变量创建创建的栈顺序依次是：buffer_one,buffer_two,value;</p>
+<p><strong>- 第二组对比：调整局部变量的顺序，再次在栈溢出保护机制下的编译和没有溢出保护机制下的编译的入栈顺序的对比：</strong></p>
+<p>即源码中局部变量声明改为：<br>  int value = 5;<br>  char buffer_one[8], buffer_two[8];</p>
+<p>栈溢出保护机制下的编译：</p>
+<pre><code>$ gcc -g -o so stack_test.c 
+
+$ ./so
+[BEFORE] buffer_two is at 0xbfe0ac54 and contains &apos;two&apos;
+[BEFORE] buffer_one is at 0xbfe0ac4c and contains &apos;one&apos;
+[BEFORE] value is at 0xbfe0ac48 and is 5 (0x00000005)
+</code></pre><p>可以看出来为变量创建创建的栈顺序依次是：buffer_two,buffer_one,value;</p>
+<p>没有溢出保护机制下的编译：</p>
+<pre><code>$ gcc -fno-stack-protector -g -o so stack_test.c
+
+$ ./so
+[BEFORE] buffer_two is at 0xbf9998bc and contains &apos;two&apos;
+[BEFORE] buffer_one is at 0xbf9998c4 and contains &apos;one&apos;
+[BEFORE] value is at 0xbf9998cc and is 5 (0x00000005)
+</code></pre><p>可以看出来为变量创建创建的栈顺序依次是：value,buffer_one,buffer_two;</p>
+<p> <strong>- 第三组对比：调整局部变量中buffer_one,buffer_two的顺序，再次在栈溢出保护机制下的编译和没有溢出保护机制下的编译的入栈顺序的对比：</strong></p>
+<p>即源码中局部变量声明改为：<br>   int value = 5;<br>   char buffer_two[8], buffer_one[8];</p>
+<p>栈溢出保护机制下的编译：</p>
+<pre><code>$ gcc -g -o so stack_test.c 
+$ ./so
+[BEFORE] buffer_two is at 0xbff96dfc and contains &apos;two&apos;
+[BEFORE] buffer_one is at 0xbff96e04 and contains &apos;one&apos;
+[BEFORE] value is at 0xbff96df8 and is 5 (0x00000005)
+</code></pre><p>可以看出来为变量创建创建的栈顺序依次是：buffer_one,buffer_two,value;</p>
+<p>没有溢出保护机制下的编译：</p>
+<pre><code>$ gcc -fno-stack-protector -g -o so stack_test.c
+$ ./so
+[BEFORE] buffer_two is at 0xbfa55234 and contains &apos;two&apos;
+[BEFORE] buffer_one is at 0xbfa5522c and contains &apos;one&apos;
+[BEFORE] value is at 0xbfa5523c and is 5 (0x00000005)
+</code></pre><p>可以看出来为变量创建创建的栈顺序依次是：value,buffer_two,buffer_one;</p>
+<blockquote>
+<blockquote>
+<p>得出的结论：</p>
+</blockquote>
+<p>在没有溢出保护机制下的编译时，我们可以发现，所有的局部变量入栈的顺序（准确来说是系统为局部变量申请内存中栈空间的顺序）是正向的，即哪个变量先申明哪个变量就先得到空间，<br>也就是说，编译器给变量空间的申请是直接按照变量申请顺序执行的。</p>
+<p>在有溢出保护机制下的编译时，情况有了顺序上的变化，对于每一种类型的变量来说，栈空间申请的顺序都与源代码中相反，即哪个变量在源代码中先出现则后申请空间；而对不同的变量来说，申请的顺序也不同，有例子可以看出，int型总是在char的buf型之后申请，不管源代码中的顺序如何（这应该来源于编译器在进行溢出保护时设下的规定）。</p>
+</blockquote>
+
+          
         
       
     </div>
@@ -927,9 +1264,9 @@ int main(int argc, char *argv[])
       
         
           
-          Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
-继承构建堆栈：
-public class StackInheritance extends List {
+            <h1 id="Java-数据结构实现（DataStructure）2"><a href="#Java-数据结构实现（DataStructure）2" class="headerlink" title="Java 数据结构实现（DataStructure）2"></a>Java 数据结构实现（DataStructure）2</h1><h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a><strong>堆栈</strong></h2><p><strong>可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，</strong>可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。</p>
+<p>继承构建堆栈：</p>
+<pre><code>public class StackInheritance extends List {
    public StackInheritance() { super( &quot;stack&quot; ); }
    public void push( Object o )
       { insertFromHead( o ); }
@@ -938,14 +1275,156 @@ public class StackInheritance extends List {
    public boolean isEmpty() { return super.isEmpty(); }
    public void print() { super.print(); }
 }
-组合构建堆栈：
-          ...
+</code></pre><p>组合构建堆栈：</p>
+<pre><code>public class StackComposition {
+   private List s;
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/08/数据结构实现（DataStructure）2/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+   public StackComposition() { s = new List( &quot;stack&quot; ); }
+   public void push( Object o )
+      { s.insertFromHead( o ); }
+   public Object pop() throws EmptyListException
+      { return s.deleteFromHead(); }
+   public boolean isEmpty() { return s.isEmpty(); }
+   public void print() { s.print(); }
+}
+</code></pre><h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a><strong>队列</strong></h2><p><strong>可以看成是有特定规则为的线性表，特定规则就是先进先出（FIFO），后进后出，</strong>可以看成是我们List的先insertFromBack的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。</p>
+<p>继承构建队列</p>
+<pre><code>public class QueueInheritance extends List {
+   public QueueInheritance() { super( &quot;queue&quot; ); }
+   public void enqueue( Object o )
+      { insertFromBack( o ); }
+   public Object dequeue()
+      throws EmptyListException { returnDeleteFromHead(); }
+   public boolean isEmpty() { return super.isEmpty(); }
+   public void print() { super.print(); }
+}
+</code></pre><h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a><strong>二叉树</strong></h2><p><strong>可以看成是一堆散节点通过特殊的连接构成的散点集，这些散点集构成了特殊的结构，</strong>看起来成了树一样的结果。</p>
+<p>如下图所示，上面的为二叉树的逻辑结构，这样的逻辑结构利于分析二叉树的性质，却不能说明二叉树存储的实际情形，因此需要使用下图所示的二叉树的物理结构来描述其存储特性，二叉树的节点存储为线性表，线性表中的节点有自己的特殊的包含（连接关系），因此使得这种物理结构和它的逻辑结构有了能够转换的基础。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrgr1r8j30j10cndgf.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrihhxdj30m809naat.jpg" alt=""></p>
+<p>鉴于上面这张物理结构和逻辑结构，我们采用Java提供的List（LinkedList）来构建主存储结构，即Node节点的线性表以达到索引的目的。然后建立节点之间的连接关系。</p>
+<pre><code>import java.util.LinkedList;
+import java.util.List;
+
+public class BinTreeTraverse {
+
+    private int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    private static List&lt;Node&gt; nodeList = null;
+
+    /**
+     * 内部类：节点
+     */
+    private static class Node {
+        Node leftChild;
+        Node rightChild;
+        int data;
+
+        Node(int newData) {
+            leftChild = null;
+            rightChild = null;
+            data = newData;
+        }
+    }
+
+    public void createBinTree() {
+        nodeList = new LinkedList&lt;Node&gt;();
+        // 将一个数组的值依次转换为Node节点
+        for (int nodeIndex = 0; nodeIndex &lt; array.length; nodeIndex++) {
+            nodeList.add(new Node(array[nodeIndex]));
+        }
+        // 对前lastParentIndex-1个父节点按照父节点与孩子节点的数字关系建立二叉树
+        for (int parentIndex = 0; parentIndex &lt; array.length / 2 - 1; parentIndex++) {
+            // 左孩子
+            nodeList.get(parentIndex).leftChild = nodeList
+                    .get(parentIndex * 2 + 1);
+            // 右孩子
+            nodeList.get(parentIndex).rightChild = nodeList
+                    .get(parentIndex * 2 + 2);
+        }
+        // 最后一个父节点:因为最后一个父节点可能没有右孩子，所以单独拿出来处理
+        int lastParentIndex = array.length / 2 - 1;
+        // 左孩子
+        nodeList.get(lastParentIndex).leftChild = nodeList
+                .get(lastParentIndex * 2 + 1);
+        // 右孩子,如果数组的长度为奇数才建立右孩子
+        if (array.length % 2 == 1) {
+            nodeList.get(lastParentIndex).rightChild = nodeList
+                    .get(lastParentIndex * 2 + 2);
+        }
+    }
+
+    /**
+     * 先序遍历
+     * 
+     * 这三种不同的遍历结构都是一样的，只是先后顺序不一样而已
+     * 
+     * @param node
+     *            遍历的节点
+     */
+    public static void preOrderTraverse(Node node) {
+        if (node == null)
+            return;
+        System.out.print(node.data + &quot; &quot;);
+        preOrderTraverse(node.leftChild);
+        preOrderTraverse(node.rightChild);
+    }
+
+    /**
+     * 中序遍历
+     * 
+     * 这三种不同的遍历结构都是一样的，只是先后顺序不一样而已
+     * 
+     * @param node
+     *            遍历的节点
+     */
+    public static void inOrderTraverse(Node node) {
+        if (node == null)
+            return;
+        inOrderTraverse(node.leftChild);
+        System.out.print(node.data + &quot; &quot;);
+        inOrderTraverse(node.rightChild);
+    }
+
+    /**
+     * 后序遍历
+     * 
+     * 这三种不同的遍历结构都是一样的，只是先后顺序不一样而已
+     * 
+     * @param node
+     *            遍历的节点
+     */
+    public static void postOrderTraverse(Node node) {
+        if (node == null)
+            return;
+        postOrderTraverse(node.leftChild);
+        postOrderTraverse(node.rightChild);
+        System.out.print(node.data + &quot; &quot;);
+    }
+
+    public static void main(String[] args) {
+        BinTreeTraverse binTree = new BinTreeTraverse();
+        binTree.createBinTree();
+        // nodeList中第0个索引处的值即为根节点
+        Node root = nodeList.get(0);
+
+        System.out.println(&quot;先序遍历：&quot;);
+        preOrderTraverse(root);
+        System.out.println();
+
+        System.out.println(&quot;中序遍历：&quot;);
+        inOrderTraverse(root);
+        System.out.println();
+
+        System.out.println(&quot;后序遍历：&quot;);
+        postOrderTraverse(root);
+    }
+
+}
+</code></pre><blockquote>
+<p>这里我们为什么不使用自己定义的NodeList呢？因为如果一旦使用这个NodeList来作为主存储部分，就会使得在子节点的指向过程中导致整个结构指向混乱，造成对结构的破坏。</p>
+</blockquote>
+
+          
         
       
     </div>
@@ -1044,33 +1523,209 @@ public class StackInheritance extends List {
       
         
           
-          Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
-下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
-
-
-
-以下两图说明了添加删除头尾节点时执行的顺序：
-
-添加头结点时先加一个临时节点，建立此临时节点和原头节点后使此临时节点为新头结点即可。删除尾节点时先使原次头结点为新头结点，然后删除原头节点和新头结点的连接后，再删除新头结点和原头结点的连接。
-
-尾节点的处理方法类似。这样的删除方法能够完全释放所有的占用空间。
-
-
-下面是双向链表的实现过程，包括链表类NodeList的插入删除操作。
-public class TestList 
+            <h1 id="Java-数据结构实现（DataStructure）1"><a href="#Java-数据结构实现（DataStructure）1" class="headerlink" title="Java 数据结构实现（DataStructure）1"></a>Java 数据结构实现（DataStructure）1</h1><h2 id="线性表和链表"><a href="#线性表和链表" class="headerlink" title="线性表和链表"></a><strong>线性表和链表</strong></h2><p>单向<strong>链表利用了类的自引用，实现了类似指针的效果。</strong><br>双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。</p>
+<p>下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu697lsj30m806naad.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu83kcej30m806j0t8.jpg" alt=""></p>
+<p>以下两图说明了添加删除头尾节点时执行的顺序：</p>
+<blockquote>
+<p>添加头结点时先加一个临时节点，建立此临时节点和原头节点后使此临时节点为新头结点即可。<br>删除尾节点时先使原次头结点为新头结点，然后删除原头节点和新头结点的连接后，再删除新头结点和原头结点的连接。</p>
+</blockquote>
+<p>尾节点的处理方法类似。<br><strong>这样的删除方法能够完全释放所有的占用空间。</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqut78u4j30m80c6dgo.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jquv5kdbj30m80ci754.jpg" alt=""></p>
+<p>下面是双向链表的实现过程，包括链表类NodeList的插入删除操作。</p>
+<pre><code>public class TestList 
 {
     public static void main(String[] Args) 
     {
         NodeList OhMyGod = new NodeList();
 
-        Boolean b = Bool
-          ...
+        Boolean b = Boolean.TRUE;
+        Character c = new Character(&apos;$&apos;);
+        Integer i = new Integer(34567);
+        String s = &quot;hello&quot;;
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/05/数据结构实现（DataStructure）1/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+        OhMyGod.insertFromBack(b);
+        OhMyGod.print();
+        OhMyGod.insertFromHead(c);
+        OhMyGod.print();
+        OhMyGod.insertFromBack(i);
+        OhMyGod.print();
+        OhMyGod.insertFromHead(s);
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+    }
+}
+
+class Node ///定义节点，节点数据类型为Object，可以通过多态方式具象化为其他类型
+{
+    private Node headPointer;
+    private Object data;
+    private Node backPointer;
+
+
+    public Node(Node hp,Object o,Node bp)
+    {
+        headPointer = hp;
+        backPointer = bp;
+        data = o;
+    }
+    public Node()
+    {
+        this(null,null,null);
+    }
+    public Node(Object o)
+    {
+        this(null,o,null);
+    }
+    public Node(Node hp,Object o)
+    {
+        this(hp,o,null);
+    }
+    public Node(Object o,Node bp)
+    {
+        this(null,o,bp);
+    }
+
+    public Node getHeadPointer() {
+        return headPointer;
+    }
+    public Object getData() {
+        return data;
+    }
+    public Node getBackPointer() {
+        return backPointer;
+    }
+    public void setHeadPointer(Node headPointer) {
+        this.headPointer = headPointer;
+    }
+    public void setBackPointer(Node backPointer) {
+        this.backPointer = backPointer;
+    }
+}
+
+class NodeListEmptyExcption extends RuntimeException
+{
+
+    private static final long serialVersionUID = 5130245130776457112L;
+    public NodeListEmptyExcption(String name)
+    {
+        super(&quot;NodeList:&quot;+name+&quot; is Empty !&quot;);
+    }
+}
+
+class NodeList
+{
+    private String listName;
+    private Node headNode;
+    private Node backNode;
+    public NodeList()
+    {
+        this(&quot;default&quot;);
+    }
+    public NodeList(String listName) 
+    {
+        this.listName = listName;
+        headNode = backNode = null;
+    }
+    public Boolean isEmpty()
+    {
+        return headNode == null;
+    }
+    ///////////////////////定义从头尾节点增加节点
+    public void insertFromHead(Object o)
+    {
+        if(isEmpty())
+            headNode = backNode = new Node(o);
+        else 
+        {
+            //headNode = new Node(o,headNode);
+            Node tempNode = new Node(o);
+            tempNode.setBackPointer(headNode);
+            headNode.setHeadPointer(tempNode);
+            headNode = tempNode;
+
+
+        }
+    }
+    public void insertFromBack(Object o)
+    {
+        if(isEmpty())
+            headNode = backNode = new Node(o);
+        else
+        {
+            Node tempNode = new Node(o);
+            backNode.setBackPointer(tempNode);
+            tempNode.setHeadPointer(backNode);
+            backNode = tempNode;
+        }
+    }
+    //////////////////////////定义从头尾节点删除节点
+    public Object deleteFromHead() throws NodeListEmptyExcption
+    {
+        if(isEmpty())
+            throw new NodeListEmptyExcption(listName);
+
+        Object removedata = headNode.getData();
+
+        if(headNode.equals(backNode))
+        {
+            headNode = backNode = null;
+        }
+
+        else 
+        {
+            headNode = headNode.getBackPointer();
+            headNode.getHeadPointer().setBackPointer(null);
+            headNode.setHeadPointer(null);    
+        }
+        return removedata;
+    }
+    public Object deleteFromBack() throws NodeListEmptyExcption
+    {
+        if(isEmpty())
+            throw new NodeListEmptyExcption(listName);
+
+        Object removedata = backNode.getData();
+        if(headNode.equals(backNode))
+        {
+            headNode = backNode = null;
+        }
+        else 
+        {
+            backNode = backNode.getHeadPointer();
+            backNode.getBackPointer().setHeadPointer(null);
+            backNode.setBackPointer(null);
+        }    
+        return removedata;
+    }
+    public void print()
+    {
+        if(isEmpty())
+        {
+            System.out.println(&quot;Node List &quot;+listName+&quot; is empty !&quot;);
+        return;
+        }
+        Node currentNode = headNode;
+        while(currentNode!=null)
+        {
+            System.out.print(currentNode.getData().toString()+&quot; &quot;);
+            currentNode  = currentNode.getBackPointer();
+        }
+        System.out.println(&quot;\n&quot;);
+    }
+}
+</code></pre>
+          
         
       
     </div>
@@ -1169,21 +1824,47 @@ public class TestList
       
         
           
-          Java 内部类（InnerClass）内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。当内部类是Static时，访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象，直接采用访问静态类属性或方法就可以了。当内部类不是Static时，就需要在类定义中创建内部类类型的对象，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之InnerClass也有权访问OuterClass的private属性或方法。OuterClass若要访问InnerClass的属性或方法，必须有一个内部类类型的对象首先被创立，这个中间对象的
-
-匿名内部类：省略了要实现接口的类的定义，直接在参数列表里完成对接口的方法实现（其实也就是定义了一个实现接口的类，只不过没有给出这个定义的类的名字）。使得出现了类种类，即匿名内部类。下两图分别展示了：直接定义一个实现类，在定义这个实现类的对象做参数的策略；               匿名实现类直接做参数的策略，即匿名内部类的策略。
-
-
-public class AnonymousTest 
+            <h1 id="Java-内部类（InnerClass）"><a href="#Java-内部类（InnerClass）" class="headerlink" title="Java 内部类（InnerClass）"></a>Java 内部类（InnerClass）</h1><p><strong>内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。</strong><br>当内部类是Static时，<strong>访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象</strong>，直接采用访问静态类属性或方法就可以了。<br>当内部类不是Static时，<strong>就需要在类定义中创建内部类类型的对象</strong>，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之InnerClass也有权访问OuterClass的private属性或方法。<br>OuterClass若要访问InnerClass的属性或方法，必须有一个内部类类型的对象首先被创立，这个中间对象的</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqx7ahpjj30m80b574p.jpg" alt=""></p>
+<p><strong>匿名内部类：省略了要实现接口的类的定义，直接在参数列表里完成对接口的方法实现</strong>（其实也就是定义了一个实现接口的类，只不过没有给出这个定义的类的名字）。使得出现了类种类，即匿名内部类。<br>下两图分别展示了：直接定义一个实现类，在定义这个实现类的对象做参数的策略；<br>               匿名实现类直接做参数的策略，即匿名内部类的策略。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jqx92sn4j30kz0cj74p.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqxc7neyj30m80bwmxm.jpg" alt=""></p>
+<pre><code>public class AnonymousTest 
 {
-    pu
-          ...
+    public static void main(String[] Args)
+    {
+        AnonymousTest AT = new AnonymousTest();
+        //myClass mC = new myClass();
+        AT.testAnonymous(new myInterface()
+        {
+            public void func() 
+            {
+                System.out.println(&quot;&quot;);
+            };
+        }
+        );
+    }
+    public void testAnonymous(myInterface mi) 
+    {
+        System.out.println(&quot;exe&quot;);
+    }
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/04/内部类（InnerClass）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+}
+class myClass implements myInterface
+{
+    public void func()
+    {
+        System.out.println(&quot;implements myInterface func()&quot;);
+    }
+}
+
+
+interface myInterface
+{
+    public void func();
+}
+</code></pre>
+          
         
       
     </div>
@@ -1282,25 +1963,138 @@ public class AnonymousTest
       
         
           
-          Java 多态（polymorphism）父类对象被定义成子类类型（家族的具体化）
-既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。
+            <h2 id="Java-多态（polymorphism）"><a href="#Java-多态（polymorphism）" class="headerlink" title="Java 多态（polymorphism）"></a>Java 多态（polymorphism）</h2><p><strong>父类对象被定义成子类类型（家族的具体化）</strong></p>
+<p>既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。</p>
+<p><strong>反过来子类对象不能被定义成父类类型</strong></p>
+<p>子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。</p>
+<blockquote>
+<p>所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。</p>
+</blockquote>
+<p><strong>同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。</strong></p>
+<p>父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jr0hymo5j30j6088wen.jpg" alt=""></p>
+<pre><code>public class ParentChildTest {
+    public static void main(String[] args)
+     {
+        Parent parent=new Parent();
+        parent.printValue();
+        Child child=new Child();
+        child.printValue();
 
-所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。
+        System.out.println(parent.getClass().getName());
+        parent=child;
+        ((Parent)parent).printValue();
+        System.out.println(parent.getClass().getName());
 
-同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。
-父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。
+        parent.myValue++;
+        ((Parent)parent).printValue();
 
-public class ParentChildTest {
-    public static 
-          ...
+        ((Child)parent).myValue++;
+        parent.printValue();
 
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/03/多态（polymorphism）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+    }
+}
+
+class Parent{
+    public int myValue=100;
+    public void printValue() {
+        System.out.println(&quot;Parent.printValue(),myValue=&quot;+myValue);
+    }
+}
+class Child extends Parent{
+    public int myValue=200;
+    public void printValue() {
+        System.out.println(&quot;Child.printValue(),myValue=&quot;+myValue);
+        super.printValue();
+    }
+}
+</code></pre><p><strong>如果子类与父类有相同的字段,则子类中的字段会代替或隐藏父类的字段，子类方法中访问的是子类中的字段（而不是父类中的字段）。</strong><br>换言之，一旦子类父类具有相同名称的字段，就会使继承的情况变得复杂，子类中的父类同名变量或方法就会褪色而不易被调用。</p>
+<p>比如，父类子类都有名为F的属性或方法，那么在继承时，子类就会有两个F属性或方法，一个继承于父类（由父类定义），而另一个由子类自己定义。生成一个子类对象时，子类对象一旦调用F属性或执行F方法就会优先使用子类自己的F属性或执行子类自己的F方法，如果要强行使用父类的F属性或执行父类F方法，得在子类定义中使用super.F()来调用。<br><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jr0sb9axj30m80a7wf5.jpg" alt=""></p>
+<p><strong>多态的本质是父类对象引用子类对象。</strong><br>利用抽象类和接口，不直接定义那些抽象的父类方法，子类方法分别个性化地重写各自的方法。<br>当要构建一批继承于同一父类的对象时，只需要使得父类对象引用子类对象，就可以使得构造出的这批子类对象的类型一致（父类类型），这样做可以大大简化后续操作，因为子类化的父类对象调用的都是子类的属性和方法。所以，导致这些对象调用的属性和方法依据它的真实类型（引用的子类型）而定，即变成不同的属性和方法，固称多态。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jr0uuk6nj30m80chjsn.jpg" alt=""></p>
+<pre><code>public class FeedTest 
+{
+    public static void main(String[] Args)
+    {
+        Administrator adm = new Administrator();
+        Animal[] animalFactory = new Animal[100];
+        for(int i = 0;i&lt;10;i++)
+        {
+            animalFactory[i]=new Monkey();
+            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
+            animalFactory[i].eat();
+        }
+        for(int i = 10;i&lt;20;i++)
+        {
+            animalFactory[i]=new Lion();
+            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
+            animalFactory[i].eat();
+        }
+        for(int i = 20;i&lt;30;i++)
+        {
+            animalFactory[i]=new Pigeon();
+            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
+            animalFactory[i].eat();
+        }
+        adm.feedAnimal(animalFactory);
+    }
+}
+
+abstract class Animal
+{
+    public String variety;
+    public abstract void eat();
+}
+
+class Monkey extends Animal
+{
+    Monkey() 
+    {
+        this.variety = &quot;猴子&quot;;
+    }
+    public void eat()
+    {
+
+        System.out.println(&quot;猴子吃桃子&quot;);
+    }
+}
+
+class Lion extends Animal
+{
+    Lion()
+    {
+        this.variety = &quot;狮子&quot;;
+    }
+    public void eat()
+    {
+        this.variety = &quot;狮子&quot;;
+        System.out.println(&quot;狮子吃肉&quot;);
+    }
+}
+
+class Pigeon extends Animal
+{
+    public Pigeon() 
+    {
+        this.variety = &quot;鸽子&quot;;
+    }
+    public void eat()
+    {
+        System.out.println(&quot;鸽子吃玉米粒&quot;);
+    }
+}
+
+class Administrator
+{
+    public String name = &quot;小王&quot;;
+    public void feedAnimal(Animal[] af)
+    {
+        System.out.println(&quot;Feeding&quot;);
+    }
+
+}
+</code></pre>
+          
         
       
     </div>
@@ -1399,29 +2193,69 @@ public class ParentChildTest {
       
         
           
-          Java 继承（Inherits）
-这张图大致说明了继承的结构关系。矩形代表属性，圆角矩形代表方法。
+            <h1 id="Java-继承（Inherits）"><a href="#Java-继承（Inherits）" class="headerlink" title="Java 继承（Inherits）"></a>Java 继承（Inherits）</h1><p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jqyuj6iej30m809yq3k.jpg" alt=""></p>
+<p>这张图大致说明了继承的结构关系。矩形代表属性，圆角矩形代表方法。</p>
+<blockquote>
+<p>在继承中，子类完全继承了父类的属性和方法，同时可能又增加了自己的属性和方法（扩充Extends），同时又可能对父类的方法进行了重写或覆盖（Override，完全一样的方法和参数），或者进行了重载（Overload，完全一样的方法名，不一样的参数）。</p>
+</blockquote>
+<p><strong>在创建一个子类对象时，会首先逐层从子类到父类传递参数给上一层以实现各方法能够有必要的参数执行，之后会逐层依次创建从Object原始类开始直到本子类的所有对象，只不过之前的对象皆为匿名，只有最终的子类对象可以实名访问。</strong></p>
+<p>如上例所示，创建一个Child类的对象C：</p>
+<pre><code>Child C = new Child(); 
+</code></pre><ul>
+<li><p>Parent (P) = new Parent();Grandparent (G) = new GrandParent();</p>
+<p>会被隐式调用以分别创建两个匿名父类对象（P），（G）已完成对最终对象的初始化。</p>
+</li>
+<li>（G）在Grandparent()构造函数调用后先被创建出来并占用一定的存储空间，同时具有了它的属性和方法；</li>
+</ul>
+<ul>
+<li>（P）在（G）的空间和逻辑基础上在Parent()构造函数调用下被创建出来，并具有了Parent类的其他独有属性和方法，同时将Grandparent类中需要重写或重载的方法变更，占用多出来的空间；</li>
+</ul>
+<ul>
+<li><p>C在（P）的空间和逻辑基础上在Child()构造函数调用下被创建出来，并具有了Child类的其他独有属性和方法，同时将Parent类中需要重写或重载的方法变更，继续占用多出来的空间。</p>
+<pre><code>class Grandparent
+{
+    public String str;
+    public Grandparent() 
+    {
+        System.out.println(&quot;GrandParent Created.&quot;);
+    }
 
-在继承中，子类完全继承了父类的属性和方法，同时可能又增加了自己的属性和方法（扩充Extends），同时又可能对父类的方法进行了重写或覆盖（Override，完全一样的方法和参数），或者进行了重载（Overload，完全一样的方法名，不一样的参数）。
+    public Grandparent(String string) 
+    {
+        str = string;
+        System.out.println(&quot;GrandParent Created.String:&quot; + string);
+    }
+}
+</code></pre></li>
+</ul>
+<pre><code>class Parent extends Grandparent 
+{
 
-在创建一个子类对象时，会首先逐层从子类到父类传递参数给上一层以实现各方法能够有必要的参数执行，之后会逐层依次创建从Object原始类开始直到本子类的所有对象，只不过之前的对象皆为匿名，只有最终的子类对象可以实名访问。
-如上例所示，创建一个Child类的对象C：
-Child C = new Child(); 
+    public Parent() 
+    {
+        super(&quot;Hello.Grandparent.&quot;);
+        System.out.println(&quot;Parent Created&quot;);
+    }
+}
+class Child extends Parent 
+{
 
-Parent (P) = new Parent();Grandparent (G) = new GrandParent();
-会被隐式调用以分别创建两个匿名父类对象（P），（G）已完成对最终对象的初始化。
+    public Child() 
+    {
+        System.out.println(&quot;Child Created&quot;);
+    }
+}
+public class Test
+{
 
-（G）在Grandparent()构造函数调用后先被创建出来并占用一定的存储空间，同时具有了它的属性和方法；
-
-
-（P）在（
-          ...
-
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/03/继承（Inherits）/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
+    public static void main(String args[]) 
+    {
+        Child c = new Child();
+        System.out.println(c.str);
+    }
+}
+</code></pre>
+          
         
       
     </div>
