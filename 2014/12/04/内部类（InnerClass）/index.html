@@ -84,19 +84,19 @@
 
 
 
-<meta name="description" content="Java 内部类（InnerClass）内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。当内部类是Static时，访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象，直接采用访问静态类属性或方法就可以了。当内部类不是Static时，就需要在类定义中创建内部类类型的对象，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之Inn">
+<meta name="description" content="好像我从来没能弄清内部类，这其实不只是一个简单的语法现象。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="内部类（InnerClass）">
 <meta property="og:url" content="http://jinhaoplus.top/2014/12/04/内部类（InnerClass）/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java 内部类（InnerClass）内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。当内部类是Static时，访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象，直接采用访问静态类属性或方法就可以了。当内部类不是Static时，就需要在类定义中创建内部类类型的对象，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之Inn">
+<meta property="og:description" content="好像我从来没能弄清内部类，这其实不只是一个简单的语法现象。">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqx7ahpjj30m80b574p.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jqx92sn4j30kz0cj74p.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqxc7neyj30m80bwmxm.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:42:41.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:39:18.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="内部类（InnerClass）">
-<meta name="twitter:description" content="Java 内部类（InnerClass）内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。当内部类是Static时，访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象，直接采用访问静态类属性或方法就可以了。当内部类不是Static时，就需要在类定义中创建内部类类型的对象，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之Inn">
+<meta name="twitter:description" content="好像我从来没能弄清内部类，这其实不只是一个简单的语法现象。">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqx7ahpjj30m80b574p.jpg">
 
 
@@ -307,7 +307,11 @@
       
 
       
-        <h1 id="Java-内部类（InnerClass）"><a href="#Java-内部类（InnerClass）" class="headerlink" title="Java 内部类（InnerClass）"></a>Java 内部类（InnerClass）</h1><p><strong>内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。</strong><br>当内部类是Static时，<strong>访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象</strong>，直接采用访问静态类属性或方法就可以了。<br>当内部类不是Static时，<strong>就需要在类定义中创建内部类类型的对象</strong>，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之InnerClass也有权访问OuterClass的private属性或方法。<br>OuterClass若要访问InnerClass的属性或方法，必须有一个内部类类型的对象首先被创立，这个中间对象的</p>
+        <blockquote>
+<p>好像我从来没能弄清内部类，这其实不只是一个简单的语法现象。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java-内部类（InnerClass）"><a href="#Java-内部类（InnerClass）" class="headerlink" title="Java 内部类（InnerClass）"></a>Java 内部类（InnerClass）</h1><p><strong>内部类定义在外部类内部，外部类成为一个有类作对象的特殊类。</strong><br>当内部类是Static时，<strong>访问内部类的属性或方法并不需要建立一个特定的内部类类型的对象</strong>，直接采用访问静态类属性或方法就可以了。<br>当内部类不是Static时，<strong>就需要在类定义中创建内部类类型的对象</strong>，访问该对象的属性或方法，OuterClass有权访问InnerClass的private属性或方法，反之InnerClass也有权访问OuterClass的private属性或方法。<br>OuterClass若要访问InnerClass的属性或方法，必须有一个内部类类型的对象首先被创立，这个中间对象的</p>
 <p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqx7ahpjj30m80b574p.jpg" alt=""></p>
 <p><strong>匿名内部类：省略了要实现接口的类的定义，直接在参数列表里完成对接口的方法实现</strong>（其实也就是定义了一个实现接口的类，只不过没有给出这个定义的类的名字）。使得出现了类种类，即匿名内部类。<br>下两图分别展示了：直接定义一个实现类，在定义这个实现类的对象做参数的策略；<br>               匿名实现类直接做参数的策略，即匿名内部类的策略。</p>
 <p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jqx92sn4j30kz0cj74p.jpg" alt=""></p>

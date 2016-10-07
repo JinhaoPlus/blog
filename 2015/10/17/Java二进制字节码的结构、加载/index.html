@@ -84,16 +84,12 @@
 
 
 
-<meta name="description" content="Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
-作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
-我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一">
+<meta name="description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java二进制字节码的结构、加载">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/17/Java二进制字节码的结构、加载/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
-作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
-我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一">
+<meta property="og:description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn75ung4j30m405jmxj.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jn77u0htj30m80cxaaw.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jn7aewj4j30m809d0tu.jpg">
@@ -103,12 +99,10 @@
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jncxvwmxj30m804rweq.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jn7gt4yuj30m808ngm8.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn7jhb1cj30cw0m8jsa.jpg">
-<meta property="og:updated_time" content="2016-10-07T05:37:35.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:31:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java二进制字节码的结构、加载">
-<meta name="twitter:description" content="Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
-作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
-我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一">
+<meta name="twitter:description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn75ung4j30m405jmxj.jpg">
 
 
@@ -319,9 +313,11 @@
       
 
       
-        <h1 id="Java虚拟机：Java二进制字节码的结构、加载"><a href="#Java虚拟机：Java二进制字节码的结构、加载" class="headerlink" title="Java虚拟机：Java二进制字节码的结构、加载"></a>Java虚拟机：Java二进制字节码的结构、加载</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。</p>
-<p>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。</p>
-<p>我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一番步骤后java虚拟机将这些二进制字节码按照一定的方式读入内存中的不同区域形成了二进制字节码的活化状态，虚拟机使用字节码指定的命令执行这些指令，其间使用字节码中存储的数据，最终完成了任务。这个过程就是java虚拟机执行java二进制字节码的过程的简单概括。可以如下图所示：</p>
+        <blockquote>
+<p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。<br>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java虚拟机：Java二进制字节码的结构、加载"><a href="#Java虚拟机：Java二进制字节码的结构、加载" class="headerlink" title="Java虚拟机：Java二进制字节码的结构、加载"></a>Java虚拟机：Java二进制字节码的结构、加载</h1><p>我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一番步骤后java虚拟机将这些二进制字节码按照一定的方式读入内存中的不同区域形成了二进制字节码的活化状态，虚拟机使用字节码指定的命令执行这些指令，其间使用字节码中存储的数据，最终完成了任务。这个过程就是java虚拟机执行java二进制字节码的过程的简单概括。可以如下图所示：</p>
 <p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn75ung4j30m405jmxj.jpg" alt=""></p>
 <p>这只是对这个过程的简单介绍，实际上其中的每一步都至关重要而且复杂，正是这些过程最终使得我们编写的java源代码能够运行在虚拟机搭建的环境中。</p>
 <h2 id="java源代码转换的结果：编译所得到字节码的结构"><a href="#java源代码转换的结果：编译所得到字节码的结构" class="headerlink" title="java源代码转换的结果：编译所得到字节码的结构"></a>java源代码转换的结果：编译所得到字节码的结构</h2><p>java的二进制字节码是一个紧密连接的二进制数码，这个数码的结构如下，各个结构之间是无缝连接的，也因此首先于这种规则，java的二进制代码才不会产生二义性，即虚拟机在读区这些数码时可以唯一地解析出它所表达的意思。</p>

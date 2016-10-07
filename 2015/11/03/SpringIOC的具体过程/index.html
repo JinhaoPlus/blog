@@ -84,29 +84,17 @@
 
 
 
-<meta name="description" content="Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
-这是整个IOC容器工作过程的过程图：
-
-容器启动阶段
-加载配置文件">
+<meta name="description" content="上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringIOC的具体过程">
 <meta property="og:url" content="http://jinhaoplus.top/2015/11/03/SpringIOC的具体过程/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
-这是整个IOC容器工作过程的过程图：
-
-容器启动阶段
-加载配置文件">
+<meta property="og:description" content="上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg">
-<meta property="og:updated_time" content="2016-10-07T05:15:54.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:29:31.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringIOC的具体过程">
-<meta name="twitter:description" content="Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
-这是整个IOC容器工作过程的过程图：
-
-容器启动阶段
-加载配置文件">
+<meta name="twitter:description" content="上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg">
 
 
@@ -317,7 +305,11 @@
       
 
       
-        <h1 id="Spring-IOC：Spring-IOC-的具体过程"><a href="#Spring-IOC：Spring-IOC-的具体过程" class="headerlink" title="Spring IOC：Spring IOC 的具体过程"></a>Spring IOC：Spring IOC 的具体过程</h1><p>上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。</p>
+        <blockquote>
+<p>上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Spring-IOC：Spring-IOC-的具体过程"><a href="#Spring-IOC：Spring-IOC-的具体过程" class="headerlink" title="Spring IOC：Spring IOC 的具体过程"></a>Spring IOC：Spring IOC 的具体过程</h1><p>上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。</p>
 <p>这是整个IOC容器工作过程的过程图：</p>
 <p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg" alt=""></p>
 <h2 id="容器启动阶段"><a href="#容器启动阶段" class="headerlink" title="容器启动阶段"></a>容器启动阶段</h2><ul>

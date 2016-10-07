@@ -308,73 +308,14 @@
 
       
         
-          
-            <h1 id="WebMVC和Spring-MVC框架"><a href="#WebMVC和Spring-MVC框架" class="headerlink" title="WebMVC和Spring MVC框架"></a>WebMVC和Spring MVC框架</h1><h2 id="WebMVC的基本任务"><a href="#WebMVC的基本任务" class="headerlink" title="WebMVC的基本任务"></a>WebMVC的基本任务</h2><p>我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。<br>在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。</p>
-<p>1.servlet时期：Web请求通过前端的html页面提交到后台servlet，servlet对请求进行处理、运行相关逻辑，通过输出html语句生成展示处理结果的页面回到前端，用户和系统之间的交互建立在繁琐的Web页面的生成基础上。<br>2.jsp（Java Server Page）时期：Web请求通过前端的jsp页面提交到后台逻辑的servlet或者jsp处理单元（jsp页面和servlet没有本质区别，前者执行的时候是会被编译成后者的），后台处理后处理结果放入相应的http请求数据保存区，再将这个Web请求转发到某个事先写就的jsp页面，jsp页面把需要的数据写入到自身并展示出来（在服务器后台实际上还有这样自动完成的步骤：编译成临时servlet，再通过输出html语句生成展示处理结果的页面回到前端）。这样系统的后台是建立在功能不甚清晰的servlet和jsp处理单元之上的。<br>3.servlet＋jsp时期：这是MVC思想在Web开发中的起点。servlet只被当作后台处理单元，而jsp页面只被当作前台展示和交互页面而不参与后台逻辑处理。Web请求通过jsp页面提交到后台，后台servlet则负责处理逻辑，后台处理后处理结果放入相应的http请求数据保存区，再将这个Web请求转发到某个事先写就的jsp页面，jsp页面把需要的数据写入到自身并展示出来。和jsp时期虽然看似相同，但是由于清楚划分了servlet的controller控制器作用、jsp的view视图的作用，（当然在后台还有model数据模型），使得Web开发能够结构化地进行，系统层次也更为清晰。</p>
-<p>那么我们来说明一下究竟什么是Web的MVC架构（当然除了在Web领域，大多数的用户系统交互中都会有MVC架构的影子）。M（Model数据模型）V（View视图）C（Controller），是Web应用的开发策略和Web应用实际运行的基本模型，大体说来就是这样的过程：请求通过V发送到后端C，C接收到请求后选择适当的M进行数据处理，处理完毕后C选择合适的V进行展现。<br>这个模型称为JSP Model2，是MVC模型的基本原理，如下图所示：</p>
-<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg" alt=""></p>
-<h2 id="Spring-MVC框架的区别和优势"><a href="#Spring-MVC框架的区别和优势" class="headerlink" title="Spring MVC框架的区别和优势"></a>Spring MVC框架的区别和优势</h2><p>如上所述的基本MVC框架看起来已经满足我们的一半需求了，那么我们所说的使用包括像Spring MVC这样的WebMVC框架有什么好处呢？</p>
-<p>在JSP Model 2 这个经典WebMVC模型里面，我们的serlet和Web请求是一一映射的并且硬配置在Web应用的配置文件中的，因此系统的需求增加导致映射关系的增加再导致Web应用本身的体积增加，缺乏一般性、易管理性和可重用性。这样的问题势必会增加系统的维护难度。<br>所以，使用一个集中控制器对Web请求进行分析并且选择合适的逻辑处理Controller来处理Web请求，将硬编码在配置文件中的映射关系写在这个集中Controller中，这种做法仍然会使得硬编码的问题，只不过是把硬编码转向了集中Controller中。</p>
-<p>Spring MVC在Web请求和我们所说的这个控制器Controller之间使用了一个非常关键的节点－－前置控制器（Front Controller），前置控制器的作用是接收所有的Web请求并将请求派发到不同的页面控制器（Page Controller），而页面控制器就是我们前面所说的这种一般意义上的Controller，亦即真正进行后段页面处理逻辑的控制器。由于引入了新的映射处理器、页面渲染器等，存在于JSP Model 2的耦合和硬编码问题能够得以解决，另外加上Spring自身的IOC特性，可以将组件在容器启动的时候就注入，实现组件的初始化前置。<br>如下图所示为Spring MVC的模型情况：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jlsln0vij30m808kq3n.jpg" alt=""></p>
-<h2 id="Spring-MVC框架的IOC加载原理"><a href="#Spring-MVC框架的IOC加载原理" class="headerlink" title="Spring MVC框架的IOC加载原理"></a>Spring MVC框架的IOC加载原理</h2><p>Spring MVC结合Spring自身的特性和WebMVC的模型，能够将Web应用的开发实现得更简洁轻快，使得可复用性得到更好的发展。下面是Spring MVC的几个重要角色：</p>
-<p>DispatcherServlet（前置控制器）：将Web请求统一发送至此，把请求发送至HandlerMapping<br>HandlerMapping（映射处理器）：接收请求并分析请求-处理器映射关系，把请求发送到Controller<br>Controller（页面控制器）：接收被派发的请求，真正处理业务逻辑，并将处理数据发往ViewSolver<br>ViewResolver（视图配发器）：统一的视图配发器和具体的视图模版技术无关，按照视图配发器的配置项将数据添加到指定视图模版技术的View中<br>View（视图）：真正展现数据的页面视图<br>这些角色参与整个WebMVC的流程如图所示：</p>
-<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jltf876jj30m80bt0tt.jpg" alt=""></p>
-<p>在知晓了这些角色之后我们再来说SpringMVC的这些角色在Web容器中的初始化过程，在这里我们使用一个相对有通用性的例子来说明其中非常重要的组件：</p>
-<h3 id="ROOT-WebApplicationContext-和-ContextLoaderListener"><a href="#ROOT-WebApplicationContext-和-ContextLoaderListener" class="headerlink" title="ROOT WebApplicationContext 和 ContextLoaderListener"></a>ROOT WebApplicationContext 和 ContextLoaderListener</h3><p>像所有的Spring IOC容器启动注入业务组件一样，Spring MVC框架也有一个主要的IOC容器用于加载注入组件，这个IOC容器就是顶层的ROOT WebApplicationContext，它通过默认位置在/WEB-INF路径下的applicationContext作为配置文件来进行加载，加载的契机当然在Web应用启动的时候，因此我们需要在作为这个Web应用的整体描述文件web.xml定义一个监听器ContextLoaderListerner，监听器在Web应用启动之后加载ROOT WebApplicationContext，加载的WebApplicationContext中主要会注入DAO、Services和数据源这些业务对象。</p>
-<h3 id="Spring-WebApplicationContext-和-DispatcherServlet"><a href="#Spring-WebApplicationContext-和-DispatcherServlet" class="headerlink" title="Spring WebApplicationContext 和 DispatcherServlet"></a>Spring WebApplicationContext 和 DispatcherServlet</h3><p>在SpringMVC架构中加入了一个为SpringWeb应用层组件打造的IOC容器，我们不妨称之为Spring WebApplicationContext，这个IOC容器是ROOT WebApplicationContext的子容器，换言之，它是可以访问到父容器中的注入对象的，也因此，其中注入的页面控制器对象Controller可以注入父容器中已经注入的Services和DAO对象。同样的，我们需要在web.xml中定义一个前置控制器servlet DispatcherServlet来接管所有符合定义的Web请求，并通过默认位置在/WEB-INF路径下的<servlet-name>-servlet作为配置文件来加载Spring WebApplicationContext，这个IOC容器存在的意义在于区分ROOT IOC和Spring IOC的职责需要，主要注入Controller，HandlerMapping，ViewResolver等SpringWeb层服务组件。</servlet-name></p>
-<p>解释了对SpringMVC架构至关重要的两个IOC容器和加载它们的组件、IOC的注入配置文件和注入的组件类型，我们来看看在具体的SpringMVC项目中是怎么写的。</p>
-<h2 id="Spring-MVC框架的使用"><a href="#Spring-MVC框架的使用" class="headerlink" title="Spring MVC框架的使用"></a>Spring MVC框架的使用</h2><p>web.xml</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;web-app...&gt;
-    &lt;!--启动监听器加载ROOT WebApplicationContext--&gt;
-    &lt;listener&gt;
-        &lt;listener-class&gt;
-            org.springframework.Web.context.ContextLoaderListener
-        &lt;/listener-class&gt;
-    &lt;/listener&gt;
-    &lt;!--前置控制器加载Spring WebApplicationContext--&gt;
-    &lt;servlet&gt;
-        &lt;servlet-name&gt;
-            springDispcher
-        &lt;/servlet-name&gt;
-        &lt;servlet-class&gt;
-            org.springframework.Web.servlet.DispatcherServlet
-        &lt;/servlet-class&gt;
-        &lt;load-on-startup&gt;2&lt;/load-on-startup&gt;
-    &lt;/servlet&gt;
-    &lt;servlet-mapping&gt;
-        &lt;servlet-name&gt;
-            springDispcher
-        &lt;/servlet-name&gt;
-        &lt;url-pattern&gt;
-            *.do
-        &lt;/url-pattern&gt;
-    &lt;/servlet-mapping&gt;
-&lt;/web-app&gt;
-</code></pre><p>/WEB-INF/applicationContext.xml</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans...&gt;
-    &lt;bean id=&quot;someService&quot; class=&quot;org.myconmpany.service.SomeService&quot;&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;someDao&quot; class=&quot;org.myconmpany.dao.SomeDao&quot;&gt;
-    &lt;/bean&gt;
-&lt;/beans&gt;
-</code></pre><p>/WEB-INF/springDispatcher-servlet.xml</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans...&gt;
-    &lt;bean id=&quot;handlerMapping&quot; class=&quot;org.springframework.Web.servlet.handler.BeanNameUrlHanlerMapping&quot;&gt;
-    &lt;/bean&gt;
-    &lt;bean name=&quot;/someLink.do&quot; class=&quot;org.myconmpany.controller.SomeController&quot;&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;viewResolver&quot; class=&quot;org.springframework.Web.servlet.view.InternalResourceViewResolver&quot;&gt;
-        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/*&quot;/&gt;
-        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
-    &lt;/bean&gt;
-&lt;/beans&gt;
-</code></pre><p>这就是Spring MVC的基本概况，但是在精简的开发过程中我们更倾向于使用Spring为我们准备的基于注解的开发，这样做可以大大减少配置文件的规模，让Spring为我们自动完成一些机械性的工作。</p>
-
-          
+          <blockquote>
+<p>几乎全世界的Web程序员都在和这个名词打交道，因为这几乎是Web应用世界里面最重要的概念之一了。对于Java世界来说Spring毫无疑问又堪称解放Java开发者的轻量级MVC框架，本文意在回顾MVC框架的前世今生，并且看看Spring作出的改进。</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/02/25/WebMVC和Spring MVC框架/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -472,130 +413,14 @@
 
       
         
-          
-            <h1 id="Core-Java-Volume-1-Key-Points"><a href="#Core-Java-Volume-1-Key-Points" class="headerlink" title="Core Java Volume 1 Key Points"></a>Core Java Volume 1 Key Points</h1><h2 id="chap6"><a href="#chap6" class="headerlink" title="chap6"></a>chap6</h2><h3 id="接口和抽象类的概念"><a href="#接口和抽象类的概念" class="headerlink" title="接口和抽象类的概念"></a>接口和抽象类的概念</h3><p>接口和抽象类是Java继承链的基础，其区别也较为明显，在Java语言的设计中，允许接口的多实现，但不允许抽象类的多继承，这样做符合简洁明了的面向对象设计思路：也就是说类只可以简单地拥有唯一父模型（抽象类），但是可以拥有多种不同的特征（接口）,这样的设计大大简化了Java的面向对象逻辑。</p>
-<p>除此之外呢，它们还有这样的区别：<br>接口为了保证其描述特征的特性，只允许描述成员方法的特征（返回值、方法名、参数），不对成员方法做具体实现，而且在接口内部不允许使用私有属性和方法，究其根本，都是因为作为描述特征的接口不应该具有个性化的属性和方法；而抽象类像类一样，没有这样的限制，但是一般使用缺省的方法来统一定义模型的方法，所以方法体要么是空，要么是通用性较高的默认情况。</p>
-<p>另外，在编码风格上，我们应该尽量给接口起名为形容词或副词，以贴近其是对类特征描述的本质，在JDK中这样的风格处处可见，比如大多数的接口会被以able结尾以说明实现这样的接口可以获得某些能力，比如实现Comparable接口可以获得被比较的能力，进而在对象数组中可以使用Arrays.sort方法来排序。而抽象类像类一样使用名词来定名，另外可以在尾部加上诸如helper，handler来说明其作用。</p>
-<h3 id="克隆"><a href="#克隆" class="headerlink" title="克隆"></a>克隆</h3><p>clone是Object这一通用父类的方法，这个方法是protected类型的，因此在用户编写的代码里是不能直接使用的。这个方法的目的为了实现对象的克隆，理论上讲，也就是复制一份完全相同的对象给我们使用。刚刚说了由于它是protected类型的，因此需要在我们使用的需要拷贝的对象的类里重写这个方法并把权限设为public的才行，不仅如此，为了类型检查的原因，我们还需要实现Cloneable这个marker接口（无方法接口）。这样做显然很繁琐，而且由于浅拷贝的问题，还很容易出错，因为很有可能拷贝出的新对象中某些子对象不是拷贝而仍然是引用。下面是个这样的例子：</p>
-<pre><code>class Email implements Cloneable{
-    private String info;
-    public Email(String info) {
-        this.info = info;
-    }
-
-    public String getInfo() {
-        return info;
-    }
-    public void setInfo(String info) {
-        this.info = info;
-    }
-    @Override
-    protected Object clone() throws CloneNotSupportedException {
-        // TODO Auto-generated method stub
-        return super.clone();
-    }
-}
-class People implements Cloneable {
-    private String name;
-    private Email rocking2013@hotmail.com;
-
-
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    public Email getMail() {
-        return rocking2013@hotmail.com;
-    }
-    public void setMail(Email rocking2013@hotmail.com) {
-        this.rocking2013@hotmail.com = rocking2013@hotmail.com;
-    }
-
-    @Override
-    public String toString() {
-        return &quot;People [name=&quot; + name + &quot;, rocking2013@hotmail.com=&quot; + rocking2013@hotmail.com.getInfo() + &quot;]&quot;;
-    }
-    @Override
-    public People clone() throws CloneNotSupportedException {
-        // TODO Auto-generated method stub
-        People people = (People) super.clone();
-        return people;
-    }
-}
-public class JustTest {
-    public static void main(String[] args) throws InterruptedException {
-        People people1 = new People();
-        people1.setName(&quot;xiaoming&quot;);
-        people1.setMail(new Email(&quot;xm@gmail.com&quot;));
-        People people2 = new People();
-        try {
-            people2 = (People) people1.clone();
-            System.out.println(people1);
-            System.out.println(people2);
-            System.out.println(&quot;--------------------------------------&quot;);
-            people1.getMail().setInfo(&quot;hi@gmail.com&quot;);
-            System.out.println(people1);
-            System.out.println(people2);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-}
-</code></pre><p>run：</p>
-<pre><code>People [name=xiaoming, rocking2013@hotmail.com=xm@rowin2013@gmail.com.com]
-People [name=xiaoming, rocking2013@hotmail.com=xm@rowin2013@gmail.com.com]
---------------------------------------
-People [name=xiaoming, rocking2013@hotmail.com=hi@rowin2013@gmail.com.com]
-People [name=xiaoming, rocking2013@hotmail.com=hi@rowin2013@gmail.com.com]
-</code></pre><p>这就是浅拷贝带来的问题，直接使用父类定义的clone就是会有这样的问题。</p>
-<p>所以需要再重写的clone方法里对这样的问题进行修改：</p>
-<pre><code>@Override
-    public People clone() throws CloneNotSupportedException {
-        // TODO Auto-generated method stub
-        People people = (People) super.clone();
-        //people.setMail((Email) rocking2013@hotmail.com.clone());
-        return people;
-    }
-</code></pre><h3 id="内部类"><a href="#内部类" class="headerlink" title="内部类"></a>内部类</h3><p>在面向对象系统中，我们的类是对象的模板，接口表示类的特征，每个类拥有自己的成员变量和成员方法，对象拥有自己所属类的成员变量和成员方法，对象之间互相调用，通过方法来实现信息沟通并执行相应的功能。一切在运行时层面上其实就是这样，我们在代码层面可以保持和运行时层面相同的编码规则，这样做可以使得代码简洁有力，在编写和运行的过程中保持一致性。然而事实是任何一门语言都会在代码层面加入一些特性，注入语法特性，使得编码看起来更紧凑、编写更简单，但是破坏了这种代码层面和运行时层面的一致性。内部类就是这样一个情况，内部类的出现虽然在运行时会被拆分为独立的临时类，但是在代码层面加深了对代码的理解难度，所以很难说其优弊殊胜。</p>
-<p>下面是个最简单的说明其用法的例子：</p>
-<pre><code>public class Outer {
-    private String info=&quot;hello world&quot;;
-    public class Inner{
-        public void func(){
-            System.out.println(info);
-        }
-    }
-    public static void main(String[] args) {
-        Outer outer = new Outer();
-        Inner inner = outer.new Inner();
-        inner.func();
-    }
-}
-</code></pre><p>这个例子我们可以看出来，这里的内部类可以“看做”是Outer的一个成员，所以这样写就的内部类也叫作成员内部类，成员内部类可以直接使用外部类的成员和方法，而外部类则需要构造内部类的对象才能使用内部类。之所以说是“看做”，是因为在实际运行时内部类会被编译成一个临时类而脱离外部类，我们可以试试看：</p>
-<pre><code>$ javac Outer.java
-</code></pre><p>编译后可以得到两个class文件：Outer.class和Outer$Inner.class，后者就是拆分好了的内部类class，所以在运行时可以使其和一般情况一样。<br>我们进一步分析其真身：</p>
-<pre><code>$ javap Outer
-    Compiled from &quot;Outer.java&quot;
-    public class Outer extends java.lang.Object{
-        public Outer();
-        public static void main(java.lang.String[]);
-        static java.lang.String access$000(Outer);
-    }
-
-$ javap Outer\$Inner
-Compiled from &quot;Outer.java&quot;
-public class Outer$Inner extends java.lang.Object{
-    final Outer this$0;
-    public Outer$Inner(Outer);
-    public void func();
-}
-</code></pre><p>我们可以看到内部类的临时独立生成类的初始化方法中带有外部类类型的参数，这样就能够保证内部类可以完整访问外部类成员变量和成员方法。</p>
-<p>那么我们为什么要使用这种看起来就不清不楚的内部类呢？我的理解是有些类实际上非常简单，单独列出对整个系统意义不大，而且和某些类关系非常大，所以就直接把这个类放入和其关系大的类之中以形成内部类，这样在代码层面看起来更加简洁，但也不影响运行时的正确性。</p>
-<p>除了上述的成员内部类外，还有局部内部类（内部类位于方法体内，这种内部类的作用域仅限于方法内部）、匿名内部类（不对内部类进行显式定义而直接在使用时顺带定义），但是无论是哪一种，其运行时都会被独立拆分并像一般情况那样运行。</p>
-
-          
+          <blockquote>
+<p>在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第三篇。</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/02/19/Core-Java[Volume1]KeyPoints-Ch6/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -663,25 +488,6 @@ public class Outer$Inner extends java.lang.Object{
           </span>
 
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
 
           
             
@@ -712,9 +518,11 @@ public class Outer$Inner extends java.lang.Object{
 
       
         
-          使用CXF集成在Spring项目里以完成WebService搭建
+          <blockquote>
+<p>WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。</p>
+</blockquote>
           <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/03/Java系统WebService：Spring与CXF的集成/">
+            <a class="btn" href="/2016/02/03/Java系统WebService：Spring与CXF的集成/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -815,147 +623,14 @@ public class Outer$Inner extends java.lang.Object{
 
       
         
-          
-            <blockquote>
-<p>开篇<br>Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。这个博客将以原书中的章节为分割，大概会是每章一篇，持续更新，每篇的内容也不会一次全部写完，视我个人对问题的理解和我的阅读进度而定。</p>
+          <blockquote>
+<p>在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第一篇。</p>
 </blockquote>
-<p>另外，我们从本书第一卷第四章开始，因为前三章无外乎就是在讲述历史和环境配置，我认为和我们的主题不大相关。</p>
-<h1 id="Core-Java-Volume-1"><a href="#Core-Java-Volume-1" class="headerlink" title="Core Java Volume 1"></a>Core Java Volume 1</h1><h2 id="chap4"><a href="#chap4" class="headerlink" title="chap4"></a>chap4</h2><h3 id="java类和包的访问权限"><a href="#java类和包的访问权限" class="headerlink" title="java类和包的访问权限"></a>java类和包的访问权限</h3><p>public，private等这些访问控制标识对java的类和包来说都是可用的，而且在类中的属性和方法、包中的方法来说访问权限上的定义也是共通的：</p>
-<ul>
-<li>public属性和方法：这些方法的访问权限是公开的，也就是说所有的类内部和外部对象都可以访问这些公开的属性和方法；</li>
-<li>public类：这些类的访问权限是公开的，也就是说在包内的类和包外的类都可以访问这些公开的类；</li>
-<li>private属性和方法：这些方法是类私有的，也就是说只能被类内部所访问；</li>
-<li>private类：这些类的访问权限是私有的，也就是说只能被包内部所访问。 </li>
-</ul>
-<h3 id="究竟什么是CLASSPATH"><a href="#究竟什么是CLASSPATH" class="headerlink" title="究竟什么是CLASSPATH"></a>究竟什么是CLASSPATH</h3><p>顾名思义，classpath指的是类路径，也就是jvm在搜寻class二进制文件时搜寻的目录，在这个目录中如果找到需要的class文件则去执行，我们可以通过执行前为java命令设置－classpath参数或者直接设置CLASSPATH系统环境变量的形式去定义这个类路径，jvm就会去这个指定的路径下搜寻需要的class文件。<br>这个例子说明这个问题：<br>我们可以在系统环境变量配置文件中这样配置java的CLASSPATH：</p>
-<pre><code>export CLASSPATH=&quot;.:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar&quot;
-</code></pre><p>这样的配置文件等同于在java命令中的 -classpath参数：</p>
-<pre><code>java -classpath .:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar Test
-</code></pre><p>这样配置CLASSPATH环境变量或使用-classpath参数之后，jvm在寻找程序中使用的不包含在当前类中的类时就会去这些路径下寻找，比如说程序中使用了不包含在当前类中的com.rocking.People类(People类通过importcom.rocking.＊引入的)，那么就会依照类路径中指示的路径去寻找：<br>压缩入$JAVA_HOME/lib/dt.jar中的com/rocking/People.class（jdk提供的系统级jar包）<br>压缩入$JAVA_HOME/lib/tools.jar的com/rocking/People.class<br>./com/rocking/People.class（当前路径.拼接上class的全路径名）</p>
-<pre><code>package com.rocking;
-
-public class People{
-    private String name;
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-
-import com.rocking.People;
-
-public class Test {
-    public static void main(String[] args) {
-        People people = new People();       
-    }
-}
-</code></pre><p>最重要的一点是，我们上面的讨论都是在jvm寻找class文件的过程中，而非javac编译器寻找待编译的java source文件的过程中，在编译中，我们必须通过package定义当前类所在的包（或者不明确定义直接使用default package），需要导入外部类时import相应包，只有这样才能通过编译。类路径只是让jvm能够通过配置好的全路径名找到所需的外部类。</p>
-<h3 id="setter的不可靠性"><a href="#setter的不可靠性" class="headerlink" title="setter的不可靠性"></a>setter的不可靠性</h3><p>理论上我们将域属性设置为private的目的是为了不让程序能够轻易地访问和修改到这个对象私有的属性，而只能通过该类定义的public的getter和setter方法去访问和修改。但是这并不是完全可靠的，程序仍然可以通过一些灵巧的办法在某些合适的情况下获取和更改这些私有的属性值。</p>
-<p>setter的不可靠性，其实只要能够确定这个私有属性的引用，是完全可以直接做更改的，当然前提是获取到这个引用，比如通过getter拿到这个属性的引用。这是一个例子：</p>
-<pre><code>class Secret{
-    private StringBuffer secret = new StringBuffer(&quot;A Secret&quot;);
-    public StringBuffer getSecret() {
-        return secret;
-    }
-    public void setSecret(StringBuffer secret) {
-        this.secret = secret;
-    }
-}
-public class TestClass {
-    public static void main(String[] args) {
-        Secret secret = new Secret();
-        StringBuffer saidSecret = secret.getSecret();
-        saidSecret.append(&quot;:broken&quot;);
-        System.out.println(secret.getSecret());
-    }
-}
-</code></pre><p>当然。这个例子其实是个特例，因为我们获取到的私有属性的引用是StringBuffer类型，是可修改内容的引用，但是如果是String类型的secret，那么我们就没办法这样绕过setter去修改了，因为String类型的引用是不允许修改原值的。</p>
-<h3 id="private的访问权限"><a href="#private的访问权限" class="headerlink" title="private的访问权限"></a>private的访问权限</h3><p>我们都知道的是private属性是私有的，那么到底是对象私有的还是类私有的呢？答案是后者，我们可以在类定义的内部访问私有属性，即使这个属性是其他对象的，只要是同类的即可，虽然我们很少这么使用，但是这却深刻地说明java中的访问权限在类的范畴上。下面说明了这样一个问题：</p>
-<pre><code>class Secret {
-    private String secret;
-    public String getSecret() {
-        return secret;
-    }
-    public void setSecret(String secret) {
-        this.secret = secret;
-    }
-    public void readOtherSecret(Secret otherSecret) {
-        System.out.println(otherSecret.secret);
-    }
-}
-public class TestClass {
-    public static void main(String[] args) {
-        Secret secret1 = new Secret();
-        secret1.setSecret(&quot;secret A&quot;);
-        Secret secret2 = new Secret();
-        secret2.setSecret(&quot;secret B&quot;);
-        secret1.readOtherSecret(secret2);
-        secret2.readOtherSecret(secret1);
-    }
-}
-</code></pre><h3 id="static究竟是什么意思"><a href="#static究竟是什么意思" class="headerlink" title="static究竟是什么意思"></a>static究竟是什么意思</h3><p>static的本意是静态的，在java里面这个静态的意思是指存在于静态的类中的，而非程序开跑之后运行时的动态对象的，所以static的域属性也好，方法也好，都是指那些存在于类中的域属性和方法，虽然该类对应的对象中也存在static域属性和方法的拷贝，但是属于类的，对于它们的影响将会影响到整个类，换言之这些影响将会产生在所有的类对象中。<br>static的方法只能访问static的域属性，这个是怎么来的呢？其实就是因为static属性是属于整个类的，所以static的方法就不应该影响特定的对象的属性，在实现上说这个方法的隐式参数是不含有非static的方法的指向当前对象的this引用的，因此不能在static方法中访问非static属性。</p>
-<h3 id="java的方法参数传递"><a href="#java的方法参数传递" class="headerlink" title="java的方法参数传递"></a>java的方法参数传递</h3><p>在C++中被反复向初学者讨论的一个问题就是swap函数的效果，如果参数是值传递的，则最终传入的两个值是不会被交换的，如果是指针（引用）传递的，那么最终传入的两个引用是会被交换的，那么java中的方法参数传递是哪种情况呢？答案是前者，即值传递，又叫做拷贝实参传递，即运行在方法中的形式参数是传递给方法的真实参数的拷贝，而非直接传入实际参数的指针。<br>下面的例子说明了这个问题：</p>
-<pre><code>class Some{
-    private String someThing;
-    public String getSomeThing() {
-        return someThing;
-    }
-    public void setSomeThing(String someThing) {
-        this.someThing = someThing;
-    }
-    public Some(String someThing) {
-        super();
-        this.someThing = someThing;
-    }
-}
-public class TestClass {
-    public static void swap(Some some1,Some some2){
-        Some temp = some1;
-        some2 = some1;
-        some1 = temp;
-    }
-    public static void main(String[] args) {
-        Some some1 = new Some(&quot;1&quot;);
-        Some some2 = new Some(&quot;2&quot;);
-        swap(some1, some2);
-        System.out.println(some1.getSomeThing());
-        System.out.println(some2.getSomeThing());
-    }
-}
-</code></pre><h3 id="类和对象初始化"><a href="#类和对象初始化" class="headerlink" title="类和对象初始化"></a>类和对象初始化</h3><p>我们都知道的是对象的初始化会引发类的初始化，初始化实现的方法也很多，最一般的初始化方法用于对象创建时对域属性的初始化，稍微少见的类的静态代码块用于对static静态域属性进行初始化，而初始化代码块则用于对象的域属性（包括static域属性）进行初始化，那么一般而言，初始化的顺序是怎样的呢？<br>首先执行静态代码块初始化static类静态域属性用于在整个类及其对象共享；<br>其次执行初始化代码块初始化域属性以完成对对象的个性化的域属性的初始化；<br>最后执行对象的初始化方法以完成进一步的域属性的初始化。</p>
-<pre><code>class Some{
-    private String someThing;
-    private static String staticSomeThing;
-    static
-    {
-        staticSomeThing = &quot;static&quot;;
-        System.out.println(&quot;static block triggered&quot;);
-    }
-    {
-        someThing = &quot;some&quot;;
-        System.out.println(&quot;init block triggered&quot;);
-    }
-    public String getSomeThing() {
-        return someThing;
-    }
-    public void setSomeThing(String someThing) {
-        this.someThing = someThing;
-    }
-    public Some(String someThing) {
-        this.someThing = someThing;
-        System.out.println(&quot;init method triggered&quot;);
-    }
-}
-public class TestClass {
-    public static void main(String[] args) {
-        Some some1 = new Some(&quot;1&quot;);
-    }
-}
-</code></pre><p>未完成。。。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/22/Core-Java[Volume1]KeyPoints-Ch4/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1053,188 +728,14 @@ public class TestClass {
 
       
         
-          
-            <blockquote>
-<p>开篇<br>Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。这个博客将以原书中的章节为分割，大概会是每章一篇，持续更新，每篇的内容也不会一次全部写完，视我个人对问题的理解和我的阅读进度而定。</p>
+          <blockquote>
+<p>在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第二篇。</p>
 </blockquote>
-<h1 id="Core-Java-Volume-1-Key-Points"><a href="#Core-Java-Volume-1-Key-Points" class="headerlink" title="Core Java Volume 1 Key Points"></a>Core Java Volume 1 Key Points</h1><h2 id="chap5"><a href="#chap5" class="headerlink" title="chap5"></a>chap5</h2><h3 id="super关键字和this"><a href="#super关键字和this" class="headerlink" title="super关键字和this"></a>super关键字和this</h3><p>super这个关键字和this其实是完全不同的，因为this实际上是一个真实存在的引用，是一个缺省的传入方法的隐式参数，引用当前的对象，所以可以完全当做一个正常的引用来使用。而super并不是父类对象的引用，而只是给javac编译器的一个提示性质的标志。当使用如下的super时：</p>
-<ul>
-<li><p>super.someFunction();   提示javac在编译这个someFunction()方法的时候去使用该类的父类定义的someFunction()方法，这一般是在当前的子类也定义了同样名字的someFunction()方法的时候去使用的。</p>
-</li>
-<li><p>super()；或者自定义的super(type Par);  提示javac在编译的时候使用当前子类的父类定义的构造器去初始化当前对象。</p>
-</li>
-</ul>
-<p>所以，总结起来，super的用法归为两种：一是可以调用父类构造器，二是可以调用父类方法。</p>
-<p>子类对象的初始化过程：子类执行子类的初始化方法，初始化方法里会先执行缺省的super()方法（写不写这个super方法都会执行），也就是说会先初始化出一个父类对象，然后再执行其他的初始化部分，最终之前初始化出的父类对象将会成为子类对象，这也是多态性的起始，因为本质上来讲，子类对象是有父类对象的结构的。</p>
-<h3 id="继承存在情形下的对象初始化"><a href="#继承存在情形下的对象初始化" class="headerlink" title="继承存在情形下的对象初始化"></a>继承存在情形下的对象初始化</h3><p>在继承存在的时候，初始化的过程就变得异常复杂，但是却仍然遵循着初始化的原则：先加载类和属于类的static属性，然后创建类的对象，因为有继承的问题，所以在初始化子类对象的时候要先初始化其父类的对象。<br>这个例子极佳地说明了这个复杂的过程，可以使用单步调试给出初始化的全过程：</p>
-<pre><code>class FatherClass {
-
-    private static FatherClass f = new FatherClass();
-    static {
-        b = 10;
-        System.out.println(&quot;father static block&quot;);
-    }
-
-    {
-        System.out.println(&quot;father object block&quot;);
-    }
-
-    static int b = 5;
-
-    public FatherClass() {
-        System.out.println(&quot;father constructor...&quot;);
-        System.out.println( &quot;b = &quot; + b);
-
-    }
-}
-
-public class ChildClass extends FatherClass {
-    static int a = 5;
-    static {
-        a = 10;
-        System.out.println(&quot;child static block&quot;);
-    }
-
-    {
-        System.out.println(&quot;chid object block&quot;);
-    }
-
-    private static ChildClass t1 = new ChildClass();
-
-    public ChildClass() {
-        System.out.println(&quot;child constructor...&quot;);
-        System.out.println(&quot;a = &quot; + a);
-    }
-
-    public static void main(String[] args) {
-        ChildClass test = new ChildClass();
-    }
-}
-</code></pre><p>这是运行的初始化结果：</p>
-<p>先加载类，所以顺序执行static代码块和static属性声明,按照先父类再子类的顺序加载类，</p>
-<pre><code>father object block
-//加载父类执行f的初始化时激发了父类对象的初始化，对象的初始化块执行
-father constructor...   
-//对象的构造器
-b = 0
-//未经初始化的属性的缺省值
-father static block
-//f的初始化完成，执行父类的静态初始化快，父类加载完毕
-child static block
-//子类初始化开始，执行子类的静态初始化块
-father object block
-//t1的初始化激发了子类对象的初始化，并进而激发了父类对象的初始化，执行父类对象初始化块
-father constructor...
-//执行父类的构造器
-b = 5
-//父类的域属性已经被初始化，父类对象初始化完成
-chid object block
-//子类对象开始初始化，对象初始化块执行
-child constructor...
-//子类对象的构造器执行
-a = 10
-//子类对象的域属性已被初始化，完成子类的加载
-father object block
-//执行父类对象的初始化
-father constructor...
-b = 5
-chid object block
-//执行子类对象的初始化
-child constructor...
-a = 10
-</code></pre><h3 id="多态是怎么实现的"><a href="#多态是怎么实现的" class="headerlink" title="多态是怎么实现的"></a>多态是怎么实现的</h3><p>如果使用最简单的办法去说明什么是多态，那么这样写无疑是有力的：</p>
-<pre><code>FatherClass child = new ChildClass();
-child.funcOverride();
-</code></pre><p>这个的意思就是说栈中创建的父类对象可以引用堆中的子类对象，那么这个过程为什么可以实现呢？从两个方面可以说明：<br>从对象初始化的角度来说，和上一节我们说到的一样，子类对象的初始化意味父类先加载，子类再加载，父类对象初始化，子类对象初始化，所以子类对象实际上就是在父类对象的基础上生成的，因此父类对象当然可以引用子类对象了；<br>从方法覆盖的角度来说，父类对象的方法子类对象都有，因此对父类方法的使用实际上就会成为对子类方法的使用，这个过程不能反过来，也就是说子类对象的方法并不是父类对象都有，因此不能使用子类对象去引用父类对象。</p>
-<p>jvm为了实现多态情况下方法执行的快速判断，会为每个类维护一个虚方法表（和C++实现多态的虚拟函数有关），这个方法表表述了该类型对象在执行某方法时应该执行的方法具体是哪个，理论上在child去执行funcOverride()方法的时候会先去看ChildClass是否拥有覆盖的funcOverride()方法，如果有则执行这个，如果没有覆盖则执行父类的同名方法，而实际上为避免做这些可能要进行多次的判断，jvm为类准备的虚方法表固化这种方法对应关系，进而可以快速定位要执行的方法。</p>
-<p>举个例子：</p>
-<pre><code>class FatherClass{
-    public void func1(){
-        System.out.println(&quot;func from FC&quot;);
-    }
-    public void func2(){
-        System.out.println(&quot;func from FC&quot;);
-    }
-}
-
-class ChildClass extends FatherClass{
-    @Override
-    public void func1() {
-        System.out.println(&quot;func from CC&quot;);
-    }
-}
-</code></pre><p>那么，jvm为类维护的虚方法表类似(不要去考虑和这个问题无关的Object自带方法)：</p>
-<pre><code>VirtualMethodTableOfFatherClass:
-FatherClass.func1()     --      FatherClass.func1()
-FatherClass.func2()     --      FatherClass.func2()
-
-VirtualMethodTableOfChildClass:
-ChildClass.func1()     --      ChildClass.func1()
-ChildClass.func2()     --      FatherClass.func2()
-</code></pre><h3 id="一个完善的equals方法怎么写呢？"><a href="#一个完善的equals方法怎么写呢？" class="headerlink" title="一个完善的equals方法怎么写呢？"></a>一个完善的equals方法怎么写呢？</h3><p>每个类都源自Object类，所以也就不得不接受Object父类带来的基本方法，比如这个麻烦的额equals方法，在Object类中的equal方法非常简单，就是一句话：</p>
-<pre><code>public boolean equals(Object obj) {
-    return (this == obj);
-}
-</code></pre><p>这句话用于判断当前这个栈中变量引用的堆中对象是否和参数变量引用的堆中对象和同一个对象，所以这其实是个很抽象的“相等”，因为这就像废话一样。</p>
-<p>所以一个完善的equals方法应该恰当地指出两个对象相等的内涵，即时两个变量并不是指向同一块内存，如果他们的某些被指定的属性是一样的，那么就可以算作是“相等”。所以，我们有以下这样对对象相等的考虑：<br>1.是否指向同一块堆中内存空间，也就是是否引用同一对象，如果是，这肯定相等；<br>2.是否是空引用的比较，如果不是，则才可能相等；<br>3.是否具有同样的类型，如果是，则才可能相等；<br>4.是否具有继承链上的一系列类型，如果是，则可能相等；<br>5.是否某些属性是相等的，如果是，则才可能相等。<br>基于上面的考虑，我们可以有这样的例子来写出一个相对完善的equals方法：<br>（特别注意的是，equals的参数是Object类型的，只有这样才能覆盖Object的equals方法）</p>
-<pre><code>class Employee{
-    private String name;
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-    @Override
-    public boolean equals(Object obj) {
-        if(this  == obj)
-            return true;
-        if(obj == null)
-            return false;
-        if(this.getClass() != obj.getClass())
-            return false;
-        Employee tempEmployee = (Employee)obj;
-        return tempEmployee.getName().equals(name);
-    }
-}
-public class TestClass {
-    public static void main(String[] args) {
-        Employee employee1 = new Employee();
-        employee1.setName(&quot;boss&quot;);
-        Employee employee2 = new Employee();
-        employee2.setName(&quot;boss&quot;);
-        System.out.println(employee1.equals(employee2));
-        System.out.println(employee2.equals(employee1));
-
-    }
-}
-</code></pre><h3 id="ArrayList之类的集合是值拷贝的和还引是用拷贝的"><a href="#ArrayList之类的集合是值拷贝的和还引是用拷贝的" class="headerlink" title="ArrayList之类的集合是值拷贝的和还引是用拷贝的"></a>ArrayList之类的集合是值拷贝的和还引是用拷贝的</h3><p>我们都知道ArrayList这样的数据集合就是Java快速处理批量数据的容器，那么对这个容器里的每个数据元素而言，是把每个元素的值拷贝到容器中呢还是只是把它们的引用拷贝到容器中去呢？从效率和资源占用的角度来说，ArrayList选择了引用拷贝，只是把“构成”这个集合的数据元素的引用放到了容器中，这个例子说明了这个问题：</p>
-<p>并不是每次“添加”一个数据元素到容器中，而是“引用”一个元素到容器中，如果每次都拿一个数据元素做引用，最后所有的容器元素索引都指向一个引用的地址。</p>
-<pre><code>class Employee {
-    private String name;
-    public String getName() {
-        return name;
-    }
-    public void setName(String name) {
-        this.name = name;
-    }
-}
-public class TestClass {
-    public static void main(String[] args) {
-        Employee employee = new Employee();
-        ArrayList&lt;Employee&gt; list = new ArrayList&lt;Employee&gt;();
-        for (int i = 0; i &lt; 5; i++) {
-            employee.setName(&quot;name&quot; + i);
-            list.add(employee);
-        }
-        for (Employee each : list) {
-            System.out.println(each.getName());
-        }
-    }
-}
-</code></pre><p>未完成。。。</p>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/22/Core-Java[Volume1]KeyPoints-Ch5/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1332,21 +833,14 @@ public class TestClass {
 
       
         
-          
-            <h1 id="Java权限描述符"><a href="#Java权限描述符" class="headerlink" title="Java权限描述符"></a>Java权限描述符</h1><p>Java中描述访问权限的描述符主要用在两个地方：</p>
-<ol>
-<li>在类名前用于说明类的访问权限的描述符：public 缺省的“包内可见”</li>
-<li>在成员变量和成员方法前面的描述符：public private protected 缺省的“包内可见”</li>
-</ol>
-<p>第一类的描述符简单明了，只是为了说明一个定义出的类在其他类看来的可见性：</p>
-<p>public描述的类是对被其他所有类可见的，也就是说其他的类都可以在自己的内部自由使用这个类（注意是对这个类可见而不是对这个类内部的成员可见）；<br>缺省的“包内可见”，也就是说没有描述符描述的类，这样的类的访问权限只限于同包内的类，特别需要说明的是，同包的意思是在同一个package内的类，包括写在同一个java文件中的类，在同一个包内的类的内部是可以自由使用这个类的。</p>
-<p>第二类的描述符稍显复杂，为了说明类中被权限描述符描述的成员变量和成员方法的可见性，注意，这个可见性是说在类中的可见性，而不是说某类的对象对成员的可见性。</p>
-<p>public描述的成员对其他所有类都是可见的，也就是说其他的类的内部都可以自由使用这些成员：任何类都可以创建这个类的对象，并可以通过这个对象去访问这些public的成员；<br>缺省的“包内可见”，也就是没有描述符描述的成员，这些成员只能对包内的类可见：包内的其它类内部可以自由使用这些成员：包内的类都可以创建这个类的对象，并可以通过这个对象去访问这些成员；<br>private描述的成员只对自己可见，也就是说这个类的内部可以自由使用这些成员；<br>特别的是这个和继承相关的protected描述符，protected描述符描述的成员对包内的类可见，除此之外还对这个类的子类可见：子类内部可以去访问这些成员。<br>这个图是Java官方文档里对成员权限描述符的总结：</p>
-<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jmgbz7tjj30gs09et9t.jpg" alt=""></p>
-<p>除此之外我们又画了这张图来说明权限描述符的可见性：</p>
-<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jmgebrd7j30m80crq43.jpg" alt=""></p>
-
-          
+          <blockquote>
+<p>真的弄得懂Java的权限描述符吗？</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/17/细说Java权限描述符/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1444,211 +938,14 @@ public class TestClass {
 
       
         
-          
-            <h1 id="Spring-IOC：Spring-IOC-的具体过程"><a href="#Spring-IOC：Spring-IOC-的具体过程" class="headerlink" title="Spring IOC：Spring IOC 的具体过程"></a>Spring IOC：Spring IOC 的具体过程</h1><p>上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。</p>
-<p>这是整个IOC容器工作过程的过程图：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg" alt=""></p>
-<h2 id="容器启动阶段"><a href="#容器启动阶段" class="headerlink" title="容器启动阶段"></a>容器启动阶段</h2><ul>
-<li>加载配置文件信息</li>
-<li>解析配置文件信息</li>
-<li>装配BeanDefinition</li>
-<li>后处理</li>
-</ul>
-<p>首先配置文件或者注解等元信息和JavaBean的类信息被加载到IOC容器中，容器读取到xml格式的配置文件，这个配置文件是使用者声明的依赖关系和装配中需要特别关注的地方，是装配Bean的早期“外部图纸”，容器中的解析引擎可以把我们写入的文本形式的字符元信息解析成容器内部可以识别的BeanDefinition，可以把BeanDefinition理解成为类似反射机制的类结构，这个通过对JavaBean和配置文件进行分析得到的BeanDefinition获取了组装一个符合要求的JavaBean的基本结构，如果需要除了BeanDefinition之后还要对这个BeanDefinition再做修改的话则执行这个后处理，后处理一般是通过Spring框架内的BeanFactoryPostProcessor处理的。</p>
-<p>我们仍然使用上次使用过的例子来说明这个BeanDefinition的运作原理：有三个bean，主模块MainModule和依赖模块DependModuleA，DependModuleB，前者依赖后面两个模块构成，在配置文件里我们一般会这么进行依赖的声明：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd&quot;&gt;
-
-    &lt;bean id=&quot;mainModule&quot; class=&quot;com.rocking.demo.MainModule&quot;&gt;
-        &lt;property name=&quot;moduleA&quot;&gt;
-            &lt;ref bean=&quot;moduleA&quot;/&gt;
-        &lt;/property&gt;
-        &lt;property name=&quot;moduleB&quot;&gt;
-            &lt;ref bean=&quot;moduleB&quot;/&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;moduleA&quot; class=&quot;com.rocking.demo.DependModuleAImpl&quot;&gt;&lt;/bean&gt;
-    &lt;bean id=&quot;moduleB&quot; class=&quot;com.rocking.demo.DependModuleBImpl&quot;&gt;&lt;/bean&gt;
-&lt;/beans&gt;
-</code></pre><p>这是我们的程序演示一个标准的BeanFactory容器（Spring IOC容器的实现之一）对上面配置文件的装配：</p>
-<pre><code>class MainModule {
-    private DependModuleA moduleA;
-    private DependModuleB moduleB;
-
-    public DependModuleA getModuleA() {
-        return moduleA;
-    }
-
-    public void setModuleA(DependModuleA moduleA) {
-        this.moduleA = moduleA;
-    }
-
-    public DependModuleB getModuleB() {
-        return moduleB;
-    }
-
-    public void setModuleB(DependModuleB moduleB) {
-        this.moduleB = moduleB;
-    }
-
-}
-
-interface DependModuleA {
-    public void funcFromModuleA();
-}
-
-interface DependModuleB {
-    public void funcFromModuleB();
-}
-
-class DependModuleAImpl implements DependModuleA {
-
-    @Override
-    public void funcFromModuleA() {
-        System.out.println(&quot;This is func from Module A&quot;);
-    }
-
-}
-
-class DependModuleBImpl implements DependModuleB {
-
-    @Override
-    public void funcFromModuleB() {
-        System.out.println(&quot;This is func from Module B&quot;);
-    }
-
-}
-
-public class SimpleIOCDemo {
-    public static void main(String[] args) throws ClassNotFoundException {
-        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(&quot;Beans.xml&quot;);
-        MainModule mainModule = (MainModule) beanFactory.getBean(&quot;mainModule&quot;);
-        mainModule.getModuleA().funcFromModuleA();
-        mainModule.getModuleB().funcFromModuleB();
-    }
-}
-</code></pre><p>这里我们的配置文件和JavaBean被加载读取并被解析，这里的BeanDefinition生成使用过程掩藏在其中，这是实际上在IOC内部发生的大致过程：</p>
-<pre><code>public class SimpleIOCDemo {
-    public static void main(String[] args) throws ClassNotFoundException {
-        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-        AbstractBeanDefinition mainModule = new RootBeanDefinition(MainModule.class);
-        AbstractBeanDefinition moduleA = new RootBeanDefinition(DependModuleAImpl.class);
-        AbstractBeanDefinition moduleB = new RootBeanDefinition(DependModuleBImpl.class);
-
-        beanFactory.registerBeanDefinition(&quot;mainModule&quot;, mainModule);
-        beanFactory.registerBeanDefinition(&quot;moduleA&quot;, moduleA);
-        beanFactory.registerBeanDefinition(&quot;moduleB&quot;, moduleB);
-
-        MutablePropertyValues propertyValues = new MutablePropertyValues();
-        propertyValues.add(&quot;moduleA&quot;, moduleA);
-        propertyValues.add(&quot;moduleB&quot;, moduleB);
-        mainModule.setPropertyValues(propertyValues);
-
-        MainModule module = (MainModule) beanFactory.getBean(&quot;mainModule&quot;);
-        module.getModuleA().funcFromModuleA();
-        module.getModuleB().funcFromModuleB();
-    }
-}
-</code></pre><p>对xml的元信息进行加载读取后，IOC解析引擎会将其中提到的模块依据其真实类型创建成BeanDefinition，这个BeanDefinition可以看成是一种反射或者代理的过程，目的是为了让IOC容器清楚以后要创建的实例对象的bean结构，然后将这些bean结构注册到BeanFactory中去，之后将主模块的依赖以setter注入的形式加入到主模块的属性中去，（这一点要看主模块提供的是setter方法还是初始化方法），这个过程结束后注册完所有“图纸”上规定的bean的Definition后，BeanFactory就已经成型。之后只要调用getBean方法即可将符合要求的bean生产出来，这是下一阶段的过程，我们之后再说。</p>
-<p>在将BeanDefinition这一“图纸”上的信息注册到BeanFactory完毕后，我们仍然可以对已经注册完的BeanDefinition进行改动的操作，这就是我们前面提到的Spring为使用者设计的灵活的地方之一，不是说所有的过程不可控，而是在很多地方留了很多使用者可以发挥的余地。具体的办法是使用BeanFactory处理器BeanFactoryPostProcessor来介入对BeanFactory的处理以进一步改写我们需要修改的BeanDefinition部分。这个过程对应流程里的“后处理”过程。<br>以常见的处理器之一：属性占位符配置处理器为例，就是在已经构建完成已注册完毕的BeanFactory之后再对它处理，以使得BeanDefinition相应属性里的内容修改为配置处理器指定配置文件里的信息：</p>
-<pre><code>DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-reader.loadBeanDefinitions( new ClassPathResource( &quot;Beans.xml&quot;));
-PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
-configurer.setLocation( new ClassPathResource( &quot;about.properties&quot;));
-configurer.postProcessBeanFactory( beanFactory);
-</code></pre><p>BeanFactoryPostProcessor将对BeanFactory处理，处理的结果就是把BeanDefinition中定义的某些属性改成BeanFactoryPostProcessor定义位置处的某些信息。</p>
-<h2 id="Bean-实例化阶段"><a href="#Bean-实例化阶段" class="headerlink" title="Bean 实例化阶段"></a>Bean 实例化阶段</h2><p>有了经过处理的BeanDefinition的“内部图纸”的指导下，容器可以进一步把BeanDefifnition通过反射或CGLIB动态字节码生产的方式化为存在于内存中的活化实例对象，再将BeanDefinition规定的依赖对象通过setter注入或者初始化注入的方式装配进新创建的实例对象中，这里是实实在在地将依赖对象的引用赋给需要依赖的对象属性中。<br>但是这里需要注意的是创建的实例不仅仅是一个简单的bean定义的实例，而是一个经过Spring包装的BeanWrapper实例，这里为什么要采用BeanWrapper的方式来包装bean呢？是因为BeanWrapper提供了统一访问bean属性的接口，在创建完了基本的bean的框架后要对其中的属性进行设置，每个bean的setter方法都不一样，所以如果直接用反射设置的话会非常复杂，所以spring提供这种包装来简化属性设置：</p>
-<p>BeanWrapper beanWrapper = new BeanWrapperImpl(Class.forName(“com.rocking.demo.MainModule”));<br>beanWrapper.setPropertyValue( “moduleA”, Class.forName(“com.rocking.demo.DepModuleAImpl”).newInstance());<br>beanWrapper.setPropertyValue( “moduleB”, Class.forName(“com.rocking.demo.DepModuleBImpl”).newInstance());<br>MainModule mainModule= (MainModule) beanWrapper.getWrappedInstance();<br>mainModule.getModuleA().funcFromA();<br>mainModule.getModuleB().funcFromB();</p>
-<p>以上的过程展示了在Spring内部，通过获取类的反射容器了解将来包装的实例bean的结构并作出包装，使用统一的属性设置方法setPropertyValue来对这个包装的实例设置属性，最后得到的bean实例通过getWrappedInstance拿到，可以发现已经成功将其属性赋值。</p>
-<p>这个时候的bean实例其实已经完全可以使用了，但是Spring同样在实例化阶段也为我们准备了灵活的策略以完成使用者对这个阶段的介入，和容器启动阶段的BeanFactoryPostProcessor控制BeanDefinition类似，在实例化阶段，Spring提供了BeanPostProcessor处理器来对已经装配好的实例进行操作，以完成可能需要的改动：、</p>
-<p>这里举个例子来说明，定义一个BeanPostProcessor的实现类，实现其中的方法postProcessAfterInitialization和postProcessBeforeInitialization来定义对在bean实例装配之后和之前分别进行的操作，在BeanFactory添加了这个处理器后就会在每次调用getBean方法装配实例的时候，都会传入根据“图纸”装配出的bean实例（包括装配过程中创建的依赖实例bean）调用这两个方法，这些方法可以对这些bean实例实施修改。</p>
-<p>下面是一个这样的例子(MainModule及其依赖关系和本文之前的例子相同)：</p>
-<pre><code>class ModuleC {
-    private String x;
-
-    public String getX() {
-        return x;
-    }
-
-    public void setX(String x) {
-        this.x = x;
-    }
-
-}
-
-class ModulePostProcessor implements BeanPostProcessor{
-
-    @Override
-    public Object postProcessAfterInitialization(Object object, String string)
-            throws BeansException {
-        System.out.println(string);
-        if(object instanceof ModuleC){
-            System.out.println(string);
-            ((ModuleC)object).setX(&quot;after&quot;);
-        }
-        return object;
-    }
-
-    @Override
-    public Object postProcessBeforeInitialization(Object object, String string)
-            throws BeansException {
-        if(object instanceof ModuleC){
-            ((ModuleC)object).setX(&quot;before&quot;);
-        }
-        return object;
-    }
-
-}
-
-public class VerySimpleIOCKernal {
-    public static void main(String[] args) throws ClassNotFoundException, BeansException, InstantiationException, IllegalAccessException {
-        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
-        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
-        reader.loadBeanDefinitions(new ClassPathResource(&quot;Beans.xml&quot;));
-        ModulePostProcessor postProcessor = new ModulePostProcessor();
-        beanFactory.addBeanPostProcessor(postProcessor);
-        MainModule module = (MainModule) beanFactory.getBean(&quot;mainModule&quot;);
-        ModuleC moduleC = (ModuleC) beanFactory.getBean(&quot;moduleC&quot;);    
-        System.out.println(moduleC.getX());
-    }
-}
-</code></pre><p>这是bean的依赖关系配置文件：</p>
-<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
-&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
-    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
-    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
-    &lt;bean id=&quot;mainModule&quot; class=&quot;com.rocking.demo.MainModule&quot;&gt;
-        &lt;property name=&quot;moduleA&quot;&gt;
-            &lt;ref bean=&quot;moduleA&quot;/&gt;
-        &lt;/property&gt;
-        &lt;property name=&quot;moduleB&quot;&gt;
-            &lt;ref bean=&quot;moduleB&quot;/&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;moduleA&quot; class=&quot;com.rocking.demo.DepModuleAImpl&quot;&gt;
-        &lt;property name=&quot;infoA&quot;&gt;
-            &lt;value&gt;${moduleA.infoA}&lt;/value&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;moduleB&quot; class=&quot;com.rocking.demo.DepModuleBImpl&quot;&gt;
-        &lt;property name=&quot;infoB&quot;&gt;
-            &lt;value&gt;info of moduleB&lt;/value&gt;
-        &lt;/property&gt;
-    &lt;/bean&gt;
-    &lt;bean id=&quot;moduleC&quot; class=&quot;com.rocking.demo.ModuleC&quot;&gt;
-    &lt;/bean&gt;
-&lt;/beans&gt;
-</code></pre><p>从最终的结果我们可以看出，每次调用getBean方法得到的bean实例（包括因依赖关系生成的）都将被BeanPostProcessor获取进行前置和后置处理。</p>
-<p>除了类似上面的BeanPostProcessor的办法对装配好的bean再做处理外，Spring还可以通过配置init-method和destroy-method来对bean的初始化和销毁过程设置回调函数，这些回调函数也还可以灵活地提供更改bean实例的机会。</p>
-<p>整个Spring IOC的过程其实总体来说和我们自己写的IOC原型在本质上是一样的，只不过通过复杂的设计使得IOC的过程能够更灵活有效地提供给使用者更多的发挥空间，除此之外，Spring的IOC也在安全性、容器的稳定性、metadata到bean转换的高效性上做到了精美的设计，使得IOC这一Spring容器的基础得以稳固。</p>
-
-          
+          <blockquote>
+<p>上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/11/03/SpringIOC的具体过程/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1746,147 +1043,14 @@ public class VerySimpleIOCKernal {
 
       
         
-          
-            <h1 id="Spring-IOC：Spring-IOC-的根本基础原理在哪里？"><a href="#Spring-IOC：Spring-IOC-的根本基础原理在哪里？" class="headerlink" title="Spring IOC：Spring IOC 的根本基础原理在哪里？"></a>Spring IOC：Spring IOC 的根本基础原理在哪里？</h1><p>spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。</p>
-<p><strong>这样做的好处是什么呢？</strong></p>
-<p>当然就是所谓的“解耦”了，可以使得程序的各模块之间的关系更为独立，只需要spring控制这些模块之间的依赖关系并在容器启动和初始化的过程中将依据这些依赖关系创建、管理和维护这些模块就好，如果需要改变模块间的依赖关系的话，甚至都不需要改变程序代码，只需要将更改的依赖关系进行修改即可，spring会在再次启动和初始化容器的过程中使得这些新的依赖关系重新建立符合新需求的模块，在这个过程中，需要注意的是代码本身不需要体现对于模块具体依赖情形的声明而只需要定义其所需模块的接口，所以这是一种典型的面向接口思想，同时最好将依赖关系以配置文件或者注解的形式表述出来，相关的spring处理类会根据这些外部的配置文件组装模块，或者扫描注解调用内部的注解处理器组装模块，以此完成IOC的过程。</p>
-<p>IOC的目的是称为DI的依赖注入，通过IOC技术，最终容器将帮助我们完成模块间的依赖注入。</p>
-<p>另外，最终的一点是，在spring IOC的过程中，我们必须始终清楚以上这条主线，即时语法和类的结构再复杂，但是其作用和目的都是一样的：就是通过依赖描述的配置文件这一装配“图纸”去完成模块的“组装”，复杂的语法只是完成这一目的的手段罢了。</p>
-<p>所谓的IOC原型，为了展示最简单的IOC原理图，我们不妨做一个完全简单的原型来说明这个过程：</p>
-<p>首先是我们定义的几个模块，包括主模块和两个接口定义的依赖模块：</p>
-<pre><code>class MainModule{
-    private DependModuleA moduleA;
-    private DependModuleB moduleB;
-    public DependModuleA getModuleA() {
-        return moduleA;
-    }
-    public void setModuleA(DependModuleA moduleA) {
-        this.moduleA = moduleA;
-    }
-    public DependModuleB getModuleB() {
-        return moduleB;
-    }
-    public void setModuleB(DependModuleB moduleB) {
-        this.moduleB = moduleB;
-    }
-
-}
-
-interface DependModuleA{
-    public void funcFromModuleA();
-}
-
-interface DependModuleB{
-    public void funcFromModuleB();
-}
-
-class DependModuleAImpl implements DependModuleA{
-
-    @Override
-    public void funcFromModuleA() {
-        System.out.println(&quot;This is func from Module A&quot;);
-    }
-
-}
-
-class DependModuleBImpl implements DependModuleB{
-
-    @Override
-    public void funcFromModuleB() {
-        System.out.println(&quot;This is func from Module B&quot;);
-    }
-
-}
-</code></pre><p>如果我们不采用IOC，而是依靠主模块本身去控制其依赖模块的创建，那么会是这样的：</p>
-<pre><code>public class SimpleIOCDemo {
-    public static void main(String[] args) throws ClassNotFoundException {
-        MainModule mainModule = new MainModule();
-        mainModule.setModuleA(new DependModuleAImpl());
-        mainModule.setModuleB(new DependModuleBImpl());
-        mainModule.getModuleA().funcFromModuleA();
-        mainModule.getModuleB().funcFromModuleB();
-    }
-}
-</code></pre><p>这是我们经过简化定义的IOC容器原型，容器在启动后初始化的时候会读取用户写入的配置文件，这里我们以简单的properties配置文件为例，只有当用户调取getBean方法的时候才会真正地按照配置文件组装加载相应的bean，在我们定义的容器原型内部维护着一个用于保存装配好的bean 的map，如果在其中有满足要求的bean的话就不需要再新建了：</p>
-<pre><code>class SimpleIOCContainer{
-    private Properties properties = new Properties();
-    private Map&lt;String, Object&gt; moduleMap = new HashMap&lt;&gt;();
-    {
-        try {
-            properties.load(new FileInputStream(new File(&quot;SimpleIOC.properties&quot;)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-    }
-    public Object getBean(String moduleName) throws ClassNotFoundException {
-        Object instanceObj;
-        if(moduleMap.get(moduleName)!=null){
-            System.out.println(&quot;return old bean&quot;);
-            return moduleMap.get(moduleName);
-        }
-        System.out.println(&quot;create new bean&quot;);
-        String fullClassName = properties.getProperty(moduleName);
-        if(fullClassName == null)
-            throw new ClassNotFoundException();
-        else{
-            Class&lt;? extends Object&gt; clazz = Class.forName(fullClassName);
-            try {
-                instanceObj = clazz.newInstance();
-                instanceObj = buildAttachedModules(moduleName,instanceObj);
-                moduleMap.put(moduleName, instanceObj);
-                return instanceObj;
-            } catch (InstantiationException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            }
-        }
-        return null;
-    }
-    private Object buildAttachedModules(String modulename , Object instanceObj) {
-        Set&lt;String&gt; propertiesKeys = properties.stringPropertyNames();
-        Field[] fields = instanceObj.getClass().getDeclaredFields();
-        for (String key : propertiesKeys) {
-            if(key.contains(modulename)&amp;&amp;!key.equals(modulename)){
-                try {
-                    Class&lt;? extends Object&gt; clazz = Class.forName(properties.getProperty(properties.getProperty(key)));
-                    for (Field field : fields) {
-                        if(field.getType().isAssignableFrom(clazz))
-                            field.set(instanceObj, clazz.newInstance());
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-            }
-        }
-        return instanceObj;
-    }
-}
-</code></pre><p>这是我们使用properties配置文件写成的依赖关系配置文件，这个配置文件是我们装配模块的“图纸”，这里的语法个是完全是我们定义的，在真实的spring IOC容器中，为了表达更为复杂的依赖逻辑，会使用更为发达的xml格式配置文件或者更新的注解配置，依靠注解处理器来完成图纸的解析：</p>
-<pre><code>mainModule=com.rocking.demo.MainModule
-mainModule.moduleA=moduleA
-mainModule.moduleB=moduleB
-moduleA=com.rocking.demo.DependModuleAImpl
-moduleB=com.rocking.demo.DependModuleBImpl
-</code></pre><p>这是测试代码，可以看到的是我们可以完整的通过我们定义的IOC容器获取到符合要求的模块，同时也可以发现我们定义的容器可以为我们维护这些bean，当有bean已经组装创建出来之后就不需要再创建了。</p>
-<pre><code>public class SimpleIOCDemo {
-    public static void main(String[] args) throws ClassNotFoundException {
-        SimpleIOCContainer container = new SimpleIOCContainer();
-        DependModuleA moduleA = (DependModuleA) container.getBean(&quot;moduleA&quot;);
-        moduleA.funcFromModuleA();
-        DependModuleB moduleB = (DependModuleB) container.getBean(&quot;moduleB&quot;);
-        moduleB.funcFromModuleB();
-        MainModule mainModule = (MainModule) container.getBean(&quot;mainModule&quot;);
-        mainModule.getModuleA().funcFromModuleA();
-        mainModule.getModuleB().funcFromModuleB();
-        container.getBean(&quot;mainModule&quot;);
-    }
-}
-</code></pre><p>这就是我依据IOC的基本思想创建的IOC容器原型，spring IOC虽然语法复杂，但是说到底完成的任务在核心上都是一样的，所谓的“万变不离其宗”。</p>
-
-          
+          <blockquote>
+<p>spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。那么说到底，IOC究竟是如何实现的呢？</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/31/SpringIOC的根本基础原理在哪里？/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -1984,66 +1148,14 @@ moduleB=com.rocking.demo.DependModuleBImpl
 
       
         
-          
-            <h1 id="Java虚拟机-：Java字节码的编译生成和运行优化"><a href="#Java虚拟机-：Java字节码的编译生成和运行优化" class="headerlink" title="Java虚拟机 ：Java字节码的编译生成和运行优化"></a>Java虚拟机 ：Java字节码的编译生成和运行优化</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。</p>
-<p>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。</p>
-<h2 id="Java字节码的编译生成"><a href="#Java字节码的编译生成" class="headerlink" title="Java字节码的编译生成"></a>Java字节码的编译生成</h2><p>我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？</p>
-<p>我们这里讨论的仅仅是从程序员编写的java源代码的编译得到的字节码，但是要知道的事，字节码不仅仅可以从源文件编译生成，字节码可以通过直接用二进制的字节拼接产生，这个拼接的起点除了间接通过编译期生成，也可以通过直接写进内存，比如通过动态代理构造的临时代理类就是通过直接写入内存的二进制字节码形成的，再比如jsp通过jsp转换器可以转变为一个对应的请求处理类，等等。总之，我们在这里讨论的仅仅是通过编译期将静态的java源代码文件编译成二进制字节码。</p>
-<p>使用javac编写的java命令是编译过程的执行者，这个命令的使命就是把java源文件转换成为java二进制字节码，javac完成这一使命的步骤主要包括如下的子过程：</p>
-<ol>
-<li>解析与填充符号表</li>
-<li>插入式注解处理器的注解处理过程</li>
-<li>分析与字节码生成</li>
-</ol>
-<p>这个过程的详细数据流和控制流如下：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmu3yonhj30m80d2wg1.jpg" alt=""></p>
-<p>这些过程的目的和一般的传统的编译过程类似，因为和传统编译过程的源文件到机器代码的目的相比，java源代码到虚拟机二进制字节码的编译过程只是最终运行的平台是虚拟机，除此之外大致是一样的处理办法。</p>
-<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>这个过程是以源代码为输入流，词法分析器和语法分析器为控制器，抽象语法树为输出流，最终生成的语法树是一个以各种语法节点（接口、包等）为顶层节点的树结构，词法分析器对输入流转换成词法元单位Token的序列，语法分析器对Token序列进行分析得到最终的语法树，顺着这个语法树的各个顶层节点，可以找到程序中所有的变量、方法甚至是注释的各种信息。语法树是后期语义分析的基础。<br>一个语法树的实例：</p>
-<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jmu8fhhbj30ks0m80vm.jpg" alt=""></p>
-<h3 id="填充符号表"><a href="#填充符号表" class="headerlink" title="填充符号表"></a>填充符号表</h3><p>在解析过后会分析生成的语法树中的各类符号，包括程序中的各类符号的信息都将存储在这个符号表里。在经历完这一步之后符号表将成为一个包含了语法树顶层节点的表，顺着这个表可以分类地寻到每个符号的信息。</p>
-<h3 id="注解处理过程"><a href="#注解处理过程" class="headerlink" title="注解处理过程"></a>注解处理过程</h3><p>在引入注解之后加入了对插入式注解处理器的编译过程，注解是形如”@XX”的语法结构，这个语法结构的目的当然不是简单的标记，而是对应到了一个对应的注解处理器之上，注解完成的任务是注解处理器定义的，因此在这个过程里注解处理器定义的任务将会以修改语法树的方式起作用。每次处理一个注解后都可能会改变语法树的结构，然后再启用符号表的填充，这个循环（round）将会是一次小规模的重建语法树和符号表，当扫描完所有的注解后语法树的结构在这个阶段将会稳定下来，然后给出一个为下面过程提供信息的To do List。实际上注解处理过程是程序员在编译过程中控制程序的很少的机会，因为其他过程大都是是编译器以无人为控制（没有程序员编写程序的指导）的情况下的处理。</p>
-<h3 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h3><p>能通过词法语法分析并不意味着语义上是成立的，因此这个过程是处理语义的过程，语义分析器通过对符号表索引的语法树的分析，对程序表达的语义进行分析。它包括几个字过程：</p>
-<ul>
-<li>标注检查：主要是类型对应变量声明以及常量折叠的检查；</li>
-<li>数据控制流检查：对程序上下文逻辑的检验，包括局部变量赋值、返回值和异常处理等；</li>
-<li>解语法糖：语法糖是程序员友好的语法规则，这些友好的规则还是要在这个过程中解开成为真正需要表达的意思的（装箱拆箱、泛型、遍历循环等的语法都会在底层替换称为“复杂”的实现）。</li>
-</ul>
-<h3 id="字节码生成"><a href="#字节码生成" class="headerlink" title="字节码生成"></a>字节码生成</h3><p>把语法树定义的抽象的语法结构按照class二进制字节码的规则排布成class字节码，最终我们可以看到满足虚拟机运行要求的二进制字节码被转换出来。在这个过程中还会有特定的代码添加和初级的优化，比如默认的类构造器<init>()和实例构造器<clinit>()。</clinit></init></p>
-<blockquote>
-<p>注意不是构造函数，构造函数是在填充符号表的阶段完成的，构造函数用于完成new操作，而构造器是在内存中构造出该类的基本结构，而构造函数是语法层级较高的操作，同时还会将静态代码块static{}加入类构造器，将构造代码块{}加入到实例构造器中，包括实例变量和类变量的初始化、父类构造器的调用等过程都会加入到构造器中去。</p>
+          <blockquote>
+<p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。<br>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。</p>
 </blockquote>
-<p>上面的过程完成后，javac命令扮演的编译器就将源代码转成了结构化的二进制字节码。</p>
-<h2 id="Java字节码的运行优化"><a href="#Java字节码的运行优化" class="headerlink" title="Java字节码的运行优化"></a>Java字节码的运行优化</h2><h3 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h3><p>字节码的运行过程我们在第三篇的时候已经解释过了：</p>
-<p><a href="http://segmentfault.com/a/1190000003871183" target="_blank" rel="external">Java虚拟机 ：Java字节码指令的执行</a></p>
-<p>当时我们看到的是逐一把二进制命令执行，也就是说执行引擎每取一条二进制指令就执行一次，这种执行方式称为解释执行（interpreted mode），我们其实可以看出解释执行的优点在于每次执行的时候都会确知当前程序的状态，但是每次执行都要从方法区里取命令，然后再能够在堆栈中执行操作，每次都去取指令无疑是会减慢执行速度的，即便把马上要执行的命令置于高速缓冲上。</p>
-<h3 id="即时编译执行"><a href="#即时编译执行" class="headerlink" title="即时编译执行"></a>即时编译执行</h3><p>基于这个弱点就有了另一种执行模式，编译模式（compiled mode），这个模式中非常重要的参与者就是JIT即时编译器（Just Intime），编译模式的原理其实就像是C一样的编译型语言一样把源代码直接编译成机器语言然后一口气运行完，省去了每次取指令的时间（只不过C是直接把源代码编译成机器码，而java是把二进制字节码通过虚拟机的JIT即时编译器编成本地机器码）。</p>
-<p><strong>JIT触发的条件：</strong></p>
-<p>不是所有的代码被以编译模式执行都是好的，因为JIT编译本身也是费时的，所以必须在非常有必要进行编译的部分才应该去编译，这些地方就是需要反复使用的部分，因为反复使用的部分是需要进行进行最大化优化的，而只用几次的代码可能使用的时间还不及JIT编译的时间，这样做就没有“性价比”了。所以我们来看看被称为hotspot的这些反复使用的代码被编译模式执行的特点：<br>如果是多次调用的方法或者是多次执行的循环体就是hotspot的。</p>
-<p>一般虚拟机会为每个方法添加一个计数器，这个计数器用于计量方法执行的次数，当这个计数器计量这个方法调用超过某个阈值时就会触发JIT编译器对这个方法的编译，即时编译后的代码会成为本地机器码，执行速度会大大加快，同时由于这个方法使用次数非常多，所以将会大大加速程序的运行。当然这个过程不是仅仅这么简单，因为如果这样的话程序运行时间足够长的话会有很多并不那么“热”的代码也会成为hotspot的，比如某段代码运行了一段时间后陷入了“冷”状态，那么这段代码就算不上是hotspot的，因此默认情况下虚拟机查看的更是代码在一个时间内的调用频率，如果一段时间内的使用次数足够多才会说明这段代码是hotspot的。</p>
-<p>同样的，循环体会被虚拟机加入一个回边计数器用以统计循环体的使用频率。<br>下面展示的就是在JIT这套机制下的编译模式的执行流程：</p>
-<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmubhp5kj30jm0m83zu.jpg" alt=""></p>
-<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jmudmxyfj30gv0m80tx.jpg" alt=""></p>
-<p>值得注意的是，JIT编译的时候并不是说线程就停在这里一直等待编译的本地机器码的结果出现，而是继续以解释模式执行，这能充分利用执行时间，等到下次执行到这里的时候再看看是否JIT编译已经有了结果，如果有了就去执行本地代码，否则还得解释执行以继续等待。</p>
-<p>JIT即时编译器在后台执行的编译任务时也会首先对字节码进行优化，包括方法内联和常量传播等策略，然后转换成高级中间代码表示，再进行一次优化，然后转为平台相关的低级中间代码表示，再进行一次优化，最后变成平台相关的机器代码。这个底层的优化过程属于相对机器层级的优化。</p>
-<p>这里所提的还有几个编译过程中的比较典型的优化技术：</p>
-<ul>
-<li>公共子表达式消除：用于消除重复计算带来的性能损失；</li>
-<li>数组边界检查消除：编译期确定的数组范围将不必要的边界检查条件去除；</li>
-<li>方法内联：避免方法调用的时候产生的栈切换和现场恢复等过程带来的损耗，由于java的因为虚方法的重载重写等问题带来的方法分派问题，内联的结果不能确定一定正确，所以才用的一般是激进优化失败退回的策略；</li>
-<li>逃逸分析：如果一个方法中的局部变量不会通过调用函数作为参数传出被外部方法或线程使用的时候，可以采用更加高效的办法优化：</li>
-</ul>
-<blockquote>
-<ul>
-<li><p>栈上分配：在栈上直接为变量对象分配空间，因为知道了这个对象不会发生逃逸被外部访问到，所以某种程度上来讲这就是一个“临时封闭在方法里”的对象，所以这种栈上分配的办法不会造成问题。使用完毕后就将它直接释放，也减小了gc的压力。</p>
-</li>
-<li><p>同步消除：同理的，不会被外部线程访问到的“临时封闭在方法里”的对象是不会发生共享的，所以可以消除它的同步标记。</p>
-</li>
-<li><p>标量替换：如果一个局部变量对象是“临时封闭在方法里”的对象，那么就完全没有必要建立一个完整的对象，只需要在栈上创建它的相关字段就可以了，这样做可以加速对真正被访问的变量的速度。</p>
-</li>
-</ul>
-</blockquote>
-
-          
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/24/Java字节码的编译生成和运行优化/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>
@@ -2141,116 +1253,14 @@ moduleB=com.rocking.demo.DependModuleBImpl
 
       
         
-          
-            <h1 id="Java基础-：Java的代理模式"><a href="#Java基础-：Java的代理模式" class="headerlink" title="Java基础 ：Java的代理模式"></a>Java基础 ：Java的代理模式</h1><p>代理的目的到底是什么呢？字面意思上就可以解释：代理就是“代人理事”，也就是说当实现某个操作的时候发现根本不能使用相关的对象或者使用这个对象的效果不好的时候就建立一个“代它理事”的代理对象，让代理对象去完成任务，因为我们关注的是完成任务本身，至于是谁完成了这个任务是不重要的。在这种逻辑下，只要建立的代理对象能够实现像原来那个对象一样的方法就行，更进一步说，我们新建的这个代理对象有足够大的自由度，不仅可以完成原来那个对象的功能，还能完成其他我们附加上的功能。<br>举两个例子：</p>
-<ul>
-<li>如果那个对象是一个是很大的图片,需要花费很长时间才能显示出来,那么当这个图片包含在文档中时,使用编辑器或浏览器打开这个文档,打开文档必须很迅速,不能等待大图片处理完成,这时需要做个图片Proxy来代替真正的图片。</li>
-<li>如果那个对象在Internet的某个远端服务器上,直接操作这个对象因为网络速度原因可能比较慢,那我们可以先用Proxy来代替那个对象。</li>
-</ul>
-<p>我们来说说静态代理和动态代理：<br><strong>静态代理：</strong>我们的代理对象是手动创建的，代理对象内部是有一个被代理对象对应的类的对象的，所以如果想要执行某些被代理对象的方法时就可以使用这个新建的代理对象的同名方法去执行，这个时候执行的逻辑里面其实就可以用这个内部对象的同名方法。</p>
-<pre><code>interface Subject{
-        public void operate();
-}
-
-class SubjectImpl implements Subject{
-        @Override
-        public void operate() {
-              System. out.println( &quot;real operate&quot;);
-       }
-}
-
-class SubjProxy implements Subject{
-       SubjectImpl subjectImpl = new SubjectImpl();
-        @Override
-        public void operate() {
-              System. out.println( &quot;proxy starts&quot;);
-               subjectImpl.operate();
-       }
-}
-
-public class TestClass {
-        public static void main(String[] args) {
-              SubjProxy proxy = new SubjProxy();
-              proxy.operate();
-       }
-}
-</code></pre><p>通过上面的例子我们可以看出来新建的代理对象拥有和原对象相同的接口，所以可以像操作原对象一样地去操作代理对象，代理对象的方法还可以做出拓展，做到原对象做不了的事情。</p>
-<p><strong>动态代理：</strong>通过查看静态类型的例子，我们有了新的问题：我们其实并想要一个准确的内部对象来完成实际的动作，我们想要的就是原对象的类结构，然后通过重写这个类结构中的相关方法去直接完成任务，在java中，我们完全可以通过反射去解决这个问题，完全不需要再去在代理对象内部搞一个原对象类型的对象出来。</p>
-<pre><code>interface Subject{
-        public void operate();
-}
-
-class SubjectImpl implements Subject{
-        @Override
-        public void operate() {
-              System. out.println( &quot;real operate&quot;);
-       }
-}
-
-public class TestClass {
-        public static void main(String[] args) {
-              Subject subject = (Subject)Proxy.newProxyInstance(SubjectImpl. class.getClassLoader(), SubjectImpl.class.getInterfaces(), new InvocationHandler() {
-                      @Override
-                      public Object invoke(Object proxy, Method method, Object[] args)
-                                   throws Throwable {
-                                  System. out.println( &quot;Proxy operate&quot;);
-                            return null;
-                     }
-              });
-              subject.operate();
-       }
-}
-</code></pre><p>动态代理的方式其实是反射的一种体现，为了让最后的代理对象能够真的去执行被代理的对象才能完成的任务，代理对象必须要得到被代理对象的类的结构，这样就能获取到被代理对象的方法，截获这个方法后可以使得方法重定向到代理对象的invoke方法上执行被重写的代理方法。所以新建代理对象实例的时候要将被代理类的类加载器、类实现的接口和重写被代理类方法的处理器对象作为参数构造代理对象，类加载器用以在后面使用这个代理对象的时候能够由被代理类的类加载器所加载，类的实现接口用以使得这个代理对象可以对外宣称自己实现了这些接口，重写方法的处理器用于真正地重写那些需要代理的方法，这样一来我们可以像使用被代理对象一样去使用代理对象，实现了代理对象能够真的做到“代人理事”。</p>
-<pre><code>interface Subject{
-        public void operate();
-        public int func();
-}
-
-class SubjectImpl implements Subject{
-        @Override
-        public void operate() {
-              System. out.println( &quot;real operate&quot;);
-       }
-
-        @Override
-        public int func() {
-              System. out.println( &quot;func&quot;);
-               return 2;
-       }
-
-}
-
-public class TestClass {
-        public static void main(String[] args) {
-              Subject subject = (Subject)Proxy.newProxyInstance(SubjectImpl. class.getClassLoader(), SubjectImpl.class.getInterfaces(), new InvocationHandler() {
-                      @Override
-                      public Object invoke(Object proxy, Method method, Object[] args)
-                                   throws Throwable {
-                            if(method.getName().equals( &quot;operate&quot;))
-                                  System. out.println( &quot;Proxy operate&quot;);
-                            else {
-                                  System. out.println( &quot;func&quot;);
-                                   return new Integer(1);
-                           }
-                            return null;
-                     }
-              });
-              subject.operate();
-              System. out.println(subject.func());
-       }
-}
-</code></pre><p>代理模式在虚拟机中的实现其实也不复杂，在运行期在字节码的基础上新创建一个临时代理类，临时代理类的各方法其实就是被代理类的同名方法的反射，执行这些方法的时候就会执行被代理的类中的反射出的同名方法。这种在运行期直接通过虚拟机加入二进制字节码的方法是实现动态代理的手段：</p>
-<pre><code>public final class $Proxy0 extends java.lang.reflect.Proxy implements Subject{
-    public $Proxy0(java.lang.reflect.InvocationHandler)       throws ;
-    public final int func()       throws ;
-    public final boolean equals(java.lang.Object)       throws ;
-    public final int hashCode()       throws ;
-    public final void operate()       throws ;
-    public final java.lang.String toString()       throws ;
-    static {}       throws ;
-}
-</code></pre>
-          
+          <blockquote>
+<p>这篇文章解释了一下作为最重要的设计模式之一的代理，Java是如何通过静态编码和动态生成来实现代理的呢？</p>
+</blockquote>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/19/Java的代理模式/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
         
       
     </div>

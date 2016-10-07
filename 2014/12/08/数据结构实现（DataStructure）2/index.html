@@ -84,27 +84,18 @@
 
 
 
-<meta name="description" content="Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
-继承构建堆栈：
-public class StackInheritance extends List {
-   public Stack">
+<meta name="description" content="数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构实现（DataStructure）2">
 <meta property="og:url" content="http://jinhaoplus.top/2014/12/08/数据结构实现（DataStructure）2/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
-继承构建堆栈：
-public class StackInheritance extends List {
-   public Stack">
+<meta property="og:description" content="数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrgr1r8j30j10cndgf.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrihhxdj30m809naat.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:39:15.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:37:17.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构实现（DataStructure）2">
-<meta name="twitter:description" content="Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
-继承构建堆栈：
-public class StackInheritance extends List {
-   public Stack">
+<meta name="twitter:description" content="数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。">
 <meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrgr1r8j30j10cndgf.jpg">
 
 
@@ -315,7 +306,11 @@ public class StackInheritance extends List {
       
 
       
-        <h1 id="Java-数据结构实现（DataStructure）2"><a href="#Java-数据结构实现（DataStructure）2" class="headerlink" title="Java 数据结构实现（DataStructure）2"></a>Java 数据结构实现（DataStructure）2</h1><h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a><strong>堆栈</strong></h2><p><strong>可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，</strong>可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。</p>
+        <blockquote>
+<p>数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java-数据结构实现（DataStructure）2"><a href="#Java-数据结构实现（DataStructure）2" class="headerlink" title="Java 数据结构实现（DataStructure）2"></a>Java 数据结构实现（DataStructure）2</h1><h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a><strong>堆栈</strong></h2><p><strong>可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，</strong>可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。</p>
 <p>继承构建堆栈：</p>
 <pre><code>public class StackInheritance extends List {
    public StackInheritance() { super( &quot;stack&quot; ); }

@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="Spring IOC：Spring IOC 的根本基础原理在哪里？spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。
-这样做的好处是什么呢？
-当然就是所谓的“解耦”了，可以使得程序的各模块之间的关系更为独立，只需要spring控制这些模块之间的依赖关系并在容器启动和初">
+<meta name="description" content="spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。那么说到底，IOC究竟是如何实现的呢？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="SpringIOC的根本基础原理在哪里？">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/31/SpringIOC的根本基础原理在哪里？/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Spring IOC：Spring IOC 的根本基础原理在哪里？spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。
-这样做的好处是什么呢？
-当然就是所谓的“解耦”了，可以使得程序的各模块之间的关系更为独立，只需要spring控制这些模块之间的依赖关系并在容器启动和初">
-<meta property="og:updated_time" content="2016-10-07T05:18:32.000Z">
+<meta property="og:description" content="spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。那么说到底，IOC究竟是如何实现的呢？">
+<meta property="og:updated_time" content="2016-10-07T09:29:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="SpringIOC的根本基础原理在哪里？">
-<meta name="twitter:description" content="Spring IOC：Spring IOC 的根本基础原理在哪里？spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。
-这样做的好处是什么呢？
-当然就是所谓的“解耦”了，可以使得程序的各模块之间的关系更为独立，只需要spring控制这些模块之间的依赖关系并在容器启动和初">
+<meta name="twitter:description" content="spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。那么说到底，IOC究竟是如何实现的呢？">
 
 
 
@@ -309,7 +303,11 @@
       
 
       
-        <h1 id="Spring-IOC：Spring-IOC-的根本基础原理在哪里？"><a href="#Spring-IOC：Spring-IOC-的根本基础原理在哪里？" class="headerlink" title="Spring IOC：Spring IOC 的根本基础原理在哪里？"></a>Spring IOC：Spring IOC 的根本基础原理在哪里？</h1><p>spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。</p>
+        <blockquote>
+<p>spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。那么说到底，IOC究竟是如何实现的呢？</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Spring-IOC：Spring-IOC-的根本基础原理在哪里？"><a href="#Spring-IOC：Spring-IOC-的根本基础原理在哪里？" class="headerlink" title="Spring IOC：Spring IOC 的根本基础原理在哪里？"></a>Spring IOC：Spring IOC 的根本基础原理在哪里？</h1><p>spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。</p>
 <p><strong>这样做的好处是什么呢？</strong></p>
 <p>当然就是所谓的“解耦”了，可以使得程序的各模块之间的关系更为独立，只需要spring控制这些模块之间的依赖关系并在容器启动和初始化的过程中将依据这些依赖关系创建、管理和维护这些模块就好，如果需要改变模块间的依赖关系的话，甚至都不需要改变程序代码，只需要将更改的依赖关系进行修改即可，spring会在再次启动和初始化容器的过程中使得这些新的依赖关系重新建立符合新需求的模块，在这个过程中，需要注意的是代码本身不需要体现对于模块具体依赖情形的声明而只需要定义其所需模块的接口，所以这是一种典型的面向接口思想，同时最好将依赖关系以配置文件或者注解的形式表述出来，相关的spring处理类会根据这些外部的配置文件组装模块，或者扫描注解调用内部的注解处理器组装模块，以此完成IOC的过程。</p>
 <p>IOC的目的是称为DI的依赖注入，通过IOC技术，最终容器将帮助我们完成模块间的依赖注入。</p>

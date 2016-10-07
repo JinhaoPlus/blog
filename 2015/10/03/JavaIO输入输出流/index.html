@@ -84,42 +84,21 @@
 
 
 
-<meta name="description" content="JavaIO ：JavaIO输入输出流流的原理：
-一连串有顺序的数据系列可以看成是一个流。
-输入输出流：
-数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
-
-下面我们使用字节输入输出流来说明这个问题：
-
-输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”">
+<meta name="description" content="接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第五篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaIO输入输出流">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/03/JavaIO输入输出流/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="JavaIO ：JavaIO输入输出流流的原理：
-一连串有顺序的数据系列可以看成是一个流。
-输入输出流：
-数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
-
-下面我们使用字节输入输出流来说明这个问题：
-
-输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”">
+<meta property="og:description" content="接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第五篇。">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jq3ufog5j30bx0m8mxf.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq43wsyfj30d40m8t90.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq4i3zy9j30et0m8jrv.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jq4y27n2j30ly0m8gmu.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:14:09.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:48:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaIO输入输出流">
-<meta name="twitter:description" content="JavaIO ：JavaIO输入输出流流的原理：
-一连串有顺序的数据系列可以看成是一个流。
-输入输出流：
-数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
-
-下面我们使用字节输入输出流来说明这个问题：
-
-输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”">
+<meta name="twitter:description" content="接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第五篇。">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg">
 
 
@@ -330,7 +309,11 @@
       
 
       
-        <h1 id="JavaIO-：JavaIO输入输出流"><a href="#JavaIO-：JavaIO输入输出流" class="headerlink" title="JavaIO ：JavaIO输入输出流"></a>JavaIO ：JavaIO输入输出流</h1><h1 id="流的原理："><a href="#流的原理：" class="headerlink" title="流的原理："></a>流的原理：</h1><p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg" alt=""></p>
+        <blockquote>
+<p>接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第五篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="JavaIO-：JavaIO输入输出流"><a href="#JavaIO-：JavaIO输入输出流" class="headerlink" title="JavaIO ：JavaIO输入输出流"></a>JavaIO ：JavaIO输入输出流</h1><h1 id="流的原理："><a href="#流的原理：" class="headerlink" title="流的原理："></a>流的原理：</h1><p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg" alt=""></p>
 <p>一连串有顺序的数据系列可以看成是一个流。</p>
 <h1 id="输入输出流："><a href="#输入输出流：" class="headerlink" title="输入输出流："></a>输入输出流：</h1><blockquote>
 <p>数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。</p>

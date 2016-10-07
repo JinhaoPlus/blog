@@ -84,42 +84,21 @@
 
 
 
-<meta name="description" content="Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
-下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
-
-
-
-以下两图说明了添加删除头尾节点时执行的顺序：
-
-添加头结点时先加一个">
+<meta name="description" content="数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据结构实现（DataStructure）1">
 <meta property="og:url" content="http://jinhaoplus.top/2014/12/05/数据结构实现（DataStructure）1/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
-下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
-
-
-
-以下两图说明了添加删除头尾节点时执行的顺序：
-
-添加头结点时先加一个">
+<meta property="og:description" content="数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu697lsj30m806naad.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu83kcej30m806j0t8.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqut78u4j30m80c6dgo.jpg">
 <meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jquv5kdbj30m80ci754.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:38:46.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:37:29.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="数据结构实现（DataStructure）1">
-<meta name="twitter:description" content="Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
-下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
-
-
-
-以下两图说明了添加删除头尾节点时执行的顺序：
-
-添加头结点时先加一个">
+<meta name="twitter:description" content="数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg">
 
 
@@ -330,7 +309,11 @@
       
 
       
-        <h1 id="Java-数据结构实现（DataStructure）1"><a href="#Java-数据结构实现（DataStructure）1" class="headerlink" title="Java 数据结构实现（DataStructure）1"></a>Java 数据结构实现（DataStructure）1</h1><h2 id="线性表和链表"><a href="#线性表和链表" class="headerlink" title="线性表和链表"></a><strong>线性表和链表</strong></h2><p>单向<strong>链表利用了类的自引用，实现了类似指针的效果。</strong><br>双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。</p>
+        <blockquote>
+<p>数据结构是程序的基础，使用Java来实现最基本的数据结构：线性表、堆栈和树，本文辅以图解来简要说明它们的实现。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java-数据结构实现（DataStructure）1"><a href="#Java-数据结构实现（DataStructure）1" class="headerlink" title="Java 数据结构实现（DataStructure）1"></a>Java 数据结构实现（DataStructure）1</h1><h2 id="线性表和链表"><a href="#线性表和链表" class="headerlink" title="线性表和链表"></a><strong>线性表和链表</strong></h2><p>单向<strong>链表利用了类的自引用，实现了类似指针的效果。</strong><br>双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。</p>
 <p>下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。</p>
 <p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg" alt=""></p>
 <p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu697lsj30m806naad.jpg" alt=""></p>

@@ -84,16 +84,16 @@
 
 
 
-<meta name="description" content="开篇Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘">
+<meta name="description" content="在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第二篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Core-Java[Volume1] KeyPoints-Ch5">
 <meta property="og:url" content="http://jinhaoplus.top/2015/12/22/Core-Java[Volume1]KeyPoints-Ch5/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="开篇Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘">
-<meta property="og:updated_time" content="2016-10-07T07:59:37.000Z">
+<meta property="og:description" content="在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第二篇。">
+<meta property="og:updated_time" content="2016-10-07T09:28:15.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Core-Java[Volume1] KeyPoints-Ch5">
-<meta name="twitter:description" content="开篇Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘">
+<meta name="twitter:description" content="在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第二篇。">
 
 
 
@@ -304,8 +304,9 @@
 
       
         <blockquote>
-<p>开篇<br>Java是一门不那么简单也不那么复杂的语言，Java里面有很多问题和特性是容易被使用者忽视的，这些问题也许会难住新手，同时也许会是老手不小心跌入的无故之坑，只有精于对基础的提炼才能最大程度地解决类似的疑问。所以，在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。这个博客将以原书中的章节为分割，大概会是每章一篇，持续更新，每篇的内容也不会一次全部写完，视我个人对问题的理解和我的阅读进度而定。</p>
+<p>在读Cay.Horstmann的《Java核心技术》的过程中，我记录下这些所谓的易忽略的问题，这些问题将会持续更新在我的这个Segment Fault的博客下，也算是激励自己重新挖掘这些基础问题的内涵。本文是系列的第二篇。</p>
 </blockquote>
+<a id="more"></a>
 <h1 id="Core-Java-Volume-1-Key-Points"><a href="#Core-Java-Volume-1-Key-Points" class="headerlink" title="Core Java Volume 1 Key Points"></a>Core Java Volume 1 Key Points</h1><h2 id="chap5"><a href="#chap5" class="headerlink" title="chap5"></a>chap5</h2><h3 id="super关键字和this"><a href="#super关键字和this" class="headerlink" title="super关键字和this"></a>super关键字和this</h3><p>super这个关键字和this其实是完全不同的，因为this实际上是一个真实存在的引用，是一个缺省的传入方法的隐式参数，引用当前的对象，所以可以完全当做一个正常的引用来使用。而super并不是父类对象的引用，而只是给javac编译器的一个提示性质的标志。当使用如下的super时：</p>
 <ul>
 <li><p>super.someFunction();   提示javac在编译这个someFunction()方法的时候去使用该类的父类定义的someFunction()方法，这一般是在当前的子类也定义了同样名字的someFunction()方法的时候去使用的。</p>

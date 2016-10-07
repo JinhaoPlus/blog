@@ -84,25 +84,16 @@
 
 
 
-<meta name="description" content="Java多线程：Java多线程同步与对象控制权join()函数Join的含义是：将某一线程加入成为另一个线程的流程之一，换言之就是等待另一个线程执行完毕。
-public class JoinTest {
-        public static void main(String[] args) throws InterruptedException {
-              Thread">
+<meta name="description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第四篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java多线程同步与对象控制权">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/10/Java多线程同步与对象控制权/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java多线程：Java多线程同步与对象控制权join()函数Join的含义是：将某一线程加入成为另一个线程的流程之一，换言之就是等待另一个线程执行完毕。
-public class JoinTest {
-        public static void main(String[] args) throws InterruptedException {
-              Thread">
-<meta property="og:updated_time" content="2016-10-07T07:16:32.000Z">
+<meta property="og:description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第四篇。">
+<meta property="og:updated_time" content="2016-10-07T09:47:21.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java多线程同步与对象控制权">
-<meta name="twitter:description" content="Java多线程：Java多线程同步与对象控制权join()函数Join的含义是：将某一线程加入成为另一个线程的流程之一，换言之就是等待另一个线程执行完毕。
-public class JoinTest {
-        public static void main(String[] args) throws InterruptedException {
-              Thread">
+<meta name="twitter:description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第四篇。">
 
 
 
@@ -312,7 +303,11 @@ public class JoinTest {
       
 
       
-        <h1 id="Java多线程：Java多线程同步与对象控制权"><a href="#Java多线程：Java多线程同步与对象控制权" class="headerlink" title="Java多线程：Java多线程同步与对象控制权"></a>Java多线程：Java多线程同步与对象控制权</h1><h2 id="join-函数"><a href="#join-函数" class="headerlink" title="join()函数"></a><strong>join()函数</strong></h2><p>Join的含义是：将某一线程加入成为另一个线程的流程之一，换言之就是等待另一个线程执行完毕。</p>
+        <blockquote>
+<p>金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第四篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java多线程：Java多线程同步与对象控制权"><a href="#Java多线程：Java多线程同步与对象控制权" class="headerlink" title="Java多线程：Java多线程同步与对象控制权"></a>Java多线程：Java多线程同步与对象控制权</h1><h2 id="join-函数"><a href="#join-函数" class="headerlink" title="join()函数"></a><strong>join()函数</strong></h2><p>Join的含义是：将某一线程加入成为另一个线程的流程之一，换言之就是等待另一个线程执行完毕。</p>
 <pre><code>public class JoinTest {
         public static void main(String[] args) throws InterruptedException {
               Thread otherThread = new Thread( new Runnable() {

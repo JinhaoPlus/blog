@@ -84,28 +84,19 @@
 
 
 
-<meta name="description" content="Java 多态（polymorphism）父类对象被定义成子类类型（家族的具体化）
-既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大">
+<meta name="description" content="作为Java的OOP特性的继承、多态，这些基本的概念是Java程序员的入门菜，那我们上菜吧。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="多态（polymorphism）">
 <meta property="og:url" content="http://jinhaoplus.top/2014/12/03/多态（polymorphism）/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java 多态（polymorphism）父类对象被定义成子类类型（家族的具体化）
-既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大">
+<meta property="og:description" content="作为Java的OOP特性的继承、多态，这些基本的概念是Java程序员的入门菜，那我们上菜吧。">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jr0hymo5j30j6088wen.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jr0sb9axj30m80a7wf5.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jr0uuk6nj30m80chjsn.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:44:43.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:34:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="多态（polymorphism）">
-<meta name="twitter:description" content="Java 多态（polymorphism）父类对象被定义成子类类型（家族的具体化）
-既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大">
+<meta name="twitter:description" content="作为Java的OOP特性的继承、多态，这些基本的概念是Java程序员的入门菜，那我们上菜吧。">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jr0hymo5j30j6088wen.jpg">
 
 
@@ -316,7 +307,11 @@
       
 
       
-        <h2 id="Java-多态（polymorphism）"><a href="#Java-多态（polymorphism）" class="headerlink" title="Java 多态（polymorphism）"></a>Java 多态（polymorphism）</h2><p><strong>父类对象被定义成子类类型（家族的具体化）</strong></p>
+        <blockquote>
+<p>作为Java的OOP特性的继承、多态，这些基本的概念是Java程序员的入门菜，那我们上菜吧。</p>
+</blockquote>
+<a id="more"></a>
+<h2 id="Java-多态（polymorphism）"><a href="#Java-多态（polymorphism）" class="headerlink" title="Java 多态（polymorphism）"></a>Java 多态（polymorphism）</h2><p><strong>父类对象被定义成子类类型（家族的具体化）</strong></p>
 <p>既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。</p>
 <p><strong>反过来子类对象不能被定义成父类类型</strong></p>
 <p>子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。</p>

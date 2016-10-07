@@ -84,22 +84,19 @@
 
 
 
-<meta name="description" content="WebMVC和Spring MVC框架WebMVC的基本任务我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。
-1.servlet时期：">
+<meta name="description" content="几乎全世界的Web程序员都在和这个名词打交道，因为这几乎是Web应用世界里面最重要的概念之一了。对于Java世界来说Spring毫无疑问又堪称解放Java开发者的轻量级MVC框架，本文意在回顾MVC框架的前世今生，并且看看Spring作出的改进。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="WebMVC和Spring MVC框架">
 <meta property="og:url" content="http://jinhaoplus.top/2016/02/25/WebMVC和Spring MVC框架/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="WebMVC和Spring MVC框架WebMVC的基本任务我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。
-1.servlet时期：">
+<meta property="og:description" content="几乎全世界的Web程序员都在和这个名词打交道，因为这几乎是Web应用世界里面最重要的概念之一了。对于Java世界来说Spring毫无疑问又堪称解放Java开发者的轻量级MVC框架，本文意在回顾MVC框架的前世今生，并且看看Spring作出的改进。">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jlsln0vij30m808kq3n.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jltf876jj30m80bt0tt.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:59:03.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:24:19.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="WebMVC和Spring MVC框架">
-<meta name="twitter:description" content="WebMVC和Spring MVC框架WebMVC的基本任务我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。
-1.servlet时期：">
+<meta name="twitter:description" content="几乎全世界的Web程序员都在和这个名词打交道，因为这几乎是Web应用世界里面最重要的概念之一了。对于Java世界来说Spring毫无疑问又堪称解放Java开发者的轻量级MVC框架，本文意在回顾MVC框架的前世今生，并且看看Spring作出的改进。">
 <meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg">
 
 
@@ -310,7 +307,11 @@
       
 
       
-        <h1 id="WebMVC和Spring-MVC框架"><a href="#WebMVC和Spring-MVC框架" class="headerlink" title="WebMVC和Spring MVC框架"></a>WebMVC和Spring MVC框架</h1><h2 id="WebMVC的基本任务"><a href="#WebMVC的基本任务" class="headerlink" title="WebMVC的基本任务"></a>WebMVC的基本任务</h2><p>我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。<br>在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。</p>
+        <blockquote>
+<p>几乎全世界的Web程序员都在和这个名词打交道，因为这几乎是Web应用世界里面最重要的概念之一了。对于Java世界来说Spring毫无疑问又堪称解放Java开发者的轻量级MVC框架，本文意在回顾MVC框架的前世今生，并且看看Spring作出的改进。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="WebMVC和Spring-MVC框架"><a href="#WebMVC和Spring-MVC框架" class="headerlink" title="WebMVC和Spring MVC框架"></a>WebMVC和Spring MVC框架</h1><h2 id="WebMVC的基本任务"><a href="#WebMVC的基本任务" class="headerlink" title="WebMVC的基本任务"></a>WebMVC的基本任务</h2><p>我们先来说一下WebMVC框架的基本任务。在Web应用中，前台负责捕捉用户的动作、展示系统的一般界面和处理结果，后台则主要负责系统的逻辑层面的处理，前台和后台一起为系统和用户的交互、数据的处理服务，并最终构建出完整的Web应用。<br>在这个目的的基础上，我们先来看看Java技术下的Web应用的早期是怎么处理这个问题的。</p>
 <p>1.servlet时期：Web请求通过前端的html页面提交到后台servlet，servlet对请求进行处理、运行相关逻辑，通过输出html语句生成展示处理结果的页面回到前端，用户和系统之间的交互建立在繁琐的Web页面的生成基础上。<br>2.jsp（Java Server Page）时期：Web请求通过前端的jsp页面提交到后台逻辑的servlet或者jsp处理单元（jsp页面和servlet没有本质区别，前者执行的时候是会被编译成后者的），后台处理后处理结果放入相应的http请求数据保存区，再将这个Web请求转发到某个事先写就的jsp页面，jsp页面把需要的数据写入到自身并展示出来（在服务器后台实际上还有这样自动完成的步骤：编译成临时servlet，再通过输出html语句生成展示处理结果的页面回到前端）。这样系统的后台是建立在功能不甚清晰的servlet和jsp处理单元之上的。<br>3.servlet＋jsp时期：这是MVC思想在Web开发中的起点。servlet只被当作后台处理单元，而jsp页面只被当作前台展示和交互页面而不参与后台逻辑处理。Web请求通过jsp页面提交到后台，后台servlet则负责处理逻辑，后台处理后处理结果放入相应的http请求数据保存区，再将这个Web请求转发到某个事先写就的jsp页面，jsp页面把需要的数据写入到自身并展示出来。和jsp时期虽然看似相同，但是由于清楚划分了servlet的controller控制器作用、jsp的view视图的作用，（当然在后台还有model数据模型），使得Web开发能够结构化地进行，系统层次也更为清晰。</p>
 <p>那么我们来说明一下究竟什么是Web的MVC架构（当然除了在Web领域，大多数的用户系统交互中都会有MVC架构的影子）。M（Model数据模型）V（View视图）C（Controller），是Web应用的开发策略和Web应用实际运行的基本模型，大体说来就是这样的过程：请求通过V发送到后端C，C接收到请求后选择适当的M进行数据处理，处理完毕后C选择合适的V进行展现。<br>这个模型称为JSP Model2，是MVC模型的基本原理，如下图所示：</p>
 <p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jlr6omvkj30m80a3wf6.jpg" alt=""></p>

@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Java架构," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -84,17 +84,17 @@
 
 
 
-<meta name="description" content="使用CXF集成在Spring项目里以完成WebService搭建">
+<meta name="description" content="WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java系统WebService：Spring与CXF的集成">
 <meta property="og:url" content="http://jinhaoplus.top/2016/02/03/Java系统WebService：Spring与CXF的集成/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="使用CXF集成在Spring项目里以完成WebService搭建">
+<meta property="og:description" content="WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg">
-<meta property="og:updated_time" content="2016-10-07T08:23:07.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:25:49.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java系统WebService：Spring与CXF的集成">
-<meta name="twitter:description" content="使用CXF集成在Spring项目里以完成WebService搭建">
+<meta name="twitter:description" content="WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。">
 <meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg">
 
 
@@ -276,25 +276,6 @@
           </span>
 
           
-            <span class="post-category" >
-              &nbsp; | &nbsp;
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-              
-                <span itemprop="about" itemscope itemtype="https://schema.org/Thing">
-                  <a href="/categories/JavaWeb/" itemprop="url" rel="index">
-                    <span itemprop="name">JavaWeb</span>
-                  </a>
-                </span>
-
-                
-                
-
-              
-            </span>
-          
 
           
             
@@ -324,7 +305,11 @@
       
 
       
-        <h1 id="Java系统WebService：Spring与CXF的集成"><a href="#Java系统WebService：Spring与CXF的集成" class="headerlink" title="Java系统WebService：Spring与CXF的集成"></a>Java系统WebService：Spring与CXF的集成</h1><p>WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。</p>
+        <blockquote>
+<p>WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java系统WebService：Spring与CXF的集成"><a href="#Java系统WebService：Spring与CXF的集成" class="headerlink" title="Java系统WebService：Spring与CXF的集成"></a>Java系统WebService：Spring与CXF的集成</h1><p>WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。</p>
 <p>WebService的实现基本原理就是选择一个各异构系统（结构、开发方式、运行环境等都不完全相同）都能处理的交互信息的方式，让各系统模块能够“听懂”彼此的请求，也可以“告诉”彼此自己的请求，进而实现功能的调用，将追求的功能转为一组合适的通用交互API，开发者只需要根据开放出的API在自己的系统中发出合乎要求的请求就可以了。因此，XML这一相对来说通用性非常强的消息传递方式被选为了完成这一任务的“传递语言”：服务发布方用XML来描述自己系统内开放功能的XML格式的API，其中方法的名称、入参、返回值等都在XML中有明确规定，服务调用方则将自己需要功能的方法、入参、返回值等信息通过XML告知服务发布方，如此一来，就实现了WebService的交互。</p>
 <p>如果每个系统都要从头开始构建自己的WebService描述，处理服务消息发布、接收等任务的话系统的重用性将大大降低，因此，就像所有的系统级开发一样，在WebService这里也有很多现成的框架来帮助开发者快速部署自己的Web服务。现在的主流WebService服务框架主要有：</p>
 <p>1、JWS（Java WebService）是Java语言对WebService服务的一种实现，用来开发和发布服务。而从服务本身的角度来看JWS服务是没有语言界限的。但是Java语言为Java开发者提供便捷发布和调用WebService服务的一种途径。这是最原生的JAVA语言层面上支持的WebService，只不过功能较弱。</p>
@@ -487,12 +472,6 @@ public class WeatherServiceImpl implements WeatherService{
     </div>
 
     <footer class="post-footer">
-      
-        <div class="post-tags">
-          
-            <a href="/tags/Java架构/" rel="tag">#Java架构</a>
-          
-        </div>
       
 
       

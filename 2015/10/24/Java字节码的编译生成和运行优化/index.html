@@ -84,29 +84,20 @@
 
 
 
-<meta name="description" content="Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
-作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
-Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
-我">
+<meta name="description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java字节码的编译生成和运行优化">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/24/Java字节码的编译生成和运行优化/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
-作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
-Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
-我">
+<meta property="og:description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmu3yonhj30m80d2wg1.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jmu8fhhbj30ks0m80vm.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmubhp5kj30jm0m83zu.jpg">
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jmudmxyfj30gv0m80tx.jpg">
-<meta property="og:updated_time" content="2016-10-07T05:21:58.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:30:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java字节码的编译生成和运行优化">
-<meta name="twitter:description" content="Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
-作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
-Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
-我">
+<meta name="twitter:description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。">
 <meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmu3yonhj30m80d2wg1.jpg">
 
 
@@ -317,9 +308,11 @@ Java字节码的编译生成我们讨论完了字节码的结构和活化字节�
       
 
       
-        <h1 id="Java虚拟机-：Java字节码的编译生成和运行优化"><a href="#Java虚拟机-：Java字节码的编译生成和运行优化" class="headerlink" title="Java虚拟机 ：Java字节码的编译生成和运行优化"></a>Java虚拟机 ：Java字节码的编译生成和运行优化</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。</p>
-<p>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。</p>
-<h2 id="Java字节码的编译生成"><a href="#Java字节码的编译生成" class="headerlink" title="Java字节码的编译生成"></a>Java字节码的编译生成</h2><p>我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？</p>
+        <blockquote>
+<p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。<br>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java虚拟机-：Java字节码的编译生成和运行优化"><a href="#Java虚拟机-：Java字节码的编译生成和运行优化" class="headerlink" title="Java虚拟机 ：Java字节码的编译生成和运行优化"></a>Java虚拟机 ：Java字节码的编译生成和运行优化</h1><h2 id="Java字节码的编译生成"><a href="#Java字节码的编译生成" class="headerlink" title="Java字节码的编译生成"></a>Java字节码的编译生成</h2><p>我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？</p>
 <p>我们这里讨论的仅仅是从程序员编写的java源代码的编译得到的字节码，但是要知道的事，字节码不仅仅可以从源文件编译生成，字节码可以通过直接用二进制的字节拼接产生，这个拼接的起点除了间接通过编译期生成，也可以通过直接写进内存，比如通过动态代理构造的临时代理类就是通过直接写入内存的二进制字节码形成的，再比如jsp通过jsp转换器可以转变为一个对应的请求处理类，等等。总之，我们在这里讨论的仅仅是通过编译期将静态的java源代码文件编译成二进制字节码。</p>
 <p>使用javac编写的java命令是编译过程的执行者，这个命令的使命就是把java源文件转换成为java二进制字节码，javac完成这一使命的步骤主要包括如下的子过程：</p>
 <ol>

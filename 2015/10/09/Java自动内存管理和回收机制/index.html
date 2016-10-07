@@ -84,14 +84,12 @@
 
 
 
-<meta name="description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
-虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，">
+<meta name="description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第一篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java自动内存管理和回收机制">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/09/Java自动内存管理和回收机制/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
-虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，">
+<meta property="og:description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第一篇。">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnf4hw0nj30m80eymyn.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnfbms8ej30m80a43zi.jpg">
 <meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnfdalz9j30m80a4wfg.jpg">
@@ -102,11 +100,10 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jni0awekj30h709h0tn.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jniwk3qoj30b40amglt.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnj7dutyj30m80dwact.jpg">
-<meta property="og:updated_time" content="2016-10-07T07:04:06.000Z">
+<meta property="og:updated_time" content="2016-10-07T09:31:28.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java自动内存管理和回收机制">
-<meta name="twitter:description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
-虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，">
+<meta name="twitter:description" content="这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第一篇。">
 <meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnf4hw0nj30m80eymyn.jpg">
 
 
@@ -317,8 +314,11 @@
       
 
       
-        <h1 id="Java虚拟机：Java自动内存管理和回收机制"><a href="#Java虚拟机：Java自动内存管理和回收机制" class="headerlink" title="Java虚拟机：Java自动内存管理和回收机制"></a>Java虚拟机：Java自动内存管理和回收机制</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。<br>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。</p>
-<h2 id="虚拟机内存分区"><a href="#虚拟机内存分区" class="headerlink" title="虚拟机内存分区"></a>虚拟机内存分区</h2><p>java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，本地方法一般执行的都是比较底层的操作，比如说IO、线程管理等，java方法则会执行的一般是相对高级的操作，比如说数逻运算，或者是调用底层的本地方法来完成底层任务。</p>
+        <blockquote>
+<p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。<br>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第一篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java虚拟机：Java自动内存管理和回收机制"><a href="#Java虚拟机：Java自动内存管理和回收机制" class="headerlink" title="Java虚拟机：Java自动内存管理和回收机制"></a>Java虚拟机：Java自动内存管理和回收机制</h1><h2 id="虚拟机内存分区"><a href="#虚拟机内存分区" class="headerlink" title="虚拟机内存分区"></a>虚拟机内存分区</h2><p>java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，本地方法一般执行的都是比较底层的操作，比如说IO、线程管理等，java方法则会执行的一般是相对高级的操作，比如说数逻运算，或者是调用底层的本地方法来完成底层任务。</p>
 <p>java虚拟机的运行时数据区域将内存分成了不同的部分协调完成java虚拟机的内存数据交互。</p>
 <p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnf4hw0nj30m80eymyn.jpg" alt=""></p>
 <p>按照数据存储过程的数据结构可以大致分为：</p>

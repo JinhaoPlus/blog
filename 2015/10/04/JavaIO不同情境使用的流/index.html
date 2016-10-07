@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="JavaIO : 不同情境使用的流不同情境的流：流的种类很多，针对不同的IO数据交换情景我们可以选择不同的流来完成任务。
-我们在前面已经提到的几种流就有它们的使用情境：
-1. FileInputStream和FileOutputStreamFileInputStream和FileOutputStream主要用于解决不限于纯文本的二进制文件的输入输出情境。同时，如果使用带有缓冲区的缓冲输入输出流的话">
+<meta name="description" content="接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第六篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="JavaIO不同情境使用的流">
 <meta property="og:url" content="http://jinhaoplus.top/2015/10/04/JavaIO不同情境使用的流/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="JavaIO : 不同情境使用的流不同情境的流：流的种类很多，针对不同的IO数据交换情景我们可以选择不同的流来完成任务。
-我们在前面已经提到的几种流就有它们的使用情境：
-1. FileInputStream和FileOutputStreamFileInputStream和FileOutputStream主要用于解决不限于纯文本的二进制文件的输入输出情境。同时，如果使用带有缓冲区的缓冲输入输出流的话">
-<meta property="og:updated_time" content="2016-10-07T07:10:30.000Z">
+<meta property="og:description" content="接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第六篇。">
+<meta property="og:updated_time" content="2016-10-07T09:48:22.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="JavaIO不同情境使用的流">
-<meta name="twitter:description" content="JavaIO : 不同情境使用的流不同情境的流：流的种类很多，针对不同的IO数据交换情景我们可以选择不同的流来完成任务。
-我们在前面已经提到的几种流就有它们的使用情境：
-1. FileInputStream和FileOutputStreamFileInputStream和FileOutputStream主要用于解决不限于纯文本的二进制文件的输入输出情境。同时，如果使用带有缓冲区的缓冲输入输出流的话">
+<meta name="twitter:description" content="接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第六篇。">
 
 
 
@@ -309,7 +303,11 @@
       
 
       
-        <h1 id="JavaIO-不同情境使用的流"><a href="#JavaIO-不同情境使用的流" class="headerlink" title="JavaIO : 不同情境使用的流"></a>JavaIO : 不同情境使用的流</h1><h2 id="不同情境的流："><a href="#不同情境的流：" class="headerlink" title="不同情境的流："></a>不同情境的流：</h2><p>流的种类很多，针对不同的IO数据交换情景我们可以选择不同的流来完成任务。</p>
+        <blockquote>
+<p>接着来看金旭亮老师的网站[jinxuliang.com]公布的JavaIO讲义吧，此文为此系列第六篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="JavaIO-不同情境使用的流"><a href="#JavaIO-不同情境使用的流" class="headerlink" title="JavaIO : 不同情境使用的流"></a>JavaIO : 不同情境使用的流</h1><h2 id="不同情境的流："><a href="#不同情境的流：" class="headerlink" title="不同情境的流："></a>不同情境的流：</h2><p>流的种类很多，针对不同的IO数据交换情景我们可以选择不同的流来完成任务。</p>
 <p>我们在前面已经提到的几种流就有它们的使用情境：</p>
 <h3 id="1-FileInputStream和FileOutputStream"><a href="#1-FileInputStream和FileOutputStream" class="headerlink" title="1. FileInputStream和FileOutputStream"></a>1. FileInputStream和FileOutputStream</h3><p>FileInputStream和FileOutputStream主要用于解决不限于纯文本的二进制文件的输入输出情境。同时，如果使用带有缓冲区的缓冲输入输出流的话会使得读写IO的效率更高，有助于更快地完成不限于纯文本的二进制文件的读写。</p>
 <pre><code>public class FilesTest {

@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="Java多线程：Java多线程同步与synchronized为什么需要同步多线程？线程的同步是指让多个运行的线程在一起良好地协作，达到让多线程按要求合理地占用释放资源。我们采用Java中的同步代码块和同步方法达到这样的目的。比如这样的解决多线程无固定序执行的问题：
-public class TwoThreadTest {
-        public static void main(String">
+<meta name="description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第二篇。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Java多线程同步与synchronized">
 <meta property="og:url" content="http://jinhaoplus.top/2015/09/30/Java多线程同步与synchronized/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Java多线程：Java多线程同步与synchronized为什么需要同步多线程？线程的同步是指让多个运行的线程在一起良好地协作，达到让多线程按要求合理地占用释放资源。我们采用Java中的同步代码块和同步方法达到这样的目的。比如这样的解决多线程无固定序执行的问题：
-public class TwoThreadTest {
-        public static void main(String">
-<meta property="og:updated_time" content="2016-10-07T07:19:39.000Z">
+<meta property="og:description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第二篇。">
+<meta property="og:updated_time" content="2016-10-07T09:47:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java多线程同步与synchronized">
-<meta name="twitter:description" content="Java多线程：Java多线程同步与synchronized为什么需要同步多线程？线程的同步是指让多个运行的线程在一起良好地协作，达到让多线程按要求合理地占用释放资源。我们采用Java中的同步代码块和同步方法达到这样的目的。比如这样的解决多线程无固定序执行的问题：
-public class TwoThreadTest {
-        public static void main(String">
+<meta name="twitter:description" content="金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第二篇。">
 
 
 
@@ -309,7 +303,11 @@ public class TwoThreadTest {
       
 
       
-        <h1 id="Java多线程：Java多线程同步与synchronized"><a href="#Java多线程：Java多线程同步与synchronized" class="headerlink" title="Java多线程：Java多线程同步与synchronized"></a>Java多线程：Java多线程同步与synchronized</h1><h2 id="为什么需要同步多线程？"><a href="#为什么需要同步多线程？" class="headerlink" title="为什么需要同步多线程？"></a><strong>为什么需要同步多线程？</strong></h2><p>线程的同步是指让多个运行的线程在一起良好地协作，达到让多线程按要求合理地占用释放资源。我们采用Java中的同步代码块和同步方法达到这样的目的。比如这样的解决多线程无固定序执行的问题：</p>
+        <blockquote>
+<p>金旭亮老师的网站[jinxuliang.com]公布的Java多线程讲义很好啊，这个系列就是那些讲义的浓缩了，此文为此系列第二篇。</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Java多线程：Java多线程同步与synchronized"><a href="#Java多线程：Java多线程同步与synchronized" class="headerlink" title="Java多线程：Java多线程同步与synchronized"></a>Java多线程：Java多线程同步与synchronized</h1><h2 id="为什么需要同步多线程？"><a href="#为什么需要同步多线程？" class="headerlink" title="为什么需要同步多线程？"></a><strong>为什么需要同步多线程？</strong></h2><p>线程的同步是指让多个运行的线程在一起良好地协作，达到让多线程按要求合理地占用释放资源。我们采用Java中的同步代码块和同步方法达到这样的目的。比如这样的解决多线程无固定序执行的问题：</p>
 <pre><code>public class TwoThreadTest {
         public static void main(String[] args) {
               Thread th1= new MyThread1();

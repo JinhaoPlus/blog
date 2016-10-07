@@ -84,25 +84,16 @@
 
 
 
-<meta name="description" content="Mac环境变量小记
-什么是环境变量呢？
-
-计算机系统本身就有很多内部命令，比如cd、ls这样的shell命令，本质上这些命令都是一些存放在系统特定目录下的程序文件，系统找到这些文件后去执行这些程序，那么在shell中使用这些命令时系统如何去寻找这些命令的位置呢 ？系统也不是神，它必须得知道哪些地方是它需要去搜索寻找这些shell命令程序文件的地方，所以有一些默认的位置是确定下来的系统会寻找的位置，">
+<meta name="description" content="什么是环境变量？在*nix系统里自己去找shell命令存在哪里？">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Mac环境变量小记">
 <meta property="og:url" content="http://jinhaoplus.top/2015/08/09/Mac环境变量小记/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="Mac环境变量小记
-什么是环境变量呢？
-
-计算机系统本身就有很多内部命令，比如cd、ls这样的shell命令，本质上这些命令都是一些存放在系统特定目录下的程序文件，系统找到这些文件后去执行这些程序，那么在shell中使用这些命令时系统如何去寻找这些命令的位置呢 ？系统也不是神，它必须得知道哪些地方是它需要去搜索寻找这些shell命令程序文件的地方，所以有一些默认的位置是确定下来的系统会寻找的位置，">
-<meta property="og:updated_time" content="2016-10-07T07:27:29.000Z">
+<meta property="og:description" content="什么是环境变量？在*nix系统里自己去找shell命令存在哪里？">
+<meta property="og:updated_time" content="2016-10-07T09:44:41.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Mac环境变量小记">
-<meta name="twitter:description" content="Mac环境变量小记
-什么是环境变量呢？
-
-计算机系统本身就有很多内部命令，比如cd、ls这样的shell命令，本质上这些命令都是一些存放在系统特定目录下的程序文件，系统找到这些文件后去执行这些程序，那么在shell中使用这些命令时系统如何去寻找这些命令的位置呢 ？系统也不是神，它必须得知道哪些地方是它需要去搜索寻找这些shell命令程序文件的地方，所以有一些默认的位置是确定下来的系统会寻找的位置，">
+<meta name="twitter:description" content="什么是环境变量？在*nix系统里自己去找shell命令存在哪里？">
 
 
 
@@ -312,7 +303,11 @@
       
 
       
-        <h1 id="Mac环境变量小记"><a href="#Mac环境变量小记" class="headerlink" title="Mac环境变量小记"></a>Mac环境变量小记</h1><ul>
+        <blockquote>
+<p>什么是环境变量？在*nix系统里自己去找shell命令存在哪里？</p>
+</blockquote>
+<a id="more"></a>
+<h1 id="Mac环境变量小记"><a href="#Mac环境变量小记" class="headerlink" title="Mac环境变量小记"></a>Mac环境变量小记</h1><ul>
 <li>什么是环境变量呢？</li>
 </ul>
 <p>计算机系统本身就有很多内部命令，比如cd、ls这样的shell命令，本质上这些命令都是一些存放在系统特定目录下的程序文件，系统找到这些文件后去执行这些程序，那么在shell中使用这些命令时系统如何去寻找这些命令的位置呢 ？系统也不是神，它必须得知道哪些地方是它需要去搜索寻找这些shell命令程序文件的地方，所以有一些默认的位置是确定下来的系统会寻找的位置，比如说/bin, /usr/bin，系统会在这些目录里寻找shell里出现的命令，找到后就会执行文件中写的程序。</p>
