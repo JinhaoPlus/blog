@@ -1,0 +1,763 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="转载自：http://blog.csdn.net/chenyiming_1990/article/details/9476181
+先看一下两段代码：
+char* toStr()   
+{  
+    char *s = &amp;quot;abcdefghijkl&amp;quot;;  
+    return s;  
+}  
+
+int main()  
+{  
+    cout &amp;lt;&amp;lt; toStr(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C语言的内存分配">
+<meta property="og:url" content="http://yoursite.com/2015/04/26/C语言的内存分配/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="转载自：http://blog.csdn.net/chenyiming_1990/article/details/9476181
+先看一下两段代码：
+char* toStr()   
+{  
+    char *s = &amp;quot;abcdefghijkl&amp;quot;;  
+    return s;  
+}  
+
+int main()  
+{  
+    cout &amp;lt;&amp;lt; toStr(">
+<meta property="og:updated_time" content="2016-10-07T07:28:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="C语言的内存分配">
+<meta name="twitter:description" content="转载自：http://blog.csdn.net/chenyiming_1990/article/details/9476181
+先看一下两段代码：
+char* toStr()   
+{  
+    char *s = &amp;quot;abcdefghijkl&amp;quot;;  
+    return s;  
+}  
+
+int main()  
+{  
+    cout &amp;lt;&amp;lt; toStr(">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/04/26/C语言的内存分配/"/>
+
+  <title> C语言的内存分配 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                C语言的内存分配
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-26T15:28:08+08:00" content="2015-04-26">
+              2015-04-26
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/26/C语言的内存分配/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/26/C语言的内存分配/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>转载自：<br><a href="http://blog.csdn.net/chenyiming_1990/article/details/9476181" target="_blank" rel="external">http://blog.csdn.net/chenyiming_1990/article/details/9476181</a></p>
+<p>先看一下两段代码：</p>
+<pre><code>char* toStr()   
+{  
+    char *s = &quot;abcdefghijkl&quot;;  
+    return s;  
+}  
+
+int main()  
+{  
+    cout &lt;&lt; toStr() &lt;&lt; endl;  
+    return 0;  
+}  
+</code></pre><p>和</p>
+<pre><code>char* toStr()   
+{  
+    char s[] = &quot;abcdefghijkl&quot;;  
+    return s;  
+}  
+int main()  
+{  
+    cout &lt;&lt; toStr() &lt;&lt; endl;  
+    return 0;  
+}  
+</code></pre><p>前一段代码打印出来是字符串，而后一段代码打印出来就是乱码。记得学C语言的时候讲到，字符串是被当做字符数组来处理的。所以字符数组名就相当于指向首地址的指针。那么</p>
+<ol>
+<li>char *s = “abcdefghijkl”;</li>
+<li>char s[] = “abcdefghijkl”;<br>这两种表达式似乎是一样的，可是为什么程序结果会不一样呢？原因就是没有对内存分配了解好。当然现在的C语言教材不会讲到的。<br>解释：<br>程序的意思比较简单，不用解释。<br>第一种表达式，指针s是局部变量，他的作用域是函数toStr内。它将其指向的地址返回，返回之后s即被销毁，庆幸s指向的地址被返回了回来。最终打印正确。<br>第二种表达式，那么我们会问第二种与第一种的区别在哪，为何错？原因就是第一种指针s虽然是局部变量，被分配在栈空间，作用域是函数内部，但其指向的内容”abcdefghijkl”是常量，被分配在程序的常量区。直到整个程序结束才被销毁。而第二种，s是一数组，分配到栈空间，”abcdefghijkl”作为数组各个元素被放到数组中，一旦函数退出，栈中这块内存就被释放。虽然返回一个地址，可是已经失去它的意义了。</li>
+</ol>
+<p>通过以上例子，我们来学习学习内存分配的问题吧。</p>
+<p>首先，需要搞清楚：变量的类型和它的存储类别是两个概念。<br>数据类型和内存管理没有直接的关系。</p>
+<p>一、一个由C/C++编译的程序占用的内存分为以下几个部分：<br>1、栈区（stack）—由编译器自动分配释放，存放函数的参数值，局部变量的值等。其操作方式类似于数据结构中的栈。<br>2、堆区（heap）—一般由程序员分配释放，若程序员不释放，程序结束时可能由OS回收。注意它与数据结构中的堆是两回事，分配方式倒是类似于链表，呵呵。<br>3、全局区（静态区）（static），全局变量和静态变量的存储是放在一块的，初始化的全局变量和静态变量在一块区域，未初始化的全局变量和未初始化的静态变量在相邻的另一块区域。  程序结束后由系统释放。<br>4、文字常量区—常量字符串就是放在这里的。程序结束后由系统释放<br>5、程序代码区—存放函数体的二进制代码。</p>
+<p>二、例子程序<br>这是一个前辈写的，非常详细</p>
+<pre><code>//main.cpp    
+int a = 0; //全局初始化区  
+char *p1; //全局未初始化区  
+
+main()  
+{  
+    int b; //栈  
+    char s[] = &quot;abc&quot;; //栈  
+    char *p2; //栈  
+    char *p3 = &quot;123456&quot;; //123456\\0在常量区，p3在栈上。  
+    static int c =0;//全局（静态）初始化区  
+    p1 = (char *)malloc(10);      
+    p2 = (char *)malloc(20);//分配得来得10和20字节的区域就在堆区。  
+    strcpy(p1, &quot;123456&quot;); //123456\\0放在常量区，编译器可能会将它与p3所指向的&quot;123456&quot;优化成一个地方。        
+}   
+</code></pre><p>这下就对程序的内存分配理解更深入了吧。</p>
+<p>其实包括其他编程语言，Java等，他们都有所谓的栈空间和堆空间以及常量区，我们经常写完程序之后发现莫名的错误，或者内存被慢慢吞噬，这都是这方面的原因。</p>
+<p>以下是堆和栈的理论知识 </p>
+<ul>
+<li>2.1申请方式</li>
+</ul>
+<p>stack: 由系统自动分配。 例如，声明在函数中一个局部变量 int b; 系统自动在栈中为b开辟空间<br>heap: 需要程序员自己申请，并指明大小，在c中malloc函数<br>如p1 = (char <em>)malloc(10);<br>在C++中用new运算符<br>如p2 = (char </em>)malloc(10);<br>但是注意p1、p2本身是在栈中的。 </p>
+<ul>
+<li>2.2 申请后系统的响应</li>
+</ul>
+<p>栈：只要栈的剩余空间大于所申请空间，系统将为程序提供内存，否则将报异常提示栈溢出。<br>堆：首先应该知道操作系统有一个记录空闲内存地址的链表，当系统收到程序的申请时，<br>      会遍历该链表，寻找第一个空间大于所申请空间的堆结点，然后将该结点从空闲结点链表中删除，并将该结点的空间分配给程序，另外，对于大多数系统，会在这块内存空间中的首地址处记录本次分配的大小，这样，代码中的delete语句才能正确的释放本内存空间。另外，由于找到的堆结点的大小不一定正好等于申请的大小，系统会自动的将多余的那部分重新放入空闲链表中。 </p>
+<ul>
+<li>2.3申请大小的限制</li>
+</ul>
+<p>栈：在Windows下,栈是向低地址扩展的数据结构，是一块连续的内存的区域。这句话的意思是栈顶的地址和栈的最大容量是系统预先规定好的，在 WINDOWS 下，栈的大小是2M（也有的说是1M，总之是一个编译时就确定的常数），如果申请的空间超过栈的剩余空间时，将提示overflow。因此，能从栈获得的空间较小。<br>堆：堆是向高地址扩展的数据结构，是不连续的内存区域。这是由于系统是用链表来存储的空闲内存地址的，自然是不连续的，而链表的遍历方向是由低地址向高地址。堆的大小受限于计算机系统中有效的虚拟内存。由此可见，堆获得的空间比较灵活，也比较大。<br>所以在程序中自动变量数组（函数内部）不能很大，因为栈（这就是我们通常说的程序的堆栈段，大数组发生段溢出）的大小有限，而可以申请为全局变量，因为那是分配在静态区，大小不受限制。</p>
+<ul>
+<li>2.4申请效率的比较：</li>
+</ul>
+<p>栈由系统自动分配，速度较快。但程序员是无法控制的。<br>堆是由new分配的内存，一般速度比较慢，而且容易产生内存碎片,不过用起来最方便.<br>另外，在WINDOWS下，最好的方式是用VirtualAlloc分配内存，他不是在堆，也不是在栈是直接在进程的地址空间中保留一快内存，虽然用起来最不方便。但是速度快，也最灵活 </p>
+<ul>
+<li>2.5堆和栈中的存储内容</li>
+</ul>
+<p>栈： 在函数调用时，第一个进栈的是主函数中后的下一条指令（函数调用语句的下一条可执行语句）的地址，然后是函数的各个参数，在大多数的C编译器中，参数是由右往左入栈的，然后是函数中的局部变量。注意静态变量是不入栈的。<br>当本次函数调用结束后，局部变量先出栈，然后是参数，最后栈顶指针指向最开始存的地址，也就是主函数中的下一条指令，程序由该点继续运行。<br>堆：一般是在堆的头部用一个字节存放堆的大小。堆中的具体内容有程序员安排。 </p>
+<ul>
+<li>2.6存取效率的比较</li>
+</ul>
+<p>char s1[] = “aaaaaaaaaaaaaaa”;<br>char *s2 = “bbbbbbbbbbbbbbbbb”;<br>aaaaaaaaaaa是在运行时刻赋值的；<br>而bbbbbbbbbbb是在编译时就确定的；<br>但是，在以后的存取中，在栈上的数组比指针所指向的字符串(例如堆)快。<br>比如： </p>
+<pre><code>#include &lt;stdio.h&gt; 
+void main() 
+{ 
+char a = 1; 
+char c[] = &quot;1234567890&quot;; 
+char *p =&quot;1234567890&quot;; 
+a = c[1]; 
+a = p[1]; 
+return; 
+} 
+</code></pre><p>对应的汇编代码 </p>
+<pre><code>10: a = c[1]; 
+00401067 8A 4D F1 mov cl,byte ptr [ebp-0Fh] 
+0040106A 88 4D FC mov byte ptr [ebp-4],cl 
+11: a = p[1]; 
+0040106D 8B 55 EC mov edx,dword ptr [ebp-14h] 
+00401070 8A 42 01 mov al,byte ptr [edx+1] 
+00401073 88 45 FC mov byte ptr [ebp-4],al 
+</code></pre><p>第一种在读取时直接就把字符串中的元素读到寄存器cl中，而第二种则要先把指针值读到edx中，在根据edx读取字符，显然慢了。 </p>
+<p>补充：<br>自动变量、静态变量和全局变量</p>
+<ul>
+<li>自动变量的关键字auto默认缺省，我们创建的大多数变量都是这种类型，创建后存储在栈内存中；</li>
+<li>静态变量关键字为static，它与自动变量的区别在于存储在内存静态区中，因此生命周期与程序一致，在程序结束时才会释放。</li>
+<li>全局变量一般放在各函数之外，因此其生命周期也是随程序结束而释放，存储在全局区中（全局区和静态区实际是同一块区域）。和静态变量的区别在于，虽然二者存储位置相同、生命周期都是伴随程序至结束，但是静态变量的作用域和一般的自动变量相同，在作用不到的范围里静态变量虽然仍然在内存里，但是不能访问，而全局变量在整个程序中都可以被访问。</li>
+</ul>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/07/工厂模式和“万能”工厂类/" rel="next" title="工厂模式和“万能”工厂类">
+                <i class="fa fa-chevron-left"></i> 工厂模式和“万能”工厂类
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/08/09/Mac环境变量小记/" rel="prev" title="Mac环境变量小记">
+                Mac环境变量小记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/26/C语言的内存分配/"
+           data-title="C语言的内存分配" data-url="http://yoursite.com/2015/04/26/C语言的内存分配/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <p class="post-toc-empty">此文章未包含目录</p>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,790 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="工厂模式和“万能”工厂类
+需要构造一个类的对象，我们通常会用new的方法来构造:
+
+A a = new A();
+
+但是如果随着这个对象被创建的同时还必须进行其他相对复杂的操作，那么在新建构造一个对象代码就显得非常复杂，这个复杂的代码通常还需要每一次都复写，大大增加了冗余。
+
+因此我们构造了生产这个类对应对象的工厂，用工厂的方法来生产对象。比如：我们需要在构造一个对象时并不知道这个对象中的某个字段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="工厂模式和“万能”工厂类">
+<meta property="og:url" content="http://yoursite.com/2015/04/07/工厂模式和“万能”工厂类/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="工厂模式和“万能”工厂类
+需要构造一个类的对象，我们通常会用new的方法来构造:
+
+A a = new A();
+
+但是如果随着这个对象被创建的同时还必须进行其他相对复杂的操作，那么在新建构造一个对象代码就显得非常复杂，这个复杂的代码通常还需要每一次都复写，大大增加了冗余。
+
+因此我们构造了生产这个类对应对象的工厂，用工厂的方法来生产对象。比如：我们需要在构造一个对象时并不知道这个对象中的某个字段">
+<meta property="og:updated_time" content="2016-10-07T07:30:00.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="工厂模式和“万能”工厂类">
+<meta name="twitter:description" content="工厂模式和“万能”工厂类
+需要构造一个类的对象，我们通常会用new的方法来构造:
+
+A a = new A();
+
+但是如果随着这个对象被创建的同时还必须进行其他相对复杂的操作，那么在新建构造一个对象代码就显得非常复杂，这个复杂的代码通常还需要每一次都复写，大大增加了冗余。
+
+因此我们构造了生产这个类对应对象的工厂，用工厂的方法来生产对象。比如：我们需要在构造一个对象时并不知道这个对象中的某个字段">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/04/07/工厂模式和“万能”工厂类/"/>
+
+  <title> 工厂模式和“万能”工厂类 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                工厂模式和“万能”工厂类
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-04-07T15:29:15+08:00" content="2015-04-07">
+              2015-04-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/04/07/工厂模式和“万能”工厂类/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/04/07/工厂模式和“万能”工厂类/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="工厂模式和“万能”工厂类"><a href="#工厂模式和“万能”工厂类" class="headerlink" title="工厂模式和“万能”工厂类"></a>工厂模式和“万能”工厂类</h1><blockquote>
+<p>需要构造一个类的对象，我们通常会用new的方法来构造:</p>
+</blockquote>
+<pre><code>A a = new A();
+</code></pre><blockquote>
+<p>但是如果随着这个对象被创建的同时还必须进行其他相对复杂的操作，那么在新建构造一个对象代码就显得非常复杂，这个复杂的代码通常还需要每一次都复写，大大增加了冗余。</p>
+</blockquote>
+<p>因此我们构造了生产这个类对应对象的工厂，用工厂的方法来生产对象。<br>比如：我们需要在构造一个对象时并不知道这个对象中的某个字段的确切值，该值保存在配置文件中，所以每次构造对象都要进行配置文件的读取，依据配置文件中的内容来确定这个对象中该字段的信息，这个过程如果直接使用new来实现将会造成大量代码的冗余，大量冗余存在于配置文件的加载和读取，不妨把它封装成工厂类，在工厂类内部实现配置文件的加载和读取。</p>
+<blockquote>
+<p>有如下配置文件：/src/config.properties:</p>
+</blockquote>
+<pre><code>ImportantString = OK
+</code></pre><blockquote>
+<p>有如下预创建的对象所属类：/src/A.java:</p>
+</blockquote>
+<pre><code>public class A {
+    private String Aname;
+    public void Ashout(){
+        System.out.println(&quot;I am &quot;+Aname+&quot;,hahaha !&quot;);
+    }
+    public String getAname() {
+        return Aname;
+    }
+    public void setAname(String aname) {
+        Aname = aname;
+    }
+}
+</code></pre><blockquote>
+<p>有如下测试文件：/src/Test.java:</p>
+</blockquote>
+<pre><code>public class Test{
+    public static void main(String[] args) {
+        A a = AFactory.getA();
+        a.Ashout();
+    }
+}
+</code></pre><p>则可以构造工厂类来生产该类的对象，生产过程中加载读取配置文件并将配置文件中的重要字段赋值给创建出的对象，并返回这个创建出的对象。</p>
+<blockquote>
+<p>如下工厂类文件：/src/AFactory.java:</p>
+</blockquote>
+<pre><code>public class AFactory {
+    private static Properties properties = null;
+    private static String ANameToGet;
+    private AFactory() {
+
+    }
+    static{
+        try {
+            properties = new Properties();
+            properties.load(new FileReader(AFactory.class.getClassLoader().getResource(&quot;config.properties&quot;).getPath()));
+            ANameToGet = properties.getProperty(&quot;ImportantString&quot;);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    public static A getA(){
+        A a = new A();
+        a.setAname(ANameToGet);
+        return a;
+    }
+}
+</code></pre><p>我们可以发现，通过工厂类的包装，在调用工厂类方法构造对象时可以十分轻松地完成任务，而后面的其他任务则交由工厂类的静态代码块完成。</p>
+<blockquote>
+<p>那么什么是万能工厂类呢？万能当然不是指能完成一切的工厂，而是说在很多情况下，我们可能需要构造各种类的对象，而这些对象在构造过程中可能也会完成很多跟构造相分离的相对复杂的任务，这些任务可能会导致前台代码冗余，而恰恰我们要构造的这些对象虽然分属不同的类却有结构相同的代码，这是我们不妨使用泛型来进一步解决这个问题。</p>
+</blockquote>
+<p>以上面的例子为基础，我们需要两个类，在这两个类的对象的创建过程中都必须要检查配置文件中的一对Key是否相等，相等的Key才能允许对象的创建，<br>否则不允许创建，这个过程中如果在new之前直接做判断逻辑，将会导致大量的代码冗余，因为每个类的对象创建前都要进行相同的判断。因此我们考虑<br>把这部分代码写入工厂类，再生产过程前进行判断，过程封装进工厂类。<br>但是由于我们两个类的对象的生成实现过程类似，因此不需要分别写工厂，而是统一地写一个泛型化的工厂，依据传进的类的类型利用Class.forName(className).newInstance()来创建新的对象。</p>
+<blockquote>
+<p>有如下配置文件：/src/config.properties:</p>
+</blockquote>
+<pre><code>Key1 = RightKey
+Key2 = RightKey
+</code></pre><blockquote>
+<p>有如下预创建的对象所属类：/src/A.java:</p>
+</blockquote>
+<pre><code>public class A {
+}
+</code></pre><blockquote>
+<p>/src/B.java:</p>
+</blockquote>
+<pre><code>public class B {
+}
+</code></pre><blockquote>
+<p>有如下测试文件：/src/Test.java:</p>
+</blockquote>
+<pre><code>public class Test{
+    public static void main(String[] args) {
+        A a = CommonFactory.getInstance();
+        B b = CommonFactory.getInstance();
+    }
+}
+</code></pre><p>则可以构造工厂类来生产该类的对象，生产过程中加载读取配置文件并将判断配置文件中的Key以确定对象是否能正常生成，如果可以返回这个创建出的对象。</p>
+<blockquote>
+<p>如下工厂类文件：/src/CommonFactory.java:</p>
+</blockquote>
+<pre><code>public class CommonFactory {
+    private static Properties properties = null;
+    private static String Key1;
+    private static String Key2;
+    static boolean no;
+    private CommonFactory() {
+    }
+    static{
+        try {
+            properties = new Properties();
+            properties.load(new FileReader(CommonFactory.class.getClassLoader().getResource(&quot;config.properties&quot;).getPath()));
+            Key1 = properties.getProperty(&quot;Key1&quot;);
+            Key2 = properties.getProperty(&quot;Key2&quot;);
+            no = Key1.equals(Key2);
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+    }
+    public static &lt;T&gt; T getInstance(Class&lt;T&gt; clazz){
+        try {
+            String className = clazz.getName();
+            if(no){
+                T t = (T) Class.forName(className).newInstance();
+                System.out.println(className+&quot; Object Astablished Successfully&quot;);
+                return t;
+            }
+            else
+            {
+                System.out.println(className+&quot; Object Astablished failed&quot;);
+                return null;
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException(e);
+        }
+
+    }
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/04/05/继承、装饰和动态代理修改对象既有方法/" rel="next" title="继承、装饰和动态代理修改对象既有方法">
+                <i class="fa fa-chevron-left"></i> 继承、装饰和动态代理修改对象既有方法
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/04/26/C语言的内存分配/" rel="prev" title="C语言的内存分配">
+                C语言的内存分配 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/04/07/工厂模式和“万能”工厂类/"
+           data-title="工厂模式和“万能”工厂类" data-url="http://yoursite.com/2015/04/07/工厂模式和“万能”工厂类/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#工厂模式和“万能”工厂类"><span class="nav-number">1.</span> <span class="nav-text">工厂模式和“万能”工厂类</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

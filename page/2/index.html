@@ -369,6 +369,120 @@ java源代码转换的结果：编译所得到字节码的结构java的二进制
             
               
                 
+                <a class="post-title-link" href="/2015/10/10/Java多线程同步与对象控制权/" itemprop="url">
+                  Java多线程同步与对象控制权
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-10T15:14:43+08:00" content="2015-10-10">
+              2015-10-10
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/10/Java多线程同步与对象控制权/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/10/Java多线程同步与对象控制权/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java多线程：Java多线程同步与对象控制权join()函数Join的含义是：将某一线程加入成为另一个线程的流程之一，换言之就是等待另一个线程执行完毕。
+public class JoinTest {
+        public static void main(String[] args) throws InterruptedException {
+              Thread otherThread = new Thread( new Runnable() {
+                      public void run() {
+                            try {
+                                   for ( int i = 1; i &lt;= 5; i++) {
+                                         Thread. sleep(1000);
+                                         System. 
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/10/Java多线程同步与对象控制权/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2015/10/09/Java自动内存管理和回收机制/" itemprop="url">
                   Java自动内存管理和回收机制
                 </a>
@@ -599,8 +713,8 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
             
               
                 
-                <a class="post-title-link" href="/2015/09/29/黑客与画家/" itemprop="url">
-                  黑客与画家
+                <a class="post-title-link" href="/2015/10/04/JavaIO不同情境使用的流/" itemprop="url">
+                  JavaIO不同情境使用的流
                 </a>
               
             
@@ -613,8 +727,8 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-09-29T00:17:11+08:00" content="2015-09-29">
-              2015-09-29
+            <time itemprop="dateCreated" datetime="2015-10-04T15:05:08+08:00" content="2015-10-04">
+              2015-10-04
             </time>
           </span>
 
@@ -624,8 +738,8 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/09/29/黑客与画家/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/29/黑客与画家/" itemprop="commentsCount"></span>
+                <a href="/2015/10/04/JavaIO不同情境使用的流/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/04/JavaIO不同情境使用的流/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -650,23 +764,17 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
       
         
           
-          这两周重新阅读了这本经典，很难有这样的机会认认真真地做一次深度的阅读，所以把读书的笔记发到博客上。
-这本书的风格很奇怪，因为你很难相信一个人可以把有些稀松平常的事看得如此透彻而且富有深层的意义，那些小事在我们平常人看来可能不值一提，然而在作者笔下你可以跟随他的指引接近一些独特的视角，把这些隐秘挖掘出来，得出一些令人惊奇的结论。
-第一部分 成长和思想黑客是如何成长的以及他们看待世界的一些观点。
-
-第一章 为什么书呆子不受欢迎一个问题是，为什么书呆子不受欢迎呢？一个看似简单的问题，却在做着一层层的分析之后让人看到一个从学生圈子直指教育体系存在的大问题。作者在这一部分大致说明了以下的观点：
-
-学生独特的圈子逻辑和社会中的成年人而言是一种完全隔绝开的难以令成年人理解的逻辑。
-
-在学生圈子里最被看重的东西是获得吸引力，表现的受欢迎可以赢得更多人的支持并最终在圈子里成为winner。
-
-书呆子们往往由于无暇顾及这些而失去吸引力，在圈子里渐渐受到孤立，他们的精力会集中在其他东西上。
-
-真实的成年人社会与这个学生圈子执行完全不同的逻辑，它没有古怪的游戏规则，你的能力和聪明将带来价值，和是否获得吸引力无
+          JavaIO : 不同情境使用的流不同情境的流：流的种类很多，针对不同的IO数据交换情景我们可以选择不同的流来完成任务。
+我们在前面已经提到的几种流就有它们的使用情境：
+1. FileInputStream和FileOutputStreamFileInputStream和FileOutputStream主要用于解决不限于纯文本的二进制文件的输入输出情境。同时，如果使用带有缓冲区的缓冲输入输出流的话会使得读写IO的效率更高，有助于更快地完成不限于纯文本的二进制文件的读写。
+public class FilesTest {
+    public static void main(String[] args) throws IOException {
+        FileInputStream fileInputStream = new FileInputStream(new File(&quot;1.png&quot;));
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(fileInp
           ...
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/29/黑客与画家/#more" rel="contents">
+            <a class="btn" href="/2015/10/04/JavaIO不同情境使用的流/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -717,8 +825,8 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
             
               
                 
-                <a class="post-title-link" href="/2014/12/03/java-polymorphism/" itemprop="url">
-                  java-polymorphism
+                <a class="post-title-link" href="/2015/10/03/JavaIO输入输出流/" itemprop="url">
+                  JavaIO输入输出流
                 </a>
               
             
@@ -731,8 +839,8 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-03T20:39:30+08:00" content="2014-12-03">
-              2014-12-03
+            <time itemprop="dateCreated" datetime="2015-10-03T15:11:40+08:00" content="2015-10-03">
+              2015-10-03
             </time>
           </span>
 
@@ -742,8 +850,8 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/03/java-polymorphism/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/03/java-polymorphism/" itemprop="commentsCount"></span>
+                <a href="/2015/10/03/JavaIO输入输出流/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/03/JavaIO输入输出流/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -768,20 +876,480 @@ java虚拟机执行程序的基础是特定的二进制指令集和运行时栈�
       
         
           
-          父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。
+          JavaIO ：JavaIO输入输出流流的原理：
+一连串有顺序的数据系列可以看成是一个流。
+输入输出流：
+数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
 
-所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。
+下面我们使用字节输入输出流来说明这个问题：
 
-同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。
-父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。
-public class ParentChildTest {
-    public static void main(String[] args
+输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”）并将io对象存储的数据输入（input）到管道中，因此管道里的数据流就是io对象内的数据。当调用InputStream数据流的read方法时，管道里的数据流读出到内存对象中（比如数组或者字符串），注意，读出的比特流将会被移除，具体能可读的数据的量可用available函数来查看；
+
+输出流 OutputStream也是由javaio对象（如File）建立的，当新建一个OutputStream时，io对象建立了一个包含有数据流的管道并建立起io对象和管道的映射。 当调用OutputStream数据流的write方法时，内存对象里的数据就会流入管道里，而管道里的数据流输出（output）到io对
           ...
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/03/java-polymorphism/#more" rel="contents">
+            <a class="btn" href="/2015/10/03/JavaIO输入输出流/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/02/Java多线程基础/" itemprop="url">
+                  Java多线程基础
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-02T15:22:13+08:00" content="2015-10-02">
+              2015-10-02
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/02/Java多线程基础/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/02/Java多线程基础/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java多线程：Java多线程基础感性地理解一下什么是线程？线程这个概念其实是比较抽象的，虽然依照教科书上的说法：
+
+进程是从系统获取资源的最小单位，线程是程序执行的最小单位。程序是静态存在于磁盘上的一段文本，进程运行这段文本记录的命令。
+
+也就是说，进程从系统那里获取到了一定的CPU占用时间片、内存单元和IO等等资源，然后线程将这些资源利用起来执行程序，线程执行程序是什么意思呢？就是把程序记录的那些命令逐条依序一步步在CPU上运作，数据在内存、IO上流转，将命令执行完。这个层级的概念存在于OS上，OS的调度抽象层级并不是那么直观，如果我们在说明白一点，在做底层的计算机组成原理实验的时候，在我们接好连线后硬件就具有了处理数据的能力，只要扳动不同的开关就可以将数据读写在不同的芯片上，我们的程序也许是为了完成数据流转写在纸上的扳动不同开关的序列，所以程序是属于IO级别的，然后我们依照纸上的命令序列实际上手去扳动不同的开关执行的就是这段程序，所以我们自己充当的角色就是进程，最终就得出了这样的结论：进程“执行”程序。至于线程呢，可以看作是进程在执行过程中的策略，比如说在一个人扳动开关的时候就是
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/02/Java多线程基础/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/09/30/Java多线程执行框架/" itemprop="url">
+                  Java多线程执行框架
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-30T15:20:22+08:00" content="2015-09-30">
+              2015-09-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/30/Java多线程执行框架/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/30/Java多线程执行框架/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java多线程：Java多线程执行框架为什么需要执行框架呢？使用一般的new方法来创建线程有什么问题呢？一般的new线程的方式一般要给出一个实现了Runnable接口的执行类，在其中重写run()方法，然后再在将这个执行类的对象传给线程以完成初始化，这个过程中线程的定义和执行过程其实是杂糅在一起了，而且每次new一个新的线程出来在资源上很有可能会产生不必要的消耗，因此我们通过多线程执行框架来解决这两个问题，其一可以分离线程的定义和执行过程，其二可以通过线程池来动态地管理线程以减小不必要的资源开销。
+线程执行框架启动线程将要多线程执行的任务封装为一个Runnable对象,将其传给一个执行框架Executor对象, Executor从线程池中选择线程执行工作任务。
+创建多线程框架对象调用线程执行任务我们通常通过Executors类的一些静态方法来实例化Executor或ThreadPoolExecutor对象：
+比如Executor对象来执行：
+public class ThreadTest {
+    public static void main(String[] args) {
+  
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/30/Java多线程执行框架/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/09/30/Java多线程同步与synchronized/" itemprop="url">
+                  Java多线程同步与synchronized
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-30T15:17:15+08:00" content="2015-09-30">
+              2015-09-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/30/Java多线程同步与synchronized/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/30/Java多线程同步与synchronized/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java多线程：Java多线程同步与synchronized为什么需要同步多线程？线程的同步是指让多个运行的线程在一起良好地协作，达到让多线程按要求合理地占用释放资源。我们采用Java中的同步代码块和同步方法达到这样的目的。比如这样的解决多线程无固定序执行的问题：
+public class TwoThreadTest {
+        public static void main(String[] args) {
+              Thread th1= new MyThread1();
+              Thread th2= new MyThread2();
+              th1.start();
+              th2.start();
+       }
+}
+
+class MyThread2 extends Thread{
+        @Override
+        public void run() {
+               for( int i=0;i&lt;10;i++)
+                  
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/30/Java多线程同步与synchronized/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/09/19/黑客与画家/" itemprop="url">
+                  黑客与画家
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-19T00:17:11+08:00" content="2015-09-19">
+              2015-09-19
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/19/黑客与画家/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/19/黑客与画家/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          这两周重新阅读了这本经典，很难有这样的机会认认真真地做一次深度的阅读，所以把读书的笔记发到博客上。
+这本书的风格很奇怪，因为你很难相信一个人可以把有些稀松平常的事看得如此透彻而且富有深层的意义，那些小事在我们平常人看来可能不值一提，然而在作者笔下你可以跟随他的指引接近一些独特的视角，把这些隐秘挖掘出来，得出一些令人惊奇的结论。
+
+第一部分 成长和思想黑客是如何成长的以及他们看待世界的一些观点。
+第一章 为什么书呆子不受欢迎一个问题是，为什么书呆子不受欢迎呢？一个看似简单的问题，却在做着一层层的分析之后让人看到一个从学生圈子直指教育体系存在的大问题。作者在这一部分大致说明了以下的观点：
+
+学生独特的圈子逻辑和社会中的成年人而言是一种完全隔绝开的难以令成年人理解的逻辑。
+
+在学生圈子里最被看重的东西是获得吸引力，表现的受欢迎可以赢得更多人的支持并最终在圈子里成为winner。
+
+书呆子们往往由于无暇顾及这些而失去吸引力，在圈子里渐渐受到孤立，他们的精力会集中在其他东西上。
+
+真实的成年人社会与这个学生圈子执行完全不同的逻辑，它没有古怪的游戏规则，你的能力和聪明将带来价值，和是否获得吸引力无
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/09/19/黑客与画家/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -815,7 +1383,7 @@ public class ParentChildTest {
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/"><i class="fa fa-angle-left"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fa fa-angle-right"></i></a>
   </nav>
 
 
@@ -856,7 +1424,7 @@ public class ParentChildTest {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

@@ -1,0 +1,861 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
+下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
+
+
+
+以下两图说明了添加删除头尾节点时执行的顺序：
+
+添加头结点时先加一个">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构实现（DataStructure）1">
+<meta property="og:url" content="http://yoursite.com/2014/12/05/数据结构实现（DataStructure）1/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
+下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
+
+
+
+以下两图说明了添加删除头尾节点时执行的顺序：
+
+添加头结点时先加一个">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu697lsj30m806naad.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu83kcej30m806j0t8.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqut78u4j30m80c6dgo.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jquv5kdbj30m80ci754.jpg">
+<meta property="og:updated_time" content="2016-10-07T07:38:46.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构实现（DataStructure）1">
+<meta name="twitter:description" content="Java 数据结构实现（DataStructure）1线性表和链表单向链表利用了类的自引用，实现了类似指针的效果。双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。
+下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。
+
+
+
+以下两图说明了添加删除头尾节点时执行的顺序：
+
+添加头结点时先加一个">
+<meta name="twitter:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/12/05/数据结构实现（DataStructure）1/"/>
+
+  <title> 数据结构实现（DataStructure）1 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构实现（DataStructure）1
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-05T15:36:25+08:00" content="2014-12-05">
+              2014-12-05
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/05/数据结构实现（DataStructure）1/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/05/数据结构实现（DataStructure）1/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-数据结构实现（DataStructure）1"><a href="#Java-数据结构实现（DataStructure）1" class="headerlink" title="Java 数据结构实现（DataStructure）1"></a>Java 数据结构实现（DataStructure）1</h1><h2 id="线性表和链表"><a href="#线性表和链表" class="headerlink" title="线性表和链表"></a><strong>线性表和链表</strong></h2><p>单向<strong>链表利用了类的自引用，实现了类似指针的效果。</strong><br>双向链表的实现，必须注意双向链表的head和back两个指针的正确指向，以及插入和删除过程中指向操作增减的有序性。</p>
+<p>下面几图从java面向对象的角度说明了单向双向链表的逻辑结构，类的自引用使得逻辑指向成为可能。</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqu4pniqj30dn0603yi.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu697lsj30m806naad.jpg" alt=""></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jqu83kcej30m806j0t8.jpg" alt=""></p>
+<p>以下两图说明了添加删除头尾节点时执行的顺序：</p>
+<blockquote>
+<p>添加头结点时先加一个临时节点，建立此临时节点和原头节点后使此临时节点为新头结点即可。<br>删除尾节点时先使原次头结点为新头结点，然后删除原头节点和新头结点的连接后，再删除新头结点和原头结点的连接。</p>
+</blockquote>
+<p>尾节点的处理方法类似。<br><strong>这样的删除方法能够完全释放所有的占用空间。</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jqut78u4j30m80c6dgo.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jquv5kdbj30m80ci754.jpg" alt=""></p>
+<p>下面是双向链表的实现过程，包括链表类NodeList的插入删除操作。</p>
+<pre><code>public class TestList 
+{
+    public static void main(String[] Args) 
+    {
+        NodeList OhMyGod = new NodeList();
+
+        Boolean b = Boolean.TRUE;
+        Character c = new Character(&apos;$&apos;);
+        Integer i = new Integer(34567);
+        String s = &quot;hello&quot;;
+
+        OhMyGod.insertFromBack(b);
+        OhMyGod.print();
+        OhMyGod.insertFromHead(c);
+        OhMyGod.print();
+        OhMyGod.insertFromBack(i);
+        OhMyGod.print();
+        OhMyGod.insertFromHead(s);
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+        System.out.println(OhMyGod.deleteFromBack());
+        OhMyGod.print();
+    }
+}
+
+class Node ///定义节点，节点数据类型为Object，可以通过多态方式具象化为其他类型
+{
+    private Node headPointer;
+    private Object data;
+    private Node backPointer;
+
+
+    public Node(Node hp,Object o,Node bp)
+    {
+        headPointer = hp;
+        backPointer = bp;
+        data = o;
+    }
+    public Node()
+    {
+        this(null,null,null);
+    }
+    public Node(Object o)
+    {
+        this(null,o,null);
+    }
+    public Node(Node hp,Object o)
+    {
+        this(hp,o,null);
+    }
+    public Node(Object o,Node bp)
+    {
+        this(null,o,bp);
+    }
+
+    public Node getHeadPointer() {
+        return headPointer;
+    }
+    public Object getData() {
+        return data;
+    }
+    public Node getBackPointer() {
+        return backPointer;
+    }
+    public void setHeadPointer(Node headPointer) {
+        this.headPointer = headPointer;
+    }
+    public void setBackPointer(Node backPointer) {
+        this.backPointer = backPointer;
+    }
+}
+
+class NodeListEmptyExcption extends RuntimeException
+{
+
+    private static final long serialVersionUID = 5130245130776457112L;
+    public NodeListEmptyExcption(String name)
+    {
+        super(&quot;NodeList:&quot;+name+&quot; is Empty !&quot;);
+    }
+}
+
+class NodeList
+{
+    private String listName;
+    private Node headNode;
+    private Node backNode;
+    public NodeList()
+    {
+        this(&quot;default&quot;);
+    }
+    public NodeList(String listName) 
+    {
+        this.listName = listName;
+        headNode = backNode = null;
+    }
+    public Boolean isEmpty()
+    {
+        return headNode == null;
+    }
+    ///////////////////////定义从头尾节点增加节点
+    public void insertFromHead(Object o)
+    {
+        if(isEmpty())
+            headNode = backNode = new Node(o);
+        else 
+        {
+            //headNode = new Node(o,headNode);
+            Node tempNode = new Node(o);
+            tempNode.setBackPointer(headNode);
+            headNode.setHeadPointer(tempNode);
+            headNode = tempNode;
+
+
+        }
+    }
+    public void insertFromBack(Object o)
+    {
+        if(isEmpty())
+            headNode = backNode = new Node(o);
+        else
+        {
+            Node tempNode = new Node(o);
+            backNode.setBackPointer(tempNode);
+            tempNode.setHeadPointer(backNode);
+            backNode = tempNode;
+        }
+    }
+    //////////////////////////定义从头尾节点删除节点
+    public Object deleteFromHead() throws NodeListEmptyExcption
+    {
+        if(isEmpty())
+            throw new NodeListEmptyExcption(listName);
+
+        Object removedata = headNode.getData();
+
+        if(headNode.equals(backNode))
+        {
+            headNode = backNode = null;
+        }
+
+        else 
+        {
+            headNode = headNode.getBackPointer();
+            headNode.getHeadPointer().setBackPointer(null);
+            headNode.setHeadPointer(null);    
+        }
+        return removedata;
+    }
+    public Object deleteFromBack() throws NodeListEmptyExcption
+    {
+        if(isEmpty())
+            throw new NodeListEmptyExcption(listName);
+
+        Object removedata = backNode.getData();
+        if(headNode.equals(backNode))
+        {
+            headNode = backNode = null;
+        }
+        else 
+        {
+            backNode = backNode.getHeadPointer();
+            backNode.getBackPointer().setHeadPointer(null);
+            backNode.setBackPointer(null);
+        }    
+        return removedata;
+    }
+    public void print()
+    {
+        if(isEmpty())
+        {
+            System.out.println(&quot;Node List &quot;+listName+&quot; is empty !&quot;);
+        return;
+        }
+        Node currentNode = headNode;
+        while(currentNode!=null)
+        {
+            System.out.print(currentNode.getData().toString()+&quot; &quot;);
+            currentNode  = currentNode.getBackPointer();
+        }
+        System.out.println(&quot;\n&quot;);
+    }
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/12/04/内部类（InnerClass）/" rel="next" title="内部类（InnerClass）">
+                <i class="fa fa-chevron-left"></i> 内部类（InnerClass）
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2014/12/08/数据结构实现（DataStructure）2/" rel="prev" title="数据结构实现（DataStructure）2">
+                数据结构实现（DataStructure）2 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/12/05/数据结构实现（DataStructure）1/"
+           data-title="数据结构实现（DataStructure）1" data-url="http://yoursite.com/2014/12/05/数据结构实现（DataStructure）1/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-数据结构实现（DataStructure）1"><span class="nav-number">1.</span> <span class="nav-text">Java 数据结构实现（DataStructure）1</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#线性表和链表"><span class="nav-number">1.1.</span> <span class="nav-text">线性表和链表</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

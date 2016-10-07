@@ -1,0 +1,804 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
+继承构建堆栈：
+public class StackInheritance extends List {
+   public Stack">
+<meta property="og:type" content="article">
+<meta property="og:title" content="数据结构实现（DataStructure）2">
+<meta property="og:url" content="http://yoursite.com/2014/12/08/数据结构实现（DataStructure）2/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
+继承构建堆栈：
+public class StackInheritance extends List {
+   public Stack">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrgr1r8j30j10cndgf.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrihhxdj30m809naat.jpg">
+<meta property="og:updated_time" content="2016-10-07T07:39:15.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据结构实现（DataStructure）2">
+<meta name="twitter:description" content="Java 数据结构实现（DataStructure）2堆栈可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。
+继承构建堆栈：
+public class StackInheritance extends List {
+   public Stack">
+<meta name="twitter:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrgr1r8j30j10cndgf.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/12/08/数据结构实现（DataStructure）2/"/>
+
+  <title> 数据结构实现（DataStructure）2 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                数据结构实现（DataStructure）2
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-08T15:33:27+08:00" content="2014-12-08">
+              2014-12-08
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/08/数据结构实现（DataStructure）2/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/08/数据结构实现（DataStructure）2/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java-数据结构实现（DataStructure）2"><a href="#Java-数据结构实现（DataStructure）2" class="headerlink" title="Java 数据结构实现（DataStructure）2"></a>Java 数据结构实现（DataStructure）2</h1><h2 id="堆栈"><a href="#堆栈" class="headerlink" title="堆栈"></a><strong>堆栈</strong></h2><p><strong>可以看成是有特定规则为的线性表，特定规则就是先进后出，后进先出，</strong>可以看成是我们List的先insertFromHead的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。</p>
+<p>继承构建堆栈：</p>
+<pre><code>public class StackInheritance extends List {
+   public StackInheritance() { super( &quot;stack&quot; ); }
+   public void push( Object o )
+      { insertFromHead( o ); }
+   public Object pop() throws EmptyListException
+      { return deleteFromHead(); }
+   public boolean isEmpty() { return super.isEmpty(); }
+   public void print() { super.print(); }
+}
+</code></pre><p>组合构建堆栈：</p>
+<pre><code>public class StackComposition {
+   private List s;
+
+   public StackComposition() { s = new List( &quot;stack&quot; ); }
+   public void push( Object o )
+      { s.insertFromHead( o ); }
+   public Object pop() throws EmptyListException
+      { return s.deleteFromHead(); }
+   public boolean isEmpty() { return s.isEmpty(); }
+   public void print() { s.print(); }
+}
+</code></pre><h2 id="队列"><a href="#队列" class="headerlink" title="队列"></a><strong>队列</strong></h2><p><strong>可以看成是有特定规则为的线性表，特定规则就是先进先出（FIFO），后进后出，</strong>可以看成是我们List的先insertFromBack的要后deleteFromHead，所以利用这一点可以通过继承或组合的方式来构建堆栈。</p>
+<p>继承构建队列</p>
+<pre><code>public class QueueInheritance extends List {
+   public QueueInheritance() { super( &quot;queue&quot; ); }
+   public void enqueue( Object o )
+      { insertFromBack( o ); }
+   public Object dequeue()
+      throws EmptyListException { returnDeleteFromHead(); }
+   public boolean isEmpty() { return super.isEmpty(); }
+   public void print() { super.print(); }
+}
+</code></pre><h2 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a><strong>二叉树</strong></h2><p><strong>可以看成是一堆散节点通过特殊的连接构成的散点集，这些散点集构成了特殊的结构，</strong>看起来成了树一样的结果。</p>
+<p>如下图所示，上面的为二叉树的逻辑结构，这样的逻辑结构利于分析二叉树的性质，却不能说明二叉树存储的实际情形，因此需要使用下图所示的二叉树的物理结构来描述其存储特性，二叉树的节点存储为线性表，线性表中的节点有自己的特殊的包含（连接关系），因此使得这种物理结构和它的逻辑结构有了能够转换的基础。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrgr1r8j30j10cndgf.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jqrihhxdj30m809naat.jpg" alt=""></p>
+<p>鉴于上面这张物理结构和逻辑结构，我们采用Java提供的List（LinkedList）来构建主存储结构，即Node节点的线性表以达到索引的目的。然后建立节点之间的连接关系。</p>
+<pre><code>import java.util.LinkedList;
+import java.util.List;
+
+public class BinTreeTraverse {
+
+    private int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9 };
+    private static List&lt;Node&gt; nodeList = null;
+
+    /**
+     * 内部类：节点
+     */
+    private static class Node {
+        Node leftChild;
+        Node rightChild;
+        int data;
+
+        Node(int newData) {
+            leftChild = null;
+            rightChild = null;
+            data = newData;
+        }
+    }
+
+    public void createBinTree() {
+        nodeList = new LinkedList&lt;Node&gt;();
+        // 将一个数组的值依次转换为Node节点
+        for (int nodeIndex = 0; nodeIndex &lt; array.length; nodeIndex++) {
+            nodeList.add(new Node(array[nodeIndex]));
+        }
+        // 对前lastParentIndex-1个父节点按照父节点与孩子节点的数字关系建立二叉树
+        for (int parentIndex = 0; parentIndex &lt; array.length / 2 - 1; parentIndex++) {
+            // 左孩子
+            nodeList.get(parentIndex).leftChild = nodeList
+                    .get(parentIndex * 2 + 1);
+            // 右孩子
+            nodeList.get(parentIndex).rightChild = nodeList
+                    .get(parentIndex * 2 + 2);
+        }
+        // 最后一个父节点:因为最后一个父节点可能没有右孩子，所以单独拿出来处理
+        int lastParentIndex = array.length / 2 - 1;
+        // 左孩子
+        nodeList.get(lastParentIndex).leftChild = nodeList
+                .get(lastParentIndex * 2 + 1);
+        // 右孩子,如果数组的长度为奇数才建立右孩子
+        if (array.length % 2 == 1) {
+            nodeList.get(lastParentIndex).rightChild = nodeList
+                    .get(lastParentIndex * 2 + 2);
+        }
+    }
+
+    /**
+     * 先序遍历
+     * 
+     * 这三种不同的遍历结构都是一样的，只是先后顺序不一样而已
+     * 
+     * @param node
+     *            遍历的节点
+     */
+    public static void preOrderTraverse(Node node) {
+        if (node == null)
+            return;
+        System.out.print(node.data + &quot; &quot;);
+        preOrderTraverse(node.leftChild);
+        preOrderTraverse(node.rightChild);
+    }
+
+    /**
+     * 中序遍历
+     * 
+     * 这三种不同的遍历结构都是一样的，只是先后顺序不一样而已
+     * 
+     * @param node
+     *            遍历的节点
+     */
+    public static void inOrderTraverse(Node node) {
+        if (node == null)
+            return;
+        inOrderTraverse(node.leftChild);
+        System.out.print(node.data + &quot; &quot;);
+        inOrderTraverse(node.rightChild);
+    }
+
+    /**
+     * 后序遍历
+     * 
+     * 这三种不同的遍历结构都是一样的，只是先后顺序不一样而已
+     * 
+     * @param node
+     *            遍历的节点
+     */
+    public static void postOrderTraverse(Node node) {
+        if (node == null)
+            return;
+        postOrderTraverse(node.leftChild);
+        postOrderTraverse(node.rightChild);
+        System.out.print(node.data + &quot; &quot;);
+    }
+
+    public static void main(String[] args) {
+        BinTreeTraverse binTree = new BinTreeTraverse();
+        binTree.createBinTree();
+        // nodeList中第0个索引处的值即为根节点
+        Node root = nodeList.get(0);
+
+        System.out.println(&quot;先序遍历：&quot;);
+        preOrderTraverse(root);
+        System.out.println();
+
+        System.out.println(&quot;中序遍历：&quot;);
+        inOrderTraverse(root);
+        System.out.println();
+
+        System.out.println(&quot;后序遍历：&quot;);
+        postOrderTraverse(root);
+    }
+
+}
+</code></pre><blockquote>
+<p>这里我们为什么不使用自己定义的NodeList呢？因为如果一旦使用这个NodeList来作为主存储部分，就会使得在子节点的指向过程中导致整个结构指向混乱，造成对结构的破坏。</p>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2014/12/05/数据结构实现（DataStructure）1/" rel="next" title="数据结构实现（DataStructure）1">
+                <i class="fa fa-chevron-left"></i> 数据结构实现（DataStructure）1
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/03/29/局部变量申请栈空间时的入栈顺序/" rel="prev" title="局部变量申请栈空间时的入栈顺序">
+                局部变量申请栈空间时的入栈顺序 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/12/08/数据结构实现（DataStructure）2/"
+           data-title="数据结构实现（DataStructure）2" data-url="http://yoursite.com/2014/12/08/数据结构实现（DataStructure）2/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java-数据结构实现（DataStructure）2"><span class="nav-number">1.</span> <span class="nav-text">Java 数据结构实现（DataStructure）2</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#堆栈"><span class="nav-number">1.1.</span> <span class="nav-text">堆栈</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#队列"><span class="nav-number">1.2.</span> <span class="nav-text">队列</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二叉树"><span class="nav-number">1.3.</span> <span class="nav-text">二叉树</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

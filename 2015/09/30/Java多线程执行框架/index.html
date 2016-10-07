@@ -1,0 +1,779 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java多线程：Java多线程执行框架为什么需要执行框架呢？使用一般的new方法来创建线程有什么问题呢？一般的new线程的方式一般要给出一个实现了Runnable接口的执行类，在其中重写run()方法，然后再在将这个执行类的对象传给线程以完成初始化，这个过程中线程的定义和执行过程其实是杂糅在一起了，而且每次new一个新的线程出来在资源上很有可能会产生不必要的消耗，因此我们通过多线程执行框架来解决这">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java多线程执行框架">
+<meta property="og:url" content="http://yoursite.com/2015/09/30/Java多线程执行框架/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java多线程：Java多线程执行框架为什么需要执行框架呢？使用一般的new方法来创建线程有什么问题呢？一般的new线程的方式一般要给出一个实现了Runnable接口的执行类，在其中重写run()方法，然后再在将这个执行类的对象传给线程以完成初始化，这个过程中线程的定义和执行过程其实是杂糅在一起了，而且每次new一个新的线程出来在资源上很有可能会产生不必要的消耗，因此我们通过多线程执行框架来解决这">
+<meta property="og:updated_time" content="2016-10-07T07:21:34.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java多线程执行框架">
+<meta name="twitter:description" content="Java多线程：Java多线程执行框架为什么需要执行框架呢？使用一般的new方法来创建线程有什么问题呢？一般的new线程的方式一般要给出一个实现了Runnable接口的执行类，在其中重写run()方法，然后再在将这个执行类的对象传给线程以完成初始化，这个过程中线程的定义和执行过程其实是杂糅在一起了，而且每次new一个新的线程出来在资源上很有可能会产生不必要的消耗，因此我们通过多线程执行框架来解决这">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/09/30/Java多线程执行框架/"/>
+
+  <title> Java多线程执行框架 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java多线程执行框架
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-09-30T15:20:22+08:00" content="2015-09-30">
+              2015-09-30
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/30/Java多线程执行框架/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/30/Java多线程执行框架/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java多线程：Java多线程执行框架"><a href="#Java多线程：Java多线程执行框架" class="headerlink" title="Java多线程：Java多线程执行框架"></a>Java多线程：Java多线程执行框架</h1><h2 id="为什么需要执行框架呢？"><a href="#为什么需要执行框架呢？" class="headerlink" title="为什么需要执行框架呢？"></a><strong>为什么需要执行框架呢？</strong></h2><p>使用一般的new方法来创建线程有什么问题呢？一般的new线程的方式一般要给出一个实现了Runnable接口的执行类，在其中重写run()方法，然后再在将这个执行类的对象传给线程以完成初始化，这个过程中线程的定义和执行过程其实是杂糅在一起了，而且每次new一个新的线程出来在资源上很有可能会产生不必要的消耗，因此我们通过多线程执行框架来解决这两个问题，其一可以分离线程的定义和执行过程，其二可以通过线程池来动态地管理线程以减小不必要的资源开销。</p>
+<h2 id="线程执行框架启动线程"><a href="#线程执行框架启动线程" class="headerlink" title="线程执行框架启动线程"></a><strong>线程执行框架启动线程</strong></h2><p>将要多线程执行的任务封装为一个Runnable对象,将其传给一个执行框架Executor对象, Executor从线程池中选择线程执行工作任务。</p>
+<p>创建多线程框架对象调用线程执行任务<br>我们通常通过Executors类的一些静态方法来实例化Executor或ThreadPoolExecutor对象：</p>
+<p>比如Executor对象来执行：</p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) {
+        Executor executor = Executors.newSingleThreadExecutor();
+        executor.execute(new MyRunnable());
+    }
+}
+
+class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(&quot;running&quot;);
+    }
+}
+</code></pre><p>比如线程池的Executor对象来执行：</p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) {
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors
+                .newFixedThreadPool(3);
+        executor.execute(new MyRunnable());
+    }
+}
+
+class MyRunnable implements Runnable {
+    @Override
+    public void run() {
+        System.out.println(&quot;running&quot;);
+    }
+}
+</code></pre><ul>
+<li>Executors. newSingleThreadExecutor()：一 个线程死掉后，自动重新创建后一个新的线程，所以没有线程池的概念，不能被ThreadPoolExecutor接收；</li>
+<li>Executors. newFixedThreadPool()：固定数目的线程池；</li>
+<li>Executors. newCachedThreadPool()：动态地增加和减少线程数；</li>
+</ul>
+<h2 id="多线程框架对象调用线程执行任务取回结果"><a href="#多线程框架对象调用线程执行任务取回结果" class="headerlink" title="多线程框架对象调用线程执行任务取回结果"></a><strong>多线程框架对象调用线程执行任务取回结果</strong></h2><p>实现了Runnable接口的执行类虽然可以在run()方法里写入执行体，但是无法返回结果值，因为run()方法是void型的，而Callable接口解决了这个问题，在继承了Callable接口的执行类中重写call()方法可以设置返回值，当Executor对象使用submit()函数提交执行类的时候会由线程池里的线程来运行，运行得到的返回值可以使用Future<v>接口来接，取得的返回值类型由V决定，Future<v>接口表示可能会得到的返回值，但是有可能报异常，因此要抛出这些异常，然后可以取得这些返回值。</v></v></p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) throws InterruptedException,
+            ExecutionException {
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors
+                .newCachedThreadPool();
+        MyCallable myCallable = new MyCallable(2);
+        Future&lt;Integer&gt; result = executor.submit(myCallable);
+        System.out.println(result.get());
+    }
+}
+
+class MyCallable implements Callable&lt;Integer&gt; {
+    private int num;
+
+    public MyCallable(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        return num * 2;
+    }
+}
+</code></pre><h2 id="多线程框架对象调用线程执行任务完成第一个还是全部完成就取回结果"><a href="#多线程框架对象调用线程执行任务完成第一个还是全部完成就取回结果" class="headerlink" title="多线程框架对象调用线程执行任务完成第一个还是全部完成就取回结果"></a><strong>多线程框架对象调用线程执行任务完成第一个还是全部完成就取回结果</strong></h2><p>使用submit()函数取回的结果不能控制任务是完成第一个还是全部完成就取回结果，然而使用invokeAny()和invokeAll()函数即可获得这样的效果，将执行体对象放入集合中传入这两个函数，前者可以在完成任务的多线程有一个(第一个)完成时就返回结果，因此结果类型是单结果，而后者则需要等待所有执行任务的线程都执行完毕才返回结果，因此结果仍是集合。</p>
+<p>1.invokeAny():</p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) throws InterruptedException, ExecutionException {
+ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors.newFixedThreadPool(5);
+List&lt;MyCallable&gt; callables = new ArrayList&lt;&gt;();
+for(int i=0;i&lt;10;i++){
+MyCallable myCallable = new MyCallable(i);
+callables.add(myCallable);
+}
+Integer res = executor.invokeAny(callables);
+System.out.println(res);
+
+}
+}
+
+class MyCallable implements Callable&lt;Integer&gt; {
+    private int num;
+
+    public MyCallable(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        System.out.println(Thread.currentThread().getName() + &quot; is running&quot;);
+        return num * 2;
+    }
+}
+</code></pre><p>2.invokeAll():</p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) throws InterruptedException,
+            ExecutionException {
+        ThreadPoolExecutor executor = (ThreadPoolExecutor) Executors
+                .newFixedThreadPool(5);
+        List&lt;MyCallable&gt; callables = new ArrayList&lt;MyCallable&gt;();
+        for (int i = 0; i &lt; 10; i++) {
+            MyCallable myCallable = new MyCallable(i);
+            callables.add(myCallable);
+        }
+        List&lt;Future&lt;Integer&gt;&gt; res = executor.invokeAll(callables);
+        for (Future&lt;Integer&gt; future : res) {
+            System.out.println(future.get());
+        }
+    }
+}
+
+class MyCallable implements Callable&lt;Integer&gt; {
+    private int num;
+
+    public MyCallable(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        System.out.println(Thread.currentThread().getName() + &quot; is running&quot;);
+        return num * 2;
+    }
+}
+</code></pre><h2 id="多线程框架对象执行定时任务"><a href="#多线程框架对象执行定时任务" class="headerlink" title="多线程框架对象执行定时任务"></a>多线程框架对象执行定时任务</h2><p>使用Executor的schedule()函数族来调度线程池中的线程来执行callable执行类对象中的call()定时任务:</p>
+<pre><code>public class ThreadTest {
+    public static void main(String[] args) throws InterruptedException,
+            ExecutionException {
+        ScheduledExecutorService executorService = Executors
+                .newScheduledThreadPool(2);
+        MyCallable callable = new MyCallable(2);
+        executorService.schedule(callable, 10, TimeUnit.SECONDS);
+        executorService.shutdown();
+    }
+}
+
+class MyCallable implements Callable&lt;Integer&gt; {
+    private int num;
+
+    public MyCallable(int num) {
+        this.num = num;
+    }
+
+    @Override
+    public Integer call() throws Exception {
+        System.out.println(Thread.currentThread().getName() + &quot; is running&quot;);
+        return num * 2;
+    }
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/30/Java多线程同步与synchronized/" rel="next" title="Java多线程同步与synchronized">
+                <i class="fa fa-chevron-left"></i> Java多线程同步与synchronized
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/02/Java多线程基础/" rel="prev" title="Java多线程基础">
+                Java多线程基础 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/09/30/Java多线程执行框架/"
+           data-title="Java多线程执行框架" data-url="http://yoursite.com/2015/09/30/Java多线程执行框架/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java多线程：Java多线程执行框架"><span class="nav-number">1.</span> <span class="nav-text">Java多线程：Java多线程执行框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#为什么需要执行框架呢？"><span class="nav-number">1.1.</span> <span class="nav-text">为什么需要执行框架呢？</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#线程执行框架启动线程"><span class="nav-number">1.2.</span> <span class="nav-text">线程执行框架启动线程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程框架对象调用线程执行任务取回结果"><span class="nav-number">1.3.</span> <span class="nav-text">多线程框架对象调用线程执行任务取回结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程框架对象调用线程执行任务完成第一个还是全部完成就取回结果"><span class="nav-number">1.4.</span> <span class="nav-text">多线程框架对象调用线程执行任务完成第一个还是全部完成就取回结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#多线程框架对象执行定时任务"><span class="nav-number">1.5.</span> <span class="nav-text">多线程框架对象执行定时任务</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

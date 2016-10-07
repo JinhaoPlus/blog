@@ -102,7 +102,7 @@
 <meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jni0awekj30h709h0tn.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jniwk3qoj30b40amglt.jpg">
 <meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnj7dutyj30m80dwact.jpg">
-<meta property="og:updated_time" content="2016-10-07T05:43:19.000Z">
+<meta property="og:updated_time" content="2016-10-07T07:04:06.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java自动内存管理和回收机制">
 <meta name="twitter:description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
@@ -345,21 +345,21 @@
 <li>StackOverflowError：线程申请的栈深度大于虚拟机的规定值；</li>
 <li>OutOfMemoryError：线程扩展增加的内存大于虚拟机的要求；</li>
 </ul>
-<p>##内存回收机制<br>虚拟机栈、本地方法栈和计数器大都是编译期确定的内存分配，在线程执行完毕后即会清理，内存回收相对比较容易。所以我们提到的内存回收大都是指堆内存的回收。我们通过如下几个问题来说明内存回收机制：</p>
-<p>###1. 什么样的堆内存是可以回收的呢？<br>什么样的堆内存是可以回收的呢？简而言之就是那些“没用”的内存，那么怎样的内存是“没用”的呢？即那些通过现有的指针（或称“引用”）条件下再也访问不到的内存对象。所以有这样的算法来描述无效的引用：<br><strong>（引用计数算法）</strong>每个对象都有一个被引用计数器，被引用一次计数器加1，引用被置空时减1，最终被引用计数器的值为0 的即是“无用”的内存对象，它占用的内存可以被回收。<br>（这个算法看起来好像没有问题，但是遭遇到循环引用的时候就会出现问题：如果同时将循环引用的双方置空，那么即使被引用计数器不为0也再也访问不到这些对象了，即发生了内存无故占用）。</p>
+<h2 id="内存回收机制"><a href="#内存回收机制" class="headerlink" title="内存回收机制"></a>内存回收机制</h2><p>虚拟机栈、本地方法栈和计数器大都是编译期确定的内存分配，在线程执行完毕后即会清理，内存回收相对比较容易。所以我们提到的内存回收大都是指堆内存的回收。我们通过如下几个问题来说明内存回收机制：</p>
+<h3 id="1-什么样的堆内存是可以回收的呢？"><a href="#1-什么样的堆内存是可以回收的呢？" class="headerlink" title="1. 什么样的堆内存是可以回收的呢？"></a>1. 什么样的堆内存是可以回收的呢？</h3><p>什么样的堆内存是可以回收的呢？简而言之就是那些“没用”的内存，那么怎样的内存是“没用”的呢？即那些通过现有的指针（或称“引用”）条件下再也访问不到的内存对象。所以有这样的算法来描述无效的引用：<br><strong>（引用计数算法）</strong>每个对象都有一个被引用计数器，被引用一次计数器加1，引用被置空时减1，最终被引用计数器的值为0 的即是“无用”的内存对象，它占用的内存可以被回收。<br>（这个算法看起来好像没有问题，但是遭遇到循环引用的时候就会出现问题：如果同时将循环引用的双方置空，那么即使被引用计数器不为0也再也访问不到这些对象了，即发生了内存无故占用）。</p>
 <p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jnghc1jxj30hd0i7q4c.jpg" alt=""></p>
 <p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jngkb8iuj30b406h3yo.jpg" alt=""></p>
 <p>这个过程体现了互相循环引用可能带来的问题，对象仍被引用但是已经不能被访问了，所以是这种算法的缺陷。</p>
 <p><strong>（根搜索算法）</strong>将由栈内存或方法区引用的对象作为GCRoots去构建引用链，如果能找到这个对象则说明这个对象能够访问其内存不能被回收，反之通过这些引用链找不到这个对象则说明已经是弃用的对象了，其内存是应该被回收的。（上面的互相循环引用的例子就可以解决了，因为这个问题里面虽然其被引用计数器的值不为0，但是已经没有GCRoots能够找到这些内存了，这个问题里的GC Roots是栈内存里的objA和objB，这两个栈内存里的引用被置空，因此引用链里没办法再找到对内存里的对象了。）</p>
-<p>###2. 确定了有哪些内存该被回收后GC机制是直接回收内存吗？<br>确定了有哪些内存该被回收后GC机制是直接回收内存吗？GC会给这些内存中的某些对象一次机会，就是那些重写过finalize方法的类的对象，GC会执行这个对象重写过的finalize方法，如果在这个方法中对象重新将自己链接给了某个引用使得这块内存区域重新可以被访问，那么GC就不会在这次回收它，但是，这个过程只能执行一次，下一次再被GC遇到的话就不会顾及这个finalize方法而是直接回收了，因此要注意重写的finalize方法只能执行一次。<br>这个是堆内存中对象的回收，在方法区里保存类信息和常量池的内存同样需要回收，这个过程相对来说更缓慢也并没有那么高效，因为一段时间内线程使用的类和常量池都比较稳定，只有当真的确认有类不再使用且不被反射使用的时候才会卸载类，当真的没有常量再被使用的时候才会释放常量池中不用的常量。</p>
-<p>###3. 内存回收策略和算法是怎样的呢？<br>知道了哪些内存该被回收、回收前的最后确认之后来说内存回收策略，也就是内存回收的时候究竟是依据什么样的算法进行的？<br><strong>（标记-清除算法）</strong></p>
+<h3 id="2-确定了有哪些内存该被回收后GC机制是直接回收内存吗？"><a href="#2-确定了有哪些内存该被回收后GC机制是直接回收内存吗？" class="headerlink" title="2. 确定了有哪些内存该被回收后GC机制是直接回收内存吗？"></a>2. 确定了有哪些内存该被回收后GC机制是直接回收内存吗？</h3><p>确定了有哪些内存该被回收后GC机制是直接回收内存吗？GC会给这些内存中的某些对象一次机会，就是那些重写过finalize方法的类的对象，GC会执行这个对象重写过的finalize方法，如果在这个方法中对象重新将自己链接给了某个引用使得这块内存区域重新可以被访问，那么GC就不会在这次回收它，但是，这个过程只能执行一次，下一次再被GC遇到的话就不会顾及这个finalize方法而是直接回收了，因此要注意重写的finalize方法只能执行一次。<br>这个是堆内存中对象的回收，在方法区里保存类信息和常量池的内存同样需要回收，这个过程相对来说更缓慢也并没有那么高效，因为一段时间内线程使用的类和常量池都比较稳定，只有当真的确认有类不再使用且不被反射使用的时候才会卸载类，当真的没有常量再被使用的时候才会释放常量池中不用的常量。</p>
+<h3 id="3-内存回收策略和算法是怎样的呢？"><a href="#3-内存回收策略和算法是怎样的呢？" class="headerlink" title="3. 内存回收策略和算法是怎样的呢？"></a>3. 内存回收策略和算法是怎样的呢？</h3><p>知道了哪些内存该被回收、回收前的最后确认之后来说内存回收策略，也就是内存回收的时候究竟是依据什么样的算法进行的？<br><strong>（标记-清除算法）</strong></p>
 <p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jnhwu12jj30fy08twfd.jpg" alt=""></p>
 <p><strong>（复制算法）</strong></p>
 <p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnhyhripj30fi08fgmo.jpg" alt=""></p>
 <p><strong>（标记-整理算法）</strong></p>
 <p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jni0awekj30h709h0tn.jpg" alt=""></p>
 <p>通过这些算法，jvm可以将已不被引用的无效内存回收，标记-清除算法清理得到的内存往往出现碎片，而标记-整理解决了内存碎片却增加了时间消耗，复制算法则会出现内存浪费的问题，结合不同场景使用不同算法进行垃圾回收是十分重要的。</p>
-<p>###4. 主流垃圾回收收集器<br>了解了内存垃圾回收的算法，我们来看执行垃圾回收的垃圾收集器。根据堆内存对对象的代的划分我们对堆内存有这样划分：</p>
+<h3 id="4-主流垃圾回收收集器"><a href="#4-主流垃圾回收收集器" class="headerlink" title="4. 主流垃圾回收收集器"></a>4. 主流垃圾回收收集器</h3><p>了解了内存垃圾回收的算法，我们来看执行垃圾回收的垃圾收集器。根据堆内存对对象的代的划分我们对堆内存有这样划分：</p>
 <p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jniwk3qoj30b40amglt.jpg" alt=""></p>
 <p>各版本和种类的垃圾回收器各有其用武之地，配合使用它们得到最好的效果十分重要。因为在垃圾内存回收的过程中对每个对象分代处理，所以对不同代的垃圾内存有不同的收集器去回收：创建不久的对象称为新生代，新生代对象的特点即是生死频率高，从生到死的过程很短，所以再回收时有大量的这样的内存存在，所以采用复制算法采用较大的eden:survivor比率将使得内存较完整也较快地回收，同时，老年代的内存存储的是创建很久仍然没有失去引用的对象，这类对象由于长期存在于内存中且未来的生死也常常不确定，所以需要使用速度慢但是更精确地标记-整理算法。下面是真正执行这些回收过程的收集器：<br><strong>新生代收集器：（主要使用复制算法）</strong></p>
 <ul>
@@ -374,7 +374,7 @@
 <li>CMS收集器：并发收集、低停顿，关注短时间停顿</li>
 </ul>
 <p>G1收集器：高级和领先的新型垃圾收集器</p>
-<p>###5. 内存分配和回收的全过程：<br>JVM虚拟机将会依次对每次即将进入堆内存的对象做出安排，一定时间间隔内对于失去引用的无效内存进行回收，当内存出现溢出的时候试图通过垃圾回收自发解决问题保持系统回归平稳。</p>
+<h3 id="5-内存分配和回收的全过程："><a href="#5-内存分配和回收的全过程：" class="headerlink" title="5. 内存分配和回收的全过程："></a>5. 内存分配和回收的全过程：</h3><p>JVM虚拟机将会依次对每次即将进入堆内存的对象做出安排，一定时间间隔内对于失去引用的无效内存进行回收，当内存出现溢出的时候试图通过垃圾回收自发解决问题保持系统回归平稳。</p>
 <ul>
 <li><p>申请内存的对象优先被分配到堆内存的Eden区，如果Eden区的空间不足就向survivor区上放，如果仍然放不下就会引发一次发生在新生代的minor GC，在这次GC过程中，如果发现仍然又放不下的对象，就将这些对象放入老年代内存里去（这种现象是对垃圾回收的统计学规律的挑战，因为理论上大多数新生代内存不应该存活到这个时候，所以这个时候就会引发这种叫做分配担保机制的对象向老年代转移），如果存在失去引用的内存，那么就将剩余存活的对象移往survivor区，剩下的Eden区内存全部清理。</p>
 </li>
@@ -387,8 +387,7 @@
 <li><p>空间分配担保：当每次执行minor GC的时候应该对要晋升到老年代的对象进行分析，如果这些马上要到老年区的老年对象的大小超过了老年区的剩余大小，那么执行一次Full GC以尽可能地获得老年区的空间。</p>
 </li>
 </ul>
-<p>###6.一个借助VisualVM工具探查JVM内存管理的实例</p>
-<p>这里我们使用一个实例借助VusualVM来查看程序运行过程中的虚拟机内存分配的过程：<br>在这个例子中，各种参数均使用默认值：</p>
+<h3 id="6-一个借助VisualVM工具探查JVM内存管理的实例"><a href="#6-一个借助VisualVM工具探查JVM内存管理的实例" class="headerlink" title="6.一个借助VisualVM工具探查JVM内存管理的实例"></a>6.一个借助VisualVM工具探查JVM内存管理的实例</h3><p>这里我们使用一个实例借助VusualVM来查看程序运行过程中的虚拟机内存分配的过程：<br>在这个例子中，各种参数均使用默认值：</p>
 <pre><code>public class VMTest {
     private static final int _1MB = 1024*1024;
     public static void main(String[] args) throws InterruptedException {
@@ -438,8 +437,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/10/17/Java二进制字节码的结构、加载/" rel="prev" title="Java二进制字节码的结构、加载">
-                Java二进制字节码的结构、加载 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/10/10/Java多线程同步与对象控制权/" rel="prev" title="Java多线程同步与对象控制权">
+                Java多线程同步与对象控制权 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -512,7 +511,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-count">31</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -573,7 +572,7 @@
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java虚拟机：Java自动内存管理和回收机制"><span class="nav-number">1.</span> <span class="nav-text">Java虚拟机：Java自动内存管理和回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机内存分区"><span class="nav-number">1.1.</span> <span class="nav-text">虚拟机内存分区</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java虚拟机：Java自动内存管理和回收机制"><span class="nav-number">1.</span> <span class="nav-text">Java虚拟机：Java自动内存管理和回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机内存分区"><span class="nav-number">1.1.</span> <span class="nav-text">虚拟机内存分区</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#内存回收机制"><span class="nav-number">1.2.</span> <span class="nav-text">内存回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-什么样的堆内存是可以回收的呢？"><span class="nav-number">1.2.1.</span> <span class="nav-text">1. 什么样的堆内存是可以回收的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-确定了有哪些内存该被回收后GC机制是直接回收内存吗？"><span class="nav-number">1.2.2.</span> <span class="nav-text">2. 确定了有哪些内存该被回收后GC机制是直接回收内存吗？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-内存回收策略和算法是怎样的呢？"><span class="nav-number">1.2.3.</span> <span class="nav-text">3. 内存回收策略和算法是怎样的呢？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-主流垃圾回收收集器"><span class="nav-number">1.2.4.</span> <span class="nav-text">4. 主流垃圾回收收集器</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-内存分配和回收的全过程："><span class="nav-number">1.2.5.</span> <span class="nav-text">5. 内存分配和回收的全过程：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-一个借助VisualVM工具探查JVM内存管理的实例"><span class="nav-number">1.2.6.</span> <span class="nav-text">6.一个借助VisualVM工具探查JVM内存管理的实例</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
         </section>

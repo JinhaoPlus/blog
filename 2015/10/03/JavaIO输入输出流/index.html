@@ -1,0 +1,777 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="JavaIO ：JavaIO输入输出流流的原理：
+一连串有顺序的数据系列可以看成是一个流。
+输入输出流：
+数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
+
+下面我们使用字节输入输出流来说明这个问题：
+
+输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”">
+<meta property="og:type" content="article">
+<meta property="og:title" content="JavaIO输入输出流">
+<meta property="og:url" content="http://yoursite.com/2015/10/03/JavaIO输入输出流/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="JavaIO ：JavaIO输入输出流流的原理：
+一连串有顺序的数据系列可以看成是一个流。
+输入输出流：
+数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
+
+下面我们使用字节输入输出流来说明这个问题：
+
+输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jq3ufog5j30bx0m8mxf.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq43wsyfj30d40m8t90.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq4i3zy9j30et0m8jrv.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jq4y27n2j30ly0m8gmu.jpg">
+<meta property="og:updated_time" content="2016-10-07T07:14:09.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="JavaIO输入输出流">
+<meta name="twitter:description" content="JavaIO ：JavaIO输入输出流流的原理：
+一连串有顺序的数据系列可以看成是一个流。
+输入输出流：
+数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。
+
+下面我们使用字节输入输出流来说明这个问题：
+
+输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/03/JavaIO输入输出流/"/>
+
+  <title> JavaIO输入输出流 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                JavaIO输入输出流
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-03T15:11:40+08:00" content="2015-10-03">
+              2015-10-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/03/JavaIO输入输出流/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/03/JavaIO输入输出流/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="JavaIO-：JavaIO输入输出流"><a href="#JavaIO-：JavaIO输入输出流" class="headerlink" title="JavaIO ：JavaIO输入输出流"></a>JavaIO ：JavaIO输入输出流</h1><h1 id="流的原理："><a href="#流的原理：" class="headerlink" title="流的原理："></a>流的原理：</h1><p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq3o8mg8j30fz05bdg9.jpg" alt=""></p>
+<p>一连串有顺序的数据系列可以看成是一个流。</p>
+<h1 id="输入输出流："><a href="#输入输出流：" class="headerlink" title="输入输出流："></a>输入输出流：</h1><blockquote>
+<p>数据从IO输入到程序的流是输入流，数据从程序输出到IO的流是输出流。</p>
+</blockquote>
+<p>下面我们使用字节输入输出流来说明这个问题：</p>
+<ul>
+<li><p>输入流 InputStream一般是由javaio对象（如File）建立的，当新建一个InputStream时，io对象建立了一个包含有数据的管道（其实就是我们所说的这个“流”）并将io对象存储的数据输入（input）到管道中，因此管道里的数据流就是io对象内的数据。当调用InputStream数据流的read方法时，管道里的数据流读出到内存对象中（比如数组或者字符串），注意，读出的比特流将会被移除，具体能可读的数据的量可用available函数来查看；</p>
+</li>
+<li><p>输出流 OutputStream也是由javaio对象（如File）建立的，当新建一个OutputStream时，io对象建立了一个包含有数据流的管道并建立起io对象和管道的映射。 当调用OutputStream数据流的write方法时，内存对象里的数据就会流入管道里，而管道里的数据流输出（output）到io对象中，flush函数将促使数据缓冲区中的数据被写入到io设备（文件本身）中区；</p>
+</li>
+</ul>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jq3ufog5j30bx0m8mxf.jpg" alt=""></p>
+<pre><code>public class FilesTest {
+    public static void main(String[] args) throws IOException {
+       File file = new File(“1.txt&quot;);
+       InputStream inputStream = new FileInputStream(file);
+       byte[] buffer = new byte[1024];
+       while(inputStream.read(buffer)!=-1)
+        System.out.println(new String(buffer));
+       inputStream.close();
+    }
+}
+</code></pre><p>在这个例子里我们可以充分看出输入流创建和输入的过程，首先创建一个File对象来映射IO上的这个文件，依据这个File对象来创建输入流InputStream对象，注意，创建过后输入流里按序存储着IO文件里的数据内容（这个过程中可能InputStream并不是其存储作用的，因为若果这样大文件内的数据一次性存储可能会爆内存，所以这个过程应该是InputStream映射到IO文件），调用输入流InputStream对象的read方法，即可将流内的数据输入到程序中的之前创建的对象内，最终在使用完后关闭作为有限资源的输入流。这个过程完成了数据由IO对象输入到程序。</p>
+<p>注意：如果是上次没有读完输入流内的内容，那么下一次程序到InputStream去读的时候是接着上次的结尾读的，这个可以根据InputStream对象的available方法看出来，所以在这个角度来看输入流就像是文件里的索引指针一样。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq43wsyfj30d40m8t90.jpg" alt=""></p>
+<pre><code>public class FilesTest {
+    public static void main(String[] args) throws IOException {
+       File file = new File(&quot;test.txt&quot;);
+       OutputStream outputStream = new FileOutputStream(file);
+       byte[] buffer = &quot;hello&quot;.getBytes();
+       outputStream.write(buffer);
+       outputStream.close();
+    }
+}
+</code></pre><p>在这个例子里我们可以充分看出输出流创建和输出的过程，首先创建一个File对象来映射IO上的这个文件，依据这个File对象来创建输出流OutputStream对象，调用输出流OutputStream对象的write方法，即可将程序对象中的数据写到输出流中然后从输出流输出到IO文件中去，最终在使用完后关闭作为有限资源的输出流。这个过程完成了数据由程序输出到IO文件中。</p>
+<p>字符输入输出流的道理是一样的，只不过字符流是直接处理字符的，而字节流的处理单位是字节。<br>read和write的API大同小异，无非就是把流里面的内容和缓冲区通过这些函数来进行交换。</p>
+<h1 id="流的流："><a href="#流的流：" class="headerlink" title="流的流："></a>流的流：</h1><p>既然可以依据IO文件来创建流在文件和程序之间交换数据，那么我们可不可以从中间再加入一个流来作为中转处理一下数据呢？这个流的流构成的多流链称之为“流对象链”，这个过程说明不是所有的流都是直接和原始数据源打交道的，所以有如下定义：</p>
+<p>节点流（Node Stream）直接连接到数据源，直接从IO文件上输入或输出数据；<br>处理流（Processing Stream）是对一个已存在的流的连接和封装,通过所封装的流的功能调用实现增强的数 据读写功能,它并不直接连到数据源。</p>
+<pre><code>public class FilesTest {
+    public static void main(String[] args) throws IOException {
+        FileOutputStream outputStream = new FileOutputStream(&quot;1.txt&quot;);
+        PrintStream printStream = new PrintStream(outputStream);
+        printStream.print(&quot;xxx&quot;);
+        printStream.close();
+        outputStream.close();
+    }
+}
+</code></pre><p>这个过程的原理如下图所示：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jq4i3zy9j30et0m8jrv.jpg" alt=""></p>
+<p>在这个例子里我们可以充分看出流对象链形成的过程，首先创建一个File对象来映射IO上的这个文件，依据这个File对象来创建输出流OutputStream对象，利用这个输出流对象再创建一个PrintStream对象来链接输出流对象，调用PrintStream对象的print方法，即可将程序对象中的数据写到PrintStream中然后再输出到IO文件中去，最终在使用完后关闭作为有限资源的流。这个过程完成了数据由程序输出到IO文件中。</p>
+<h1 id="流中的缓冲技术"><a href="#流中的缓冲技术" class="headerlink" title="流中的缓冲技术"></a>流中的缓冲技术</h1><p>在内存中开辟一块区域,称为缓冲区，当缓冲区满时一次写入到磁盘中，提高了I/O的性能。和一般的输入输出流相比，这样的带有缓冲区的流可以做到更好的IO性能，在带缓冲的输出流时由于缓冲区的存在，需要在最后强制使用flush函数将缓冲区中剩余的内容全部输出到IO设备中去。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jq4y27n2j30ly0m8gmu.jpg" alt=""></p>
+<pre><code>public class FilesTest {
+    public static void main(String[] args) {
+        try {
+            byte[] data = new byte[1];
+            File srcFile = new File(&quot;1.txt&quot;);
+            File desFile = new File(&quot;2.txt&quot;);
+            BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(srcFile));
+            BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(desFile));
+            while (bufferedInputStream.read(data) != -1) {
+                bufferedOutputStream.write(data);
+            }
+            bufferedOutputStream.flush();
+            bufferedInputStream.close();
+            bufferedOutputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre><p>这里表现的是这个过程，IO文件里的数据经过文件输入流FileInputStream对象流入缓冲输入流BufferedInputStream对象，之后所有的数据(在数据量较小的时候，一般是小于8K时，后面会讨论到)流入输入流的缓冲区，之后每次在读取的时候都是直接从缓冲区读到临时的数组中去而不是再从流读入，然后临时数组的数据在write函数的作用下写到输出流的缓冲区中去，缓冲区满后数据会经由缓冲输出流BufferedOutputStream对象流入文件输出流FileOutputStream对象，并最终输出到IO文件中去，<strong>如果缓冲区不满的话是不会自发输出到缓冲输出流中去的，因此往往我们需要在最后缓冲区不满的情况下强制执行输出流的flush方法让缓冲区数据强制输出到输出流中去。</strong>这个过程完成了IO文件数据的流转，中间有一个缓冲区在暂存数据。</p>
+<pre><code>public class FilesTest {
+    public byte[] generateString() {
+        StringBuffer buffer = new StringBuffer();
+        String content = &quot;abcdefg\r\n&quot;;
+        for (int i = 0; i &lt; 10000; i++) {
+            buffer.append(content);
+        }
+        return buffer.toString().getBytes();
+    }
+
+    public static void main(String[] args) throws IOException {
+        FilesTest filesTest = new FilesTest();
+        byte[] buffer = filesTest.generateString();
+        InputStream inputStream = new ByteArrayInputStream(buffer);
+        BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
+        DataInputStream dataInputStream = new DataInputStream(inputStream);
+        bufferedReader.readLine();
+        System.out.println(dataInputStream.readline());
+    }
+}
+</code></pre><p>在这个例子里我们可以更容易地发现BufferedReader这样的缓冲类输入流的缓冲作用，当首次调用readline(或者read等各种读取方法)函数读取这个输入流的时候，就会将流里的数据读进程序为BufferedInputStream对象分配的一个缓冲区中，而<strong>在此后的读取输入流的过程中就不需要去流中读取而只需要去缓冲区里读取就可以了，将开销较大的IO数据交换过程变成了开销小得多的内存数据交换</strong>，进而提高了IO效率，这是缓冲输入输出流的好处。但是这个缓冲区的大小是有限的，jdk为这个大小确定的固定值为8K字节，一旦超过这个值的话在第一次读取时就只能缓冲最多8K子节的数据，超出的部分只能在之后再缓冲。最后，如果要结束任务写入输出流的时候，要注意调用输出流的flush方法来将缓冲区强制清空使之全部输出到输出流中去。</p>
+<pre><code>public class FilesTest {
+    public static void main(String[] args) throws IOException {
+        //buffer:8192    
+        File src = new File(&quot;1.txt&quot;);
+        File des = new File(&quot;2.txt&quot;);
+        FileWriter writer = new FileWriter(src);
+        StringBuffer buffer = new StringBuffer();
+        for(int i = 0;i&lt;8193;i++){
+            buffer.append(&quot;a&quot;);
+        }
+        writer.write(buffer.toString());
+        writer.flush();
+        BufferedInputStream bufferedInputStream = new BufferedInputStream(new FileInputStream(src));
+        BufferedOutputStream bufferedOutputStream = new BufferedOutputStream(new FileOutputStream(des));
+        byte[] eachBuffer = new byte[1024];
+        int haveRead;
+        while((haveRead = bufferedInputStream.read(eachBuffer))!=-1){
+            bufferedOutputStream.write(eachBuffer);
+        }
+        //bufferedOutputStream.flush();
+    }
+}
+</code></pre><p>上面这个过程演示了缓冲区的大小，当输入流的内容填不满缓冲区时(也就是不足8192字节时)，如果不用flush没有办法自动写入文件，当原来缓冲区的大小大于这个值的时候，会一次性把上次的8192字节自动写入，下一次会再读入8192个字节，完成上面的过程。因此，这提醒我们，使用带有缓冲的输出流时务必要在最后强制清空缓冲进入输出流才能保证数据不出错。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/02/Java多线程基础/" rel="next" title="Java多线程基础">
+                <i class="fa fa-chevron-left"></i> Java多线程基础
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/04/JavaIO不同情境使用的流/" rel="prev" title="JavaIO不同情境使用的流">
+                JavaIO不同情境使用的流 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/03/JavaIO输入输出流/"
+           data-title="JavaIO输入输出流" data-url="http://yoursite.com/2015/10/03/JavaIO输入输出流/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">31</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#JavaIO-：JavaIO输入输出流"><span class="nav-number">1.</span> <span class="nav-text">JavaIO ：JavaIO输入输出流</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流的原理："><span class="nav-number">2.</span> <span class="nav-text">流的原理：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#输入输出流："><span class="nav-number">3.</span> <span class="nav-text">输入输出流：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流的流："><span class="nav-number">4.</span> <span class="nav-text">流的流：</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#流中的缓冲技术"><span class="nav-number">5.</span> <span class="nav-text">流中的缓冲技术</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
