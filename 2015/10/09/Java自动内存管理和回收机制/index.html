@@ -1,0 +1,735 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
+虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java自动内存管理和回收机制">
+<meta property="og:url" content="http://yoursite.com/2015/10/09/Java自动内存管理和回收机制/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
+虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnf4hw0nj30m80eymyn.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnfbms8ej30m80a43zi.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnfdalz9j30m80a4wfg.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jnghc1jxj30hd0i7q4c.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jngkb8iuj30b406h3yo.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jnhwu12jj30fy08twfd.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnhyhripj30fi08fgmo.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jni0awekj30h709h0tn.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jniwk3qoj30b40amglt.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnj7dutyj30m80dwact.jpg">
+<meta property="og:updated_time" content="2016-10-07T05:43:19.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java自动内存管理和回收机制">
+<meta name="twitter:description" content="Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
+虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnf4hw0nj30m80eymyn.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/09/Java自动内存管理和回收机制/"/>
+
+  <title> Java自动内存管理和回收机制 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java自动内存管理和回收机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-09T13:38:15+08:00" content="2015-10-09">
+              2015-10-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/09/Java自动内存管理和回收机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/Java自动内存管理和回收机制/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java虚拟机：Java自动内存管理和回收机制"><a href="#Java虚拟机：Java自动内存管理和回收机制" class="headerlink" title="Java虚拟机：Java自动内存管理和回收机制"></a>Java虚拟机：Java自动内存管理和回收机制</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。<br>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。</p>
+<h2 id="虚拟机内存分区"><a href="#虚拟机内存分区" class="headerlink" title="虚拟机内存分区"></a>虚拟机内存分区</h2><p>java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，本地方法一般执行的都是比较底层的操作，比如说IO、线程管理等，java方法则会执行的一般是相对高级的操作，比如说数逻运算，或者是调用底层的本地方法来完成底层任务。</p>
+<p>java虚拟机的运行时数据区域将内存分成了不同的部分协调完成java虚拟机的内存数据交互。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnf4hw0nj30m80eymyn.jpg" alt=""></p>
+<p>按照数据存储过程的数据结构可以大致分为：</p>
+<p><strong>栈区：</strong></p>
+<ul>
+<li>虚拟机栈：java虚拟机运行的java方法(java字节码方法)构成的栈空间，这个空间在运行时存储这些方法的局部变量表、操作栈、动态链接和方法出口；</li>
+<li>本地方法栈：本地方法在运行时存储数据产生的栈区。</li>
+</ul>
+<p><strong>堆区：</strong></p>
+<ul>
+<li>java堆：对象的实例存储在这个共享的堆空间里，由于占有最大的和最有实际意义的空间，这个空间的GC过程时虚拟机运行的重点。</li>
+<li>方法区：存储虚拟机运行时加载的类信息、常量、静态变量和即时编译的代码，因此可以把这一部分考虑为一个保存相对来说数据较为固定的部分，常量和静态变量在编译时就确定下来进入这部分内存，运行时类信息会直接加载到这部分内存，所以都是相对较早期进入内存的。</li>
+<li>运行时常量池：不是所有的常量都是在编译时就确定下来进入内存的，仍然会有运行时才进入内存的常量，这部分常量一般是编译时产生的一些固定信息，比如说翻译出的引用等，直接在类加载的时候把它们存入运行时常量池有助于提高性能。<br>所有的内存区域的数据交互由程序计数器指导虚拟机完成复杂的逻辑步骤。</li>
+</ul>
+<p><strong>如何找到一个对象的实例：</strong></p>
+<pre><code>Object obj ＝ new Object();
+</code></pre><p>在这个过程中在虚拟机栈的局部变量表里创建obj引用，在堆内存里创建Object类的一个实例，最后就是把obj引用和这个对象实例关联起来的问题了，另外，我们需要知道的是，不是所有的实例都完整地保存了所有的类的信息，一般共有的或者静态的类的数据将被保存在方法区中，独有的实例数据才会真的被保存在java堆里，因此每个引用必须同时找到关联它的实例数据和类数据。针对这个问题，有两个办法来做： </p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnfbms8ej30m80a43zi.jpg" alt=""></p>
+<p>I. 引用存储的只是实例的句柄，句柄在堆的句柄池中，句柄中保存着到堆中真正实例的地址和到方法区中类数据的地址，这样就可以通过这个句柄可以找到这些地址。</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnfdalz9j30m80a4wfg.jpg" alt=""></p>
+<p>II. 引用存储的就是实例在堆中的地址，而实例中是含有可以定位类数据的地址的，也就是通过找到的实例地址可以再去寻找它对应的类的数据。</p>
+<p><strong>两个和内存溢出相关的异常：</strong></p>
+<ul>
+<li>StackOverflowError：线程申请的栈深度大于虚拟机的规定值；</li>
+<li>OutOfMemoryError：线程扩展增加的内存大于虚拟机的要求；</li>
+</ul>
+<p>##内存回收机制<br>虚拟机栈、本地方法栈和计数器大都是编译期确定的内存分配，在线程执行完毕后即会清理，内存回收相对比较容易。所以我们提到的内存回收大都是指堆内存的回收。我们通过如下几个问题来说明内存回收机制：</p>
+<p>###1. 什么样的堆内存是可以回收的呢？<br>什么样的堆内存是可以回收的呢？简而言之就是那些“没用”的内存，那么怎样的内存是“没用”的呢？即那些通过现有的指针（或称“引用”）条件下再也访问不到的内存对象。所以有这样的算法来描述无效的引用：<br><strong>（引用计数算法）</strong>每个对象都有一个被引用计数器，被引用一次计数器加1，引用被置空时减1，最终被引用计数器的值为0 的即是“无用”的内存对象，它占用的内存可以被回收。<br>（这个算法看起来好像没有问题，但是遭遇到循环引用的时候就会出现问题：如果同时将循环引用的双方置空，那么即使被引用计数器不为0也再也访问不到这些对象了，即发生了内存无故占用）。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jnghc1jxj30hd0i7q4c.jpg" alt=""></p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jngkb8iuj30b406h3yo.jpg" alt=""></p>
+<p>这个过程体现了互相循环引用可能带来的问题，对象仍被引用但是已经不能被访问了，所以是这种算法的缺陷。</p>
+<p><strong>（根搜索算法）</strong>将由栈内存或方法区引用的对象作为GCRoots去构建引用链，如果能找到这个对象则说明这个对象能够访问其内存不能被回收，反之通过这些引用链找不到这个对象则说明已经是弃用的对象了，其内存是应该被回收的。（上面的互相循环引用的例子就可以解决了，因为这个问题里面虽然其被引用计数器的值不为0，但是已经没有GCRoots能够找到这些内存了，这个问题里的GC Roots是栈内存里的objA和objB，这两个栈内存里的引用被置空，因此引用链里没办法再找到对内存里的对象了。）</p>
+<p>###2. 确定了有哪些内存该被回收后GC机制是直接回收内存吗？<br>确定了有哪些内存该被回收后GC机制是直接回收内存吗？GC会给这些内存中的某些对象一次机会，就是那些重写过finalize方法的类的对象，GC会执行这个对象重写过的finalize方法，如果在这个方法中对象重新将自己链接给了某个引用使得这块内存区域重新可以被访问，那么GC就不会在这次回收它，但是，这个过程只能执行一次，下一次再被GC遇到的话就不会顾及这个finalize方法而是直接回收了，因此要注意重写的finalize方法只能执行一次。<br>这个是堆内存中对象的回收，在方法区里保存类信息和常量池的内存同样需要回收，这个过程相对来说更缓慢也并没有那么高效，因为一段时间内线程使用的类和常量池都比较稳定，只有当真的确认有类不再使用且不被反射使用的时候才会卸载类，当真的没有常量再被使用的时候才会释放常量池中不用的常量。</p>
+<p>###3. 内存回收策略和算法是怎样的呢？<br>知道了哪些内存该被回收、回收前的最后确认之后来说内存回收策略，也就是内存回收的时候究竟是依据什么样的算法进行的？<br><strong>（标记-清除算法）</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jnhwu12jj30fy08twfd.jpg" alt=""></p>
+<p><strong>（复制算法）</strong></p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnhyhripj30fi08fgmo.jpg" alt=""></p>
+<p><strong>（标记-整理算法）</strong></p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jni0awekj30h709h0tn.jpg" alt=""></p>
+<p>通过这些算法，jvm可以将已不被引用的无效内存回收，标记-清除算法清理得到的内存往往出现碎片，而标记-整理解决了内存碎片却增加了时间消耗，复制算法则会出现内存浪费的问题，结合不同场景使用不同算法进行垃圾回收是十分重要的。</p>
+<p>###4. 主流垃圾回收收集器<br>了解了内存垃圾回收的算法，我们来看执行垃圾回收的垃圾收集器。根据堆内存对对象的代的划分我们对堆内存有这样划分：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jniwk3qoj30b40amglt.jpg" alt=""></p>
+<p>各版本和种类的垃圾回收器各有其用武之地，配合使用它们得到最好的效果十分重要。因为在垃圾内存回收的过程中对每个对象分代处理，所以对不同代的垃圾内存有不同的收集器去回收：创建不久的对象称为新生代，新生代对象的特点即是生死频率高，从生到死的过程很短，所以再回收时有大量的这样的内存存在，所以采用复制算法采用较大的eden:survivor比率将使得内存较完整也较快地回收，同时，老年代的内存存储的是创建很久仍然没有失去引用的对象，这类对象由于长期存在于内存中且未来的生死也常常不确定，所以需要使用速度慢但是更精确地标记-整理算法。下面是真正执行这些回收过程的收集器：<br><strong>新生代收集器：（主要使用复制算法）</strong></p>
+<ul>
+<li>Serial收集器：单线程+“Stop the World”停顿式收集</li>
+<li>ParNew收集器：多线程版本的Serial收集器</li>
+<li>Parallel Scavenge收集器：多线程收集器，关注“吞吐量”</li>
+</ul>
+<p><strong>老年代收集器：（主要使用标记-整理算法）</strong></p>
+<ul>
+<li>Serial Old收集器：Serial的老年代版本</li>
+<li>Parallel Old收集器：Parallel的老年代版本</li>
+<li>CMS收集器：并发收集、低停顿，关注短时间停顿</li>
+</ul>
+<p>G1收集器：高级和领先的新型垃圾收集器</p>
+<p>###5. 内存分配和回收的全过程：<br>JVM虚拟机将会依次对每次即将进入堆内存的对象做出安排，一定时间间隔内对于失去引用的无效内存进行回收，当内存出现溢出的时候试图通过垃圾回收自发解决问题保持系统回归平稳。</p>
+<ul>
+<li><p>申请内存的对象优先被分配到堆内存的Eden区，如果Eden区的空间不足就向survivor区上放，如果仍然放不下就会引发一次发生在新生代的minor GC，在这次GC过程中，如果发现仍然又放不下的对象，就将这些对象放入老年代内存里去（这种现象是对垃圾回收的统计学规律的挑战，因为理论上大多数新生代内存不应该存活到这个时候，所以这个时候就会引发这种叫做分配担保机制的对象向老年代转移），如果存在失去引用的内存，那么就将剩余存活的对象移往survivor区，剩下的Eden区内存全部清理。</p>
+</li>
+<li><p>大对象直接进入老年区，上面的描述中我们已经可以看到大的对象在一旦出现长时间存活的时候会引发分配担保机制进入老年区，所以不如直接在刚开始创建这个对象的时候就把它放入老年区。</p>
+</li>
+<li><p>长期存活的对象直接进入老年区：同上面的描述，长期存活的对象的移动会耗费资源，所以在创建这些长期存活的对象时就将它直接放入老年区。</p>
+</li>
+<li><p>动态对象的年龄判断：虚拟机并不是一直等待所有的对象都到达老年代的标准才将它们放入老年期，因为那样做可能会使新生代的空间一直很紧张引发不必要的GC，所以在当Survivor区里的对象中相同年龄的对象的大小达到Survivor区的一半时就可以将其移入老年区。</p>
+</li>
+<li><p>空间分配担保：当每次执行minor GC的时候应该对要晋升到老年代的对象进行分析，如果这些马上要到老年区的老年对象的大小超过了老年区的剩余大小，那么执行一次Full GC以尽可能地获得老年区的空间。</p>
+</li>
+</ul>
+<p>###6.一个借助VisualVM工具探查JVM内存管理的实例</p>
+<p>这里我们使用一个实例借助VusualVM来查看程序运行过程中的虚拟机内存分配的过程：<br>在这个例子中，各种参数均使用默认值：</p>
+<pre><code>public class VMTest {
+    private static final int _1MB = 1024*1024;
+    public static void main(String[] args) throws InterruptedException {
+        Thread.sleep(4000);
+        byte[] allocation1;
+        for (int i = 0; i &lt; 400; i++) {
+            allocation1 = new byte[_1MB];    
+            System.out.println(&quot;Create One&quot;+i);
+            Thread.sleep(1000);
+        }
+
+    }
+}
+</code></pre><p>这个例子中，主线程每次循环向虚拟机申请内存创建新对象，然后在循环结束的时候将引用链接到新的对象，原来的对象就会处于失去引用的状态，每隔一段时间后JVM的minor GC就会使得这些弃用的对象占据的内存被回收。以下即是这个过程中VisualVM展示的的实时内存各区占据情况：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jnj7dutyj30m80dwact.jpg" alt=""></p>
+<p>这个过程中，我们可以清楚地看出内存分配的全过程。新的对象作为新生代对象会被分配到新生区的Eden区中，在一个循环中这些对象都会被分配到Eden区中，因为Eden区默认的超过600M的空间足够容纳这些对象，当一段时间后发生minor GC的时候就会将仍然存活的（也就是仍然有有效引用的）对象移至空的Survivor区，在这里是Survivor0区，失去引用的对象占据的Eden区空间将会被回收；下一次monor GC到来之前仍然会进行这样的空间分配，Eden区中会产生新的对象并有一些对象会失去有效引用，下一次minor GC到来的时候会把Eden区中存活的对象（以及Survivor0中存活的对象）移至空的Survivor区中，这里是Survivor1，并将Eden和Survivor0回收。注意，每次minor GC进行的时候都会将一个Survivor（from Space）置空，并将存活的对象移至空Survivor（to Space）里，如果Survivor（to Space）空间不足，则会引发分配担保机制将这些存活对象移至老年区。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/07/Java字节码指令的执行/" rel="next" title="Java字节码指令的执行">
+                <i class="fa fa-chevron-left"></i> Java字节码指令的执行
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/17/Java二进制字节码的结构、加载/" rel="prev" title="Java二进制字节码的结构、加载">
+                Java二进制字节码的结构、加载 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/09/Java自动内存管理和回收机制/"
+           data-title="Java自动内存管理和回收机制" data-url="http://yoursite.com/2015/10/09/Java自动内存管理和回收机制/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java虚拟机：Java自动内存管理和回收机制"><span class="nav-number">1.</span> <span class="nav-text">Java虚拟机：Java自动内存管理和回收机制</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#虚拟机内存分区"><span class="nav-number">1.1.</span> <span class="nav-text">虚拟机内存分区</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

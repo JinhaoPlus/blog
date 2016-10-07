@@ -1,0 +1,758 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
+我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java二进制字节码的结构、加载">
+<meta property="og:url" content="http://yoursite.com/2015/10/17/Java二进制字节码的结构、加载/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
+我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn75ung4j30m405jmxj.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jn77u0htj30m80cxaaw.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jn7aewj4j30m809d0tu.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnauqydhj30m803fq31.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/006y8lVajw1f8jn7c72euj30m808emya.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jnbzatxtj30m804xmxf.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jncxvwmxj30m804rweq.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jn7gt4yuj30m808ngm8.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn7jhb1cj30cw0m8jsa.jpg">
+<meta property="og:updated_time" content="2016-10-07T05:37:35.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java二进制字节码的结构、加载">
+<meta name="twitter:description" content="Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
+我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn75ung4j30m405jmxj.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/17/Java二进制字节码的结构、加载/"/>
+
+  <title> Java二进制字节码的结构、加载 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java二进制字节码的结构、加载
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-17T13:30:15+08:00" content="2015-10-17">
+              2015-10-17
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/17/Java二进制字节码的结构、加载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/17/Java二进制字节码的结构、加载/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java虚拟机：Java二进制字节码的结构、加载"><a href="#Java虚拟机：Java二进制字节码的结构、加载" class="headerlink" title="Java虚拟机：Java二进制字节码的结构、加载"></a>Java虚拟机：Java二进制字节码的结构、加载</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。</p>
+<p>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。</p>
+<p>我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一番步骤后java虚拟机将这些二进制字节码按照一定的方式读入内存中的不同区域形成了二进制字节码的活化状态，虚拟机使用字节码指定的命令执行这些指令，其间使用字节码中存储的数据，最终完成了任务。这个过程就是java虚拟机执行java二进制字节码的过程的简单概括。可以如下图所示：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn75ung4j30m405jmxj.jpg" alt=""></p>
+<p>这只是对这个过程的简单介绍，实际上其中的每一步都至关重要而且复杂，正是这些过程最终使得我们编写的java源代码能够运行在虚拟机搭建的环境中。</p>
+<h2 id="java源代码转换的结果：编译所得到字节码的结构"><a href="#java源代码转换的结果：编译所得到字节码的结构" class="headerlink" title="java源代码转换的结果：编译所得到字节码的结构"></a>java源代码转换的结果：编译所得到字节码的结构</h2><p>java的二进制字节码是一个紧密连接的二进制数码，这个数码的结构如下，各个结构之间是无缝连接的，也因此首先于这种规则，java的二进制代码才不会产生二义性，即虚拟机在读区这些数码时可以唯一地解析出它所表达的意思。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jn77u0htj30m80cxaaw.jpg" alt=""></p>
+<p>这个庞大的结构主要包含以下几个部分：</p>
+<h3 id="1-魔数和版本号"><a href="#1-魔数和版本号" class="headerlink" title="1.魔数和版本号"></a>1.魔数和版本号</h3><p>基本的信息用于确定java二进制字节码的特征和加载可行特征。<br>魔数“CAFEBABE”用以确定这段字节码是java字节码的开始，版本号用于确定不同版本的jdk编译了不同版本的java源代码生成了不同版本的二进制字节码，这个标记的另外的目的用于提示虚拟机高于当前版本的二进制字节码可能由于兼容性不能加载。</p>
+<h3 id="2-常量池"><a href="#2-常量池" class="headerlink" title="2.常量池"></a>2.常量池</h3><p>所有和程序相关的常量都将加入这个部分中，这个部分开头的常量数决定了常量池中常量的个数以使得虚拟机能够正确解析出哪些部分是常量池。后面的常量以表的形式呈现，“表”是字节码中一个特殊的复合型的数据结构，不同类型的常量有不同的标记tag以指示虚拟机以不同的方式解析出常量的值。这样最终虚拟机将根据不同类型的常量解析出常量池中的全部常量对应的值或索引。</p>
+<p>常量分为字面量和符号引用两种，字面量即一般的基本类型的数据，比如整型、浮点型等，而符号引用则是那些需要进一步通过这个符号的值去寻找它真正引用的对象，比如CONSTANT_Fieldref_info类型的常量就是符号引用，必须通过这个字段名去寻找到它真正引用的字段。<br>如下是常量池中的常量类型，另外以CONSTANT_Utf8_info表为例说明了常量表中的结构：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jn7aewj4j30m809d0tu.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jnauqydhj30m803fq31.jpg" alt=""></p>
+<h3 id="3-访问标志"><a href="#3-访问标志" class="headerlink" title="3.访问标志"></a>3.访问标志</h3><p>关乎类的访问权限的信息将会以位的不同的形式展示在这里。<br>以下是访问标志的不同位，如果有好几个访问标志，那么一般将它们做或运算将几个相关的位都展示出来。</p>
+<p><img src="http://ww4.sinaimg.cn/large/006y8lVajw1f8jn7c72euj30m808emya.jpg" alt=""></p>
+<h3 id="4-类索引、父类索引和接口索引"><a href="#4-类索引、父类索引和接口索引" class="headerlink" title="4.类索引、父类索引和接口索引"></a>4.类索引、父类索引和接口索引</h3><p>这些字节码向虚拟机提供了这个类的类名、父类的类名和接口名的索引值，这个索引值最终将可以从常量池中获得其对应的全限定名。</p>
+<h3 id="5-字段表集合"><a href="#5-字段表集合" class="headerlink" title="5.字段表集合"></a>5.字段表集合</h3><p>（成员变量的描述）这些字节码向虚拟机提供了这个类中包含的字段的个数和每个字段的信息，每个字段同样是用一个字段表来描述的，这个字段表里说明了这个字段的信息：字段的访问权限、名索引在常量池中找到它的名字、描述符说明了这个字段的类型，可能会附带的属性表则会进一步通过拓展的数据结构展示这个字段的其它属性，比如这个字段可能被赋的初值。<br>以下展示的是字段表的结构：</p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jnbzatxtj30m804xmxf.jpg" alt=""></p>
+<h3 id="6-方法表集合"><a href="#6-方法表集合" class="headerlink" title="6.方法表集合"></a>6.方法表集合</h3><p>（成员方法的描述）和字段表类似的，这些字节码向虚拟机提供了这个类中包含的方法的个数和每个方法的信息，，每个方法用一个方法表来描述：方法的访问权限、方法名的索引在常量池中找到这个方法的名字、描述符索引得到了这个方法的特征如返回值类型和参数，可能会附带的属性表则会进一步通过拓展的数据结构展示这个方法的其它属性，比如这个方法索引得到的Code属性存在的话那么说明这个方法的方法体是存在的，则接下去的字节码就是具体的方法体了，这个方法体由Code属性表来描述。Code属性表则是更深入的一个数据结构了（字节码的数据结构就是以这样可拓展的方式一步步建立的，当简单的索引或字面量不足以描述的时候就会引入表，以结构化的方式来对所要描述的对象做进一步的阐释），在Code属性表里规定了“Code”常量索引以确定这段字节码是方法体、Code属性长度、最大栈、局部变量空间、代码长、代码、异常数和异常表，还有可能带有其他可拓展的属性表。</p>
+<p>以下是方法表的结构，针对方法表中的Code属性表可以看到它的更深一层的结构，方法表中还有其他的属性表可依据情况以供拓展，比如Exceptions属性表用以描述这个方法所要规定的可抛出异常。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jncxvwmxj30m804rweq.jpg" alt=""></p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jn7gt4yuj30m808ngm8.jpg" alt=""></p>
+<h3 id="7-类其它属性表"><a href="#7-类其它属性表" class="headerlink" title="7.类其它属性表"></a>7.类其它属性表</h3><p>基于同样的拓展思想，整体结构最后也预留了同样的属性表来做拓展，包括源代码所在文件等信息都可以拓展在这个部分里。</p>
+<p>这个部分我们可以清楚地看出字节码设计者对于数据结构的可拓展性的追求，通过可拓展的属性表的定义，很多难以描述的结构可以更深一步的描述（这有点像是文件的结构：在一个文件难以描述的时候就用一个包含了很多文件的文件夹来共同描述），这种设计最终使java二进制字节码能够长期稳定的存在下来，因为新添加的特性只需要在特定的节点做一个拓展即可。</p>
+<blockquote>
+<p>上面的部分除了辛苦地使用十六进制编辑器对class文件作分析之外还可以直接使用jdk提供的javap工具进行分析：javap -verbose * ，它将结构化的结果呈现出来：</p>
+</blockquote>
+<pre><code>jinhaoplus$ javap -verbose MyClass
+Classfile /Users/jinhao/Desktop/MyClass.class
+  Last modified 2015-10-11; size 288 bytes
+  MD5 checksum 8235b2e50d3ca6704b44862387570773
+  Compiled from &quot;MyClass.java&quot;
+class MyClass
+  minor version: 0
+  major version: 52
+  flags: ACC_SUPER
+Constant pool:
+   #1 = Methodref          #5.#17         // java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+   #2 = String             #18            // a
+   #3 = Fieldref           #4.#19         // MyClass.x:Ljava/lang/String;
+   #4 = Class              #20            // MyClass
+   #5 = Class              #21            // java/lang/Object
+   #6 = Utf8               x
+   #7 = Utf8               Ljava/lang/String;
+   #8 = Utf8               ConstantValue
+   #9 = Utf8               y
+  #10 = Utf8               C
+  #11 = Utf8               &lt;init&gt;
+  #12 = Utf8               ()V
+  #13 = Utf8               Code
+  #14 = Utf8               LineNumberTable
+  #15 = Utf8               SourceFile
+  #16 = Utf8               MyClass.java
+  #17 = NameAndType        #11:#12        // &quot;&lt;init&gt;&quot;:()V
+  #18 = Utf8               a
+  #19 = NameAndType        #6:#7          // x:Ljava/lang/String;
+  #20 = Utf8               MyClass
+  #21 = Utf8               java/lang/Object
+{
+  final java.lang.String x;
+    descriptor: Ljava/lang/String;
+    flags: ACC_FINAL
+    ConstantValue: String a
+
+  char y;
+    descriptor: C
+    flags:
+
+  MyClass();
+    descriptor: ()V
+    flags:
+    Code:
+      stack=2, locals=1, args_size=1
+         0: aload_0
+         1: invokespecial #1                  // Method java/lang/Object.&quot;&lt;init&gt;&quot;:()V
+         4: aload_0
+         5: ldc           #2                  // String a
+         7: putfield      #3                  // Field x:Ljava/lang/String;
+        10: return
+      LineNumberTable:
+        line 1: 0
+        line 2: 4
+}
+SourceFile: &quot;MyClass.java&quot;
+</code></pre><h2 id="java字节码转换为活化的内存数据：类加载的过程"><a href="#java字节码转换为活化的内存数据：类加载的过程" class="headerlink" title="java字节码转换为活化的内存数据：类加载的过程"></a>java字节码转换为活化的内存数据：类加载的过程</h2><p>java的字节码经过了编译存在了磁盘上，那么把它从磁盘里请到内存里成为真正活化可用的内存对象是至关重要的，这个过程称之为类加载过程：Class Loading，这个加载过程结束后class文件里的二进制字节码将会成为内存不同区域里的数据，虚拟机就可以按照原则将这些数据代表的指令执行完成任务。</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jn7jhb1cj30cw0m8jsa.jpg" alt=""></p>
+<p>上图展示的就是这个过程的分步骤。下面是这几步的功能：</p>
+<h3 id="加载的任务："><a href="#加载的任务：" class="headerlink" title="加载的任务："></a>加载的任务：</h3><p>加载就是把二进制字节码转为字节流，通过类的全限定名把对应class文件里的二进制字节码转换为虚拟机内存中方法区里规定的数据结构（也就是说最终虚拟机里的结构并不是二进制字节码的那种紧密型）以完成之后的数据向内存中的分配，同时在堆内存中开辟区域以存放类的java.lang.Class对象以使得将来形成的方法区中的数据能有入口访问。</p>
+<p>类加载器：加载的时候是根据全限定名去找到对应的二进制字节码，这个过程是由类加载器完成的，虽然是同一个二进制字节码文件，如果类加载器的选择不同，那么出于安全考虑也不能判定加载出的类是完全一致的，因此自定义加载器和系统的应用程序加载器对同一个类的加载结果是不一样的，要判定这两个类是不一样的。为了解决这个问题，类加载器被设计成了多层继承关系，从上向下分别是启动类加载器、拓展类加载器、应用程序加载器、自定义加载器，加载的时候层层向上代理给父加载器，最终将会使得启动类加载器执行最终的加载，以确保所有同名的类能够被同一个类加载器所加载。</p>
+<h3 id="验证的任务："><a href="#验证的任务：" class="headerlink" title="验证的任务："></a>验证的任务：</h3><p>毕竟是文件里的字节码，没有办法保证字节码是不被修改的安全代码，即使保证了没被修改也不能保证代码编写者在满足编译成功之外没有犯下低级的语意错误，所以对字节码的验证工作至关重要，可以一定程度上保证字节码的安全性和正确性，虚拟机将从字节流的格式是否正确（是否满足class字节码的格式限制）、元数据语法是否正确（类的元数据信息是否符合java语言的语法要求）、字节码安全性是否保证（是否有跨越内存安全性的错误和隐患出现）、符号引用验证是否能够通过（符号引用是查看那些非类自身的其它类和这些类中的字段和方法是否真的存在，这个过程是解析时会触发的，解析的过程会去查看这些符号引用到的类的情况是否会出错）。</p>
+<h3 id="准备的任务："><a href="#准备的任务：" class="headerlink" title="准备的任务："></a>准备的任务：</h3><p>准备是为了在方法区中为即将要分配内存的数据开始开辟在相应位置开辟内存空间，并将相应的字节流注入到这些空间中去，同时为字段赋初值。值得注意的是，除非字段带有ContantValue属性外，一般情况下赋初值的时候都会为字段赋零值。这个过程结束后方法区里就已经建立起来了类的基本数据结构，这其中包括常量池的常量。</p>
+<h3 id="解析的任务："><a href="#解析的任务：" class="headerlink" title="解析的任务："></a>解析的任务：</h3><p>准备阶段结束后类变量就都带着初值在方法区中等待了，但是这个时候方法区中的常量池里的常量却只是一些字面量和符号引用，字面量是可以直接使用的，但是符号引用必须转换为直接引用（可以理解为这些引用真正指向的地址）才能使用，否则这些常量的字面量并不能指定活化在内存里的对象：比如常量池中有一个CONSTANT_Class_info类型的符号引用常量，这个类符号引用里存储的仅仅是类的全限定名的索引，找到全限定名之后也没有什么用处，因为没办法确定符合这个全限定名的类在内存中加载的具体地址，因此必须将这个符号引用对应的类的直接引用（地址）找出来，也就是转换为直接引用。</p>
+<p>所以解析的任务就是将常量池里的符号引用转换为直接引用，以使得方法区里的类、父类、接口、字段、方法能够通过自身的索引寻找常量池中的引用时直接定位到这些类、父类、接口、字段、方法的准确的内存地址。</p>
+<blockquote>
+<p>另外需要注意的是，解析不一定非要在准备之后初始化之前进行，因为我们可以看到这个阶段的主要任务是使用阶段才会用到的，如果程序中有动态绑定的需求时这时候是没有办法把符号引用准确转换为直接引用的。所以解析的阶段有时会在初始化之后甚至使用的过程中才会再进行的。这样做的好处就是能够完成相对灵活的动态绑定。</p>
+</blockquote>
+<h3 id="初始化的任务："><a href="#初始化的任务：" class="headerlink" title="初始化的任务："></a>初始化的任务：</h3><p>初始化的过程实际上就是执行<clinit>类初始化函数的过程，这个函数执行的其实就是字段的赋值语句和静态代码块的执行，这步过后，所有的字段都将被初始化为程序中赋值语句和静态代码块要求的初值，而不是准备阶段的零值。</clinit></p>
+<p>以上几个步骤就是类加载的全过程，在这个过程中，class文件中的二进制字节码以二进制字节流的形式先按照方法区特定的数据结构重整并建立java.lang.Class对象于堆中，验证重整后的二进制字节流没有语法、语意和安全性的问题后虚拟机为即将加载的类在方法区中开辟内存空间，字节流注入开辟的方法区的内存空间并将各字段赋零值，常量池中的符号引用转换为有实际意义的直接引用以访问特定的地址，特定的字段被初始化为程序规定的初值，整个类成功加载到方法区中。</p>
+<p>虚拟机规范制定了很多限制，这些限制是必须遵守的，不同的厂商对虚拟机的规范有不同的实现，但是面对限制都是一样的遵守。java虚拟机对于类加载的时机没有明确限制，但是对于类加载过程的初始化的时机却有明确的四个“有且仅有要求”：这些条件下必须对类进行初始化，鉴于类初始化位于类加载过程的最后，所以这个规定也可以大致理解为类加载的时机，这些时机称为“主动引用”：</p>
+<ol>
+<li><p>new新对象、读写静态字段、调用静态方法的时候必须初始化类：读写静态字段时只初始化这个静态字段所在的类，如果是父类的静态字段则只初始化父类而不初始化字类；另外如果是static final修饰的静态字段，那么在编译的时候就会将其写入常量池，这个时候即使读这个静态字段也不会加载类，因为只需要去常量池中取这个值就好。这两个策略的目的其实都是尽可能地减少类加载的开销；</p>
+</li>
+<li><p>反射调用的时候初始化类；</p>
+</li>
+<li><p>初始化类的时候如果父类未初始化要初始化父类；</p>
+</li>
+<li><p>执行主类（执行的main函数所在类）要初始化。</p>
+</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/09/Java自动内存管理和回收机制/" rel="next" title="Java自动内存管理和回收机制">
+                <i class="fa fa-chevron-left"></i> Java自动内存管理和回收机制
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/19/Java的代理模式/" rel="prev" title="Java的代理模式">
+                Java的代理模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/17/Java二进制字节码的结构、加载/"
+           data-title="Java二进制字节码的结构、加载" data-url="http://yoursite.com/2015/10/17/Java二进制字节码的结构、加载/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">15</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java虚拟机：Java二进制字节码的结构、加载"><span class="nav-number">1.</span> <span class="nav-text">Java虚拟机：Java二进制字节码的结构、加载</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#java源代码转换的结果：编译所得到字节码的结构"><span class="nav-number">1.1.</span> <span class="nav-text">java源代码转换的结果：编译所得到字节码的结构</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-魔数和版本号"><span class="nav-number">1.1.1.</span> <span class="nav-text">1.魔数和版本号</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-常量池"><span class="nav-number">1.1.2.</span> <span class="nav-text">2.常量池</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-访问标志"><span class="nav-number">1.1.3.</span> <span class="nav-text">3.访问标志</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-类索引、父类索引和接口索引"><span class="nav-number">1.1.4.</span> <span class="nav-text">4.类索引、父类索引和接口索引</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-字段表集合"><span class="nav-number">1.1.5.</span> <span class="nav-text">5.字段表集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-方法表集合"><span class="nav-number">1.1.6.</span> <span class="nav-text">6.方法表集合</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-类其它属性表"><span class="nav-number">1.1.7.</span> <span class="nav-text">7.类其它属性表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#java字节码转换为活化的内存数据：类加载的过程"><span class="nav-number">1.2.</span> <span class="nav-text">java字节码转换为活化的内存数据：类加载的过程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#加载的任务："><span class="nav-number">1.2.1.</span> <span class="nav-text">加载的任务：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#验证的任务："><span class="nav-number">1.2.2.</span> <span class="nav-text">验证的任务：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#准备的任务："><span class="nav-number">1.2.3.</span> <span class="nav-text">准备的任务：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#解析的任务："><span class="nav-number">1.2.4.</span> <span class="nav-text">解析的任务：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#初始化的任务："><span class="nav-number">1.2.5.</span> <span class="nav-text">初始化的任务：</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

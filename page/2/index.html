@@ -258,8 +258,8 @@
             
               
                 
-                <a class="post-title-link" href="/2015/10/19/Java的代理模式/" itemprop="url">
-                  Java的代理模式
+                <a class="post-title-link" href="/2015/10/17/Java二进制字节码的结构、加载/" itemprop="url">
+                  Java二进制字节码的结构、加载
                 </a>
               
             
@@ -272,8 +272,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-10-19T13:22:35+08:00" content="2015-10-19">
-              2015-10-19
+            <time itemprop="dateCreated" datetime="2015-10-17T13:30:15+08:00" content="2015-10-17">
+              2015-10-17
             </time>
           </span>
 
@@ -283,8 +283,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/10/19/Java的代理模式/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/19/Java的代理模式/" itemprop="commentsCount"></span>
+                <a href="/2015/10/17/Java二进制字节码的结构、加载/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/17/Java二进制字节码的结构、加载/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -309,16 +309,246 @@
       
         
           
-          Java基础 ：Java的代理模式代理的目的到底是什么呢？字面意思上就可以解释：代理就是“代人理事”，也就是说当实现某个操作的时候发现根本不能使用相关的对象或者使用这个对象的效果不好的时候就建立一个“代它理事”的代理对象，让代理对象去完成任务，因为我们关注的是完成任务本身，至于是谁完成了这个任务是不重要的。在这种逻辑下，只要建立的代理对象能够实现像原来那个对象一样的方法就行，更进一步说，我们新建的这个代理对象有足够大的自由度，不仅可以完成原来那个对象的功能，还能完成其他我们附加上的功能。举两个例子：
+          Java虚拟机：Java二进制字节码的结构、加载这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第二篇。
+我们在文件里写入了java的源代码，源代码写就后存入磁盘，磁盘上的源代码经过javac命令的编译形成了二进制字节码形成了class文件，经过一番步骤后java虚拟机将这些二进制字节码按照一定的方式读入内存中的不同区域形成了二进制字节码的活化状态，虚拟机使用字节码指定的命令执行这些指令，其间使用字节码中存储的数据，最终完成了任务。这个过程就是java虚拟机执行java二进制字节码的过程的简单概括。可以如下图所示：
 
-如果那个对象是一个是很大的图片,需要花费很长时间才能显示出来,那么当这个图片包含在文档中时,使用编辑器或浏览器打开这个文档,打开文档必须很迅速,不能等待大图片处理完成,这时需要做个图片Proxy来代替真正的图片。
-如果那个对象在Internet的某个远端服务器上,直接操作这个对象因为网络速度原因可能比较慢,那我们可以先用Proxy来代替那个对象。
-
-我们来说说静态代理和动态代理：静态代理：我们的代理对象是手动创建的，代理对象内部是有一个被代理对象对应的类的对象的，所以如果想要执行某些被代
+这只是对这个过程的简单介绍，实际上其中的每一步都至关重要而且复杂，正是这些过程最终使得我们编写的java源代码能够运行在虚拟机搭建的环境中。
+java源代码转换的结果：编译所得到字节码的结构java的二进制字节码是一个紧密连接的二进制数码，这个数码的结构如下，各个结构之间是无缝连接的，也因此首先于这种规则，java的二进制
           ...
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/10/19/Java的代理模式/#more" rel="contents">
+            <a class="btn" href="/2015/10/17/Java二进制字节码的结构、加载/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/09/Java自动内存管理和回收机制/" itemprop="url">
+                  Java自动内存管理和回收机制
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-09T13:38:15+08:00" content="2015-10-09">
+              2015-10-09
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/09/Java自动内存管理和回收机制/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/09/Java自动内存管理和回收机制/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java虚拟机：Java自动内存管理和回收机制这篇文章的素材来自周志明的《深入理解Java虚拟机》。作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程。
+虚拟机内存分区java虚拟机运行在受不同操作系统操纵的物理机上，不同的操作系统使用不同的底层方法来执行不同的操作，这些方法称之为本地方法：Native Method，本地方法一般执行的都是比较底层的操作，比如说IO、线程管理等，java方法则会执行的一般是相对高级的操作，比如说数逻运算，或者是调用底层的本地方法来完成底层任务。
+java虚拟机的运行时数据区域将内存分成了不同的部分协调完成java虚拟机的内存数据交互。
+
+按照数据存储过程的数据结构可以大致分为：
+栈区：
+
+虚拟机栈：java虚拟机运行的java方法(java字节码方法)构成的栈空间，这个空间在运行时存储这些方法的局部变量表、操作栈、动态链接和方法出口；
+本地方法栈：本地方法在运行时存储数据产生的栈区。
+
+堆区：
+
+java堆：对象的实例存储在这个共享的堆空间里，由于占有最大的和最有实际意义的
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/09/Java自动内存管理和回收机制/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/07/Java字节码指令的执行/" itemprop="url">
+                  Java字节码指令的执行
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-07T13:23:53+08:00" content="2015-10-07">
+              2015-10-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/07/Java字节码指令的执行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/07/Java字节码指令的执行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java虚拟机 ：Java字节码指令的执行这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第三篇。
+虚拟机运行活化的内存数据中的指令：程序的执行前面我们说明了java源码被编译成为了二进制字节码，二进制字节码转为内存中方法区里存储的活化对象，那么最重要的程序执行就做好了基础：当方法区里的字段和方法按照虚拟机规定的数据结构排好，常量池中的符号引用数据在加载过程中最大限度地转为了直接引用，那么这个时候虚拟机就可以在加载主类后创建新的线程按步执行主类的main函数中的指令了。
+java虚拟机执行程序的基础是特定的二进制指令集和运行时栈帧：
+
+二进制指令集是java虚拟机规定的一些指令，在编译后二进制字节码的类方法里的字节码就是这种指令，所以只要找到方法区里的类方法就可以依照这套指令集去执行命令。
+运行时栈帧是虚拟机执行的物理所在，在这个栈帧结构上，方法的局部变量、操作数栈、动态链接和返回地址依序排列，依照命令动态变换栈帧上的数据，最终完成所有
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/07/Java字节码指令的执行/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -626,7 +856,7 @@ public class ParentChildTest {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-count">15</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
