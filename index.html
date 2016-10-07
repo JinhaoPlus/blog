@@ -281,6 +281,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/02/25/MVC框架/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/02/25/MVC框架/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -381,6 +388,13 @@
 
           
             
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/09/29/黑客与画家/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/29/黑客与画家/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
           
 
           
@@ -405,6 +419,7 @@
           这两周重新阅读了这本经典，很难有这样的机会认认真真地做一次深度的阅读，所以把读书的笔记发到博客上。
 这本书的风格很奇怪，因为你很难相信一个人可以把有些稀松平常的事看得如此透彻而且富有深层的意义，那些小事在我们平常人看来可能不值一提，然而在作者笔下你可以跟随他的指引接近一些独特的视角，把这些隐秘挖掘出来，得出一些令人惊奇的结论。
 第一部分 成长和思想黑客是如何成长的以及他们看待世界的一些观点。
+
 第一章 为什么书呆子不受欢迎一个问题是，为什么书呆子不受欢迎呢？一个看似简单的问题，却在做着一层层的分析之后让人看到一个从学生圈子直指教育体系存在的大问题。作者在这一部分大致说明了以下的观点：
 
 学生独特的圈子逻辑和社会中的成年人而言是一种完全隔绝开的难以令成年人理解的逻辑。
@@ -413,11 +428,126 @@
 
 书呆子们往往由于无暇顾及这些而失去吸引力，在圈子里渐渐受到孤立，他们的精力会集中在其他东西上。
 
-真实的成年人社会与这个学生圈子执行完全不同的逻辑，它没有古怪的游戏规则，你的能力和聪明将带来价值，和是否获得吸引力无关
+真实的成年人社会与这个学生圈子执行完全不同的逻辑，它没有古怪的游戏规则，你的能力和聪明将带来价值，和是否获得吸引力无
           ...
 
           <div class="post-more-link text-center">
             <a class="btn" href="/2015/09/29/黑客与画家/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2014/12/03/java-polymorphism/" itemprop="url">
+                  java-polymorphism
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-03T20:39:30+08:00" content="2014-12-03">
+              2014-12-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/03/java-polymorphism/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/03/java-polymorphism/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
+反过来子类对象不能被定义成父类类型
+子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。
+
+所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。
+
+同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。
+父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。
+public class ParentChildTest {
+    public static void main(String[] args
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2014/12/03/java-polymorphism/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -488,7 +618,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">2</span>
+              <span class="site-state-item-count">3</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -655,9 +785,30 @@
 
   
 
+  
+    
+  
 
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
 
   
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
 
 
 

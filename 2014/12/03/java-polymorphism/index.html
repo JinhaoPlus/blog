@@ -1,0 +1,763 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
+反过来子类对象不能被定义成父类类型
+子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以">
+<meta property="og:type" content="article">
+<meta property="og:title" content="java-polymorphism">
+<meta property="og:url" content="http://yoursite.com/2014/12/03/java-polymorphism/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
+反过来子类对象不能被定义成父类类型
+子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以">
+<meta property="og:updated_time" content="2016-10-07T04:05:02.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="java-polymorphism">
+<meta name="twitter:description" content="父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
+反过来子类对象不能被定义成父类类型
+子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2014/12/03/java-polymorphism/"/>
+
+  <title> java-polymorphism | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                java-polymorphism
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2014-12-03T20:39:30+08:00" content="2014-12-03">
+              2014-12-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2014/12/03/java-polymorphism/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/03/java-polymorphism/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="父类对象被定义成子类类型（家族的具体化"><a href="#父类对象被定义成子类类型（家族的具体化" class="headerlink" title="父类对象被定义成子类类型（家族的具体化)"></a>父类对象被定义成子类类型（家族的具体化)</h2><p>既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。</p>
+<p><strong>反过来子类对象不能被定义成父类类型</strong></p>
+<p>子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。</p>
+<blockquote>
+<p>所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。</p>
+</blockquote>
+<p><strong>同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。</strong></p>
+<p>父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。</p>
+<pre><code>public class ParentChildTest {
+    public static void main(String[] args)
+     {
+        Parent parent=new Parent();
+        parent.printValue();
+        Child child=new Child();
+        child.printValue();
+
+        System.out.println(parent.getClass().getName());
+        parent=child;
+        ((Parent)parent).printValue();
+        System.out.println(parent.getClass().getName());
+
+        parent.myValue++;
+        ((Parent)parent).printValue();
+
+        ((Child)parent).myValue++;
+        parent.printValue();
+
+    }
+}
+
+class Parent{
+    public int myValue=100;
+    public void printValue() {
+        System.out.println(&quot;Parent.printValue(),myValue=&quot;+myValue);
+    }
+}
+class Child extends Parent{
+    public int myValue=200;
+    public void printValue() {
+        System.out.println(&quot;Child.printValue(),myValue=&quot;+myValue);
+        super.printValue();
+    }
+}
+</code></pre><p><strong>如果子类与父类有相同的字段,则子类中的字段会代替或隐藏父类的字段，子类方法中访问的是子类中的字段（而不是父类中的字段）。</strong><br>换言之，一旦子类父类具有相同名称的字段，就会使继承的情况变得复杂，子类中的父类同名变量或方法就会褪色而不易被调用。</p>
+<p>比如，父类子类都有名为F的属性或方法，那么在继承时，子类就会有两个F属性或方法，一个继承于父类（由父类定义），而另一个由子类自己定义。生成一个子类对象时，子类对象一旦调用F属性或执行F方法就会优先使用子类自己的F属性或执行子类自己的F方法，如果要强行使用父类的F属性或执行父类F方法，得在子类定义中使用super.F()来调用。<br>![图片描述][2]</p>
+<p><strong>多态的本质是父类对象引用子类对象。</strong><br>利用抽象类和接口，不直接定义那些抽象的父类方法，子类方法分别个性化地重写各自的方法。<br>当要构建一批继承于同一父类的对象时，只需要使得父类对象引用子类对象，就可以使得构造出的这批子类对象的类型一致（父类类型），这样做可以大大简化后续操作，因为子类化的父类对象调用的都是子类的属性和方法。所以，导致这些对象调用的属性和方法依据它的真实类型（引用的子类型）而定，即变成不同的属性和方法，固称多态。</p>
+<p>![图片描述][3]</p>
+<pre><code>public class FeedTest 
+{
+    public static void main(String[] Args)
+    {
+        Administrator adm = new Administrator();
+        Animal[] animalFactory = new Animal[100];
+        for(int i = 0;i&lt;10;i++)
+        {
+            animalFactory[i]=new Monkey();
+            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
+            animalFactory[i].eat();
+        }
+        for(int i = 10;i&lt;20;i++)
+        {
+            animalFactory[i]=new Lion();
+            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
+            animalFactory[i].eat();
+        }
+        for(int i = 20;i&lt;30;i++)
+        {
+            animalFactory[i]=new Pigeon();
+            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
+            animalFactory[i].eat();
+        }
+        adm.feedAnimal(animalFactory);
+    }
+}
+
+abstract class Animal
+{
+    public String variety;
+    public abstract void eat();
+}
+
+class Monkey extends Animal
+{
+    Monkey() 
+    {
+        this.variety = &quot;猴子&quot;;
+    }
+    public void eat()
+    {
+
+        System.out.println(&quot;猴子吃桃子&quot;);
+    }
+}
+
+class Lion extends Animal
+{
+    Lion()
+    {
+        this.variety = &quot;狮子&quot;;
+    }
+    public void eat()
+    {
+        this.variety = &quot;狮子&quot;;
+        System.out.println(&quot;狮子吃肉&quot;);
+    }
+}
+
+class Pigeon extends Animal
+{
+    public Pigeon() 
+    {
+        this.variety = &quot;鸽子&quot;;
+    }
+    public void eat()
+    {
+        System.out.println(&quot;鸽子吃玉米粒&quot;);
+    }
+}
+
+class Administrator
+{
+    public String name = &quot;小王&quot;;
+    public void feedAnimal(Animal[] af)
+    {
+        System.out.println(&quot;Feeding&quot;);
+    }
+
+}
+</code></pre>
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/09/29/黑客与画家/" rel="prev" title="黑客与画家">
+                黑客与画家 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2014/12/03/java-polymorphism/"
+           data-title="java-polymorphism" data-url="http://yoursite.com/2014/12/03/java-polymorphism/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">3</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#父类对象被定义成子类类型（家族的具体化"><span class="nav-number">1.</span> <span class="nav-text">父类对象被定义成子类类型（家族的具体化)</span></a></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
