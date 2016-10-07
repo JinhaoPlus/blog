@@ -372,6 +372,118 @@ public属性和方法：这些方法的访问权限是公开的，也就是说�
             
               
                 
+                <a class="post-title-link" href="/2016/10/07/Java字节码指令的执行/" itemprop="url">
+                  Java字节码指令的执行
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-10-07T13:23:53+08:00" content="2016-10-07">
+              2016-10-07
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/10/07/Java字节码指令的执行/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/10/07/Java字节码指令的执行/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java虚拟机 ：Java字节码指令的执行这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第三篇。
+虚拟机运行活化的内存数据中的指令：程序的执行前面我们说明了java源码被编译成为了二进制字节码，二进制字节码转为内存中方法区里存储的活化对象，那么最重要的程序执行就做好了基础：当方法区里的字段和方法按照虚拟机规定的数据结构排好，常量池中的符号引用数据在加载过程中最大限度地转为了直接引用，那么这个时候虚拟机就可以在加载主类后创建新的线程按步执行主类的main函数中的指令了。
+java虚拟机执行程序的基础是特定的二进制指令集和运行时栈帧：
+
+二进制指令集是java虚拟机规定的一些指令，在编译后二进制字节码的类方法里的字节码就是这种指令，所以只要找到方法区里的类方法就可以依照这套指令集去执行命令。
+运行时栈帧是虚拟机执行的物理所在，在这个栈帧结构上，方法的局部变量、操作数栈、动态链接和返回地址依序排列，依照命令动态变换栈帧上的数据，最终完成所有
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/10/07/Java字节码指令的执行/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
                 <a class="post-title-link" href="/2016/02/25/MVC框架/" itemprop="url">
                   MVC框架
                 </a>
@@ -924,8 +1036,8 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
             
               
                 
-                <a class="post-title-link" href="/2015/09/29/黑客与画家/" itemprop="url">
-                  黑客与画家
+                <a class="post-title-link" href="/2015/11/03/SpringIOC的具体过程/" itemprop="url">
+                  SpringIOC的具体过程
                 </a>
               
             
@@ -938,8 +1050,8 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2015-09-29T00:17:11+08:00" content="2015-09-29">
-              2015-09-29
+            <time itemprop="dateCreated" datetime="2015-11-03T13:14:36+08:00" content="2015-11-03">
+              2015-11-03
             </time>
           </span>
 
@@ -949,8 +1061,8 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2015/09/29/黑客与画家/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/09/29/黑客与画家/" itemprop="commentsCount"></span>
+                <a href="/2015/11/03/SpringIOC的具体过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/03/SpringIOC的具体过程/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -975,23 +1087,20 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
       
         
           
-          这两周重新阅读了这本经典，很难有这样的机会认认真真地做一次深度的阅读，所以把读书的笔记发到博客上。
-这本书的风格很奇怪，因为你很难相信一个人可以把有些稀松平常的事看得如此透彻而且富有深层的意义，那些小事在我们平常人看来可能不值一提，然而在作者笔下你可以跟随他的指引接近一些独特的视角，把这些隐秘挖掘出来，得出一些令人惊奇的结论。
-第一部分 成长和思想黑客是如何成长的以及他们看待世界的一些观点。
+          Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
+这是整个IOC容器工作过程的过程图：
 
-第一章 为什么书呆子不受欢迎一个问题是，为什么书呆子不受欢迎呢？一个看似简单的问题，却在做着一层层的分析之后让人看到一个从学生圈子直指教育体系存在的大问题。作者在这一部分大致说明了以下的观点：
+容器启动阶段
+加载配置文件信息
+解析配置文件信息
+装配BeanDefinition
+后处理
 
-学生独特的圈子逻辑和社会中的成年人而言是一种完全隔绝开的难以令成年人理解的逻辑。
-
-在学生圈子里最被看重的东西是获得吸引力，表现的受欢迎可以赢得更多人的支持并最终在圈子里成为winner。
-
-书呆子们往往由于无暇顾及这些而失去吸引力，在圈子里渐渐受到孤立，他们的精力会集中在其他东西上。
-
-真实的成年人社会与这个学生圈子执行完全不同的逻辑，它没有古怪的游戏规则，你的能力和聪明将带来价值，和是否获得吸引力无
+首先配置文件或者注解等元信息和JavaBean的类信息被加载到IOC容器中，容器读取到xml格式的配置文件，这个配置文件是使用者声明的依赖关系和装配中需要特别关注的地方，是装配Bean的早期“外部图纸”，容器中的解析引擎可以把我们写入的文本形式的字符元信息解析成容器内部可以识别的BeanDefinition，可以把BeanDefinition理解成为类似反射机制的类结构，这个通过对JavaBean和配置文件进行分析得到的BeanDefinition获取了组装一个符合要求的JavaBean的基本结构，如果需要除了BeanDefi
           ...
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2015/09/29/黑客与画家/#more" rel="contents">
+            <a class="btn" href="/2015/11/03/SpringIOC的具体过程/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1042,8 +1151,8 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
             
               
                 
-                <a class="post-title-link" href="/2014/12/03/java-polymorphism/" itemprop="url">
-                  java-polymorphism
+                <a class="post-title-link" href="/2015/10/31/SpringIOC的根本基础原理在哪里？/" itemprop="url">
+                  SpringIOC的根本基础原理在哪里？
                 </a>
               
             
@@ -1056,8 +1165,8 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-03T20:39:30+08:00" content="2014-12-03">
-              2014-12-03
+            <time itemprop="dateCreated" datetime="2015-10-31T13:16:47+08:00" content="2015-10-31">
+              2015-10-31
             </time>
           </span>
 
@@ -1067,8 +1176,8 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/03/java-polymorphism/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/03/java-polymorphism/" itemprop="commentsCount"></span>
+                <a href="/2015/10/31/SpringIOC的根本基础原理在哪里？/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/31/SpringIOC的根本基础原理在哪里？/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -1093,20 +1202,124 @@ public描述的成员对其他所有类都是可见的，也就是说其他的�
       
         
           
-          父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。
-
-所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。
-
-同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。
-父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。
-public class ParentChildTest {
-    public static void main(String[] args
+          Spring IOC：Spring IOC 的根本基础原理在哪里？spring框架的基础核心和起点毫无疑问就是IOC，IOC作为spring容器提供的核心技术，成功完成了依赖的反转：从主类的对依赖的主动管理反转为了spring容器对依赖的全局控制。
+这样做的好处是什么呢？
+当然就是所谓的“解耦”了，可以使得程序的各模块之间的关系更为独立，只需要spring控制这些模块之间的依赖关系并在容器启动和初始化的过程中将依据这些依赖关系创建、管理和维护这些模块就好，如果需要改变模块间的依赖关系的话，甚至都不需要改变程序代码，只需要将更改的依赖关系进行修改即可，spring会在再次启动和初始化容器的过程中使得这些新的依赖关系重新建立符合新需求的模块，在这个过程中，需要注意的是代码本身不需要体现对于模块具体依赖情形的声明而只需要定义其所需模块的接口，所以这是一种典型的面向接口思想，同时最好将依赖关系以配置文件或者注解的形式表述出来，相关的spring处理类会根据这些外部的配置文件组装模块，或者扫描注解调用内部的注解处理器组装模块，以此完成IOC的过程。
+IOC的目的是称为DI的依赖注入，通过IOC技
           ...
 
           <div class="post-more-link text-center">
-            <a class="btn" href="/2014/12/03/java-polymorphism/#more" rel="contents">
+            <a class="btn" href="/2015/10/31/SpringIOC的根本基础原理在哪里？/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <div>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/10/24/Java字节码的编译生成和运行优化/" itemprop="url">
+                  Java字节码的编译生成和运行优化
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-24T13:18:16+08:00" content="2015-10-24">
+              2015-10-24
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/24/Java字节码的编译生成和运行优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/24/Java字节码的编译生成和运行优化/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+          Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
+Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
+我们这里讨论的仅仅是从程序员编写的java源代码的编译得到的字节码，但是要知道的事，字节码不仅仅可以从源文件编译生成，字节码可以通过直接用二进制的字节拼接产生，这个拼接的起点除了间接通过编译期生成，也可以通过直接写进内存，比如通过动态代理构造的临时代理类就是通过直接写入内存的二进制字节码形成的，再比如jsp通过jsp转换器可以转变为一个对应的请求处理类，等等。总之，我们在这里讨论的仅仅是通过编译期将静态的java源代码文件编译成二进制字节码。
+使用javac编写的java命令是编译过程的执行者，这个命令的使命就是把java源文件转换成为java二进制字节码，javac完成这一使命的步骤主要包括如
+          ...
+
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/10/24/Java字节码的编译生成和运行优化/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -1139,6 +1352,10 @@ public class ParentChildTest {
   </section>
 
   
+  <nav class="pagination">
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right"></i></a>
+  </nav>
+
 
 
           </div>
@@ -1177,7 +1394,7 @@ public class ParentChildTest {
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">8</span>
+              <span class="site-state-item-count">13</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>

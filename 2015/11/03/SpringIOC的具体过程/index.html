@@ -1,0 +1,849 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
+这是整个IOC容器工作过程的过程图：
+
+容器启动阶段
+加载配置文件">
+<meta property="og:type" content="article">
+<meta property="og:title" content="SpringIOC的具体过程">
+<meta property="og:url" content="http://yoursite.com/2015/11/03/SpringIOC的具体过程/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
+这是整个IOC容器工作过程的过程图：
+
+容器启动阶段
+加载配置文件">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg">
+<meta property="og:updated_time" content="2016-10-07T05:15:54.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="SpringIOC的具体过程">
+<meta name="twitter:description" content="Spring IOC：Spring IOC 的具体过程上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。
+这是整个IOC容器工作过程的过程图：
+
+容器启动阶段
+加载配置文件">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/11/03/SpringIOC的具体过程/"/>
+
+  <title> SpringIOC的具体过程 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                SpringIOC的具体过程
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-11-03T13:14:36+08:00" content="2015-11-03">
+              2015-11-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/11/03/SpringIOC的具体过程/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/11/03/SpringIOC的具体过程/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Spring-IOC：Spring-IOC-的具体过程"><a href="#Spring-IOC：Spring-IOC-的具体过程" class="headerlink" title="Spring IOC：Spring IOC 的具体过程"></a>Spring IOC：Spring IOC 的具体过程</h1><p>上回展示了IOC的大致实现的原型，那么在Spring框架中具体是怎么实现这个容器根据metadata元信息配置加载POJO的过程的呢？在整个Spring IOC容器的工作过程中有很多地方是设计地相当灵活的，供给使用者很多空间去完成自己的任务，而不是一味地只是完成容器的机械过程。</p>
+<p>这是整个IOC容器工作过程的过程图：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmpwqjq3j30m80c0q47.jpg" alt=""></p>
+<h2 id="容器启动阶段"><a href="#容器启动阶段" class="headerlink" title="容器启动阶段"></a>容器启动阶段</h2><ul>
+<li>加载配置文件信息</li>
+<li>解析配置文件信息</li>
+<li>装配BeanDefinition</li>
+<li>后处理</li>
+</ul>
+<p>首先配置文件或者注解等元信息和JavaBean的类信息被加载到IOC容器中，容器读取到xml格式的配置文件，这个配置文件是使用者声明的依赖关系和装配中需要特别关注的地方，是装配Bean的早期“外部图纸”，容器中的解析引擎可以把我们写入的文本形式的字符元信息解析成容器内部可以识别的BeanDefinition，可以把BeanDefinition理解成为类似反射机制的类结构，这个通过对JavaBean和配置文件进行分析得到的BeanDefinition获取了组装一个符合要求的JavaBean的基本结构，如果需要除了BeanDefinition之后还要对这个BeanDefinition再做修改的话则执行这个后处理，后处理一般是通过Spring框架内的BeanFactoryPostProcessor处理的。</p>
+<p>我们仍然使用上次使用过的例子来说明这个BeanDefinition的运作原理：有三个bean，主模块MainModule和依赖模块DependModuleA，DependModuleB，前者依赖后面两个模块构成，在配置文件里我们一般会这么进行依赖的声明：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd&quot;&gt;
+
+    &lt;bean id=&quot;mainModule&quot; class=&quot;com.rocking.demo.MainModule&quot;&gt;
+        &lt;property name=&quot;moduleA&quot;&gt;
+            &lt;ref bean=&quot;moduleA&quot;/&gt;
+        &lt;/property&gt;
+        &lt;property name=&quot;moduleB&quot;&gt;
+            &lt;ref bean=&quot;moduleB&quot;/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;moduleA&quot; class=&quot;com.rocking.demo.DependModuleAImpl&quot;&gt;&lt;/bean&gt;
+    &lt;bean id=&quot;moduleB&quot; class=&quot;com.rocking.demo.DependModuleBImpl&quot;&gt;&lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>这是我们的程序演示一个标准的BeanFactory容器（Spring IOC容器的实现之一）对上面配置文件的装配：</p>
+<pre><code>class MainModule {
+    private DependModuleA moduleA;
+    private DependModuleB moduleB;
+
+    public DependModuleA getModuleA() {
+        return moduleA;
+    }
+
+    public void setModuleA(DependModuleA moduleA) {
+        this.moduleA = moduleA;
+    }
+
+    public DependModuleB getModuleB() {
+        return moduleB;
+    }
+
+    public void setModuleB(DependModuleB moduleB) {
+        this.moduleB = moduleB;
+    }
+
+}
+
+interface DependModuleA {
+    public void funcFromModuleA();
+}
+
+interface DependModuleB {
+    public void funcFromModuleB();
+}
+
+class DependModuleAImpl implements DependModuleA {
+
+    @Override
+    public void funcFromModuleA() {
+        System.out.println(&quot;This is func from Module A&quot;);
+    }
+
+}
+
+class DependModuleBImpl implements DependModuleB {
+
+    @Override
+    public void funcFromModuleB() {
+        System.out.println(&quot;This is func from Module B&quot;);
+    }
+
+}
+
+public class SimpleIOCDemo {
+    public static void main(String[] args) throws ClassNotFoundException {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(&quot;Beans.xml&quot;);
+        MainModule mainModule = (MainModule) beanFactory.getBean(&quot;mainModule&quot;);
+        mainModule.getModuleA().funcFromModuleA();
+        mainModule.getModuleB().funcFromModuleB();
+    }
+}
+</code></pre><p>这里我们的配置文件和JavaBean被加载读取并被解析，这里的BeanDefinition生成使用过程掩藏在其中，这是实际上在IOC内部发生的大致过程：</p>
+<pre><code>public class SimpleIOCDemo {
+    public static void main(String[] args) throws ClassNotFoundException {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        AbstractBeanDefinition mainModule = new RootBeanDefinition(MainModule.class);
+        AbstractBeanDefinition moduleA = new RootBeanDefinition(DependModuleAImpl.class);
+        AbstractBeanDefinition moduleB = new RootBeanDefinition(DependModuleBImpl.class);
+
+        beanFactory.registerBeanDefinition(&quot;mainModule&quot;, mainModule);
+        beanFactory.registerBeanDefinition(&quot;moduleA&quot;, moduleA);
+        beanFactory.registerBeanDefinition(&quot;moduleB&quot;, moduleB);
+
+        MutablePropertyValues propertyValues = new MutablePropertyValues();
+        propertyValues.add(&quot;moduleA&quot;, moduleA);
+        propertyValues.add(&quot;moduleB&quot;, moduleB);
+        mainModule.setPropertyValues(propertyValues);
+
+        MainModule module = (MainModule) beanFactory.getBean(&quot;mainModule&quot;);
+        module.getModuleA().funcFromModuleA();
+        module.getModuleB().funcFromModuleB();
+    }
+}
+</code></pre><p>对xml的元信息进行加载读取后，IOC解析引擎会将其中提到的模块依据其真实类型创建成BeanDefinition，这个BeanDefinition可以看成是一种反射或者代理的过程，目的是为了让IOC容器清楚以后要创建的实例对象的bean结构，然后将这些bean结构注册到BeanFactory中去，之后将主模块的依赖以setter注入的形式加入到主模块的属性中去，（这一点要看主模块提供的是setter方法还是初始化方法），这个过程结束后注册完所有“图纸”上规定的bean的Definition后，BeanFactory就已经成型。之后只要调用getBean方法即可将符合要求的bean生产出来，这是下一阶段的过程，我们之后再说。</p>
+<p>在将BeanDefinition这一“图纸”上的信息注册到BeanFactory完毕后，我们仍然可以对已经注册完的BeanDefinition进行改动的操作，这就是我们前面提到的Spring为使用者设计的灵活的地方之一，不是说所有的过程不可控，而是在很多地方留了很多使用者可以发挥的余地。具体的办法是使用BeanFactory处理器BeanFactoryPostProcessor来介入对BeanFactory的处理以进一步改写我们需要修改的BeanDefinition部分。这个过程对应流程里的“后处理”过程。<br>以常见的处理器之一：属性占位符配置处理器为例，就是在已经构建完成已注册完毕的BeanFactory之后再对它处理，以使得BeanDefinition相应属性里的内容修改为配置处理器指定配置文件里的信息：</p>
+<pre><code>DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+reader.loadBeanDefinitions( new ClassPathResource( &quot;Beans.xml&quot;));
+PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
+configurer.setLocation( new ClassPathResource( &quot;about.properties&quot;));
+configurer.postProcessBeanFactory( beanFactory);
+</code></pre><p>BeanFactoryPostProcessor将对BeanFactory处理，处理的结果就是把BeanDefinition中定义的某些属性改成BeanFactoryPostProcessor定义位置处的某些信息。</p>
+<h2 id="Bean-实例化阶段"><a href="#Bean-实例化阶段" class="headerlink" title="Bean 实例化阶段"></a>Bean 实例化阶段</h2><p>有了经过处理的BeanDefinition的“内部图纸”的指导下，容器可以进一步把BeanDefifnition通过反射或CGLIB动态字节码生产的方式化为存在于内存中的活化实例对象，再将BeanDefinition规定的依赖对象通过setter注入或者初始化注入的方式装配进新创建的实例对象中，这里是实实在在地将依赖对象的引用赋给需要依赖的对象属性中。<br>但是这里需要注意的是创建的实例不仅仅是一个简单的bean定义的实例，而是一个经过Spring包装的BeanWrapper实例，这里为什么要采用BeanWrapper的方式来包装bean呢？是因为BeanWrapper提供了统一访问bean属性的接口，在创建完了基本的bean的框架后要对其中的属性进行设置，每个bean的setter方法都不一样，所以如果直接用反射设置的话会非常复杂，所以spring提供这种包装来简化属性设置：</p>
+<p>BeanWrapper beanWrapper = new BeanWrapperImpl(Class.forName(“com.rocking.demo.MainModule”));<br>beanWrapper.setPropertyValue( “moduleA”, Class.forName(“com.rocking.demo.DepModuleAImpl”).newInstance());<br>beanWrapper.setPropertyValue( “moduleB”, Class.forName(“com.rocking.demo.DepModuleBImpl”).newInstance());<br>MainModule mainModule= (MainModule) beanWrapper.getWrappedInstance();<br>mainModule.getModuleA().funcFromA();<br>mainModule.getModuleB().funcFromB();</p>
+<p>以上的过程展示了在Spring内部，通过获取类的反射容器了解将来包装的实例bean的结构并作出包装，使用统一的属性设置方法setPropertyValue来对这个包装的实例设置属性，最后得到的bean实例通过getWrappedInstance拿到，可以发现已经成功将其属性赋值。</p>
+<p>这个时候的bean实例其实已经完全可以使用了，但是Spring同样在实例化阶段也为我们准备了灵活的策略以完成使用者对这个阶段的介入，和容器启动阶段的BeanFactoryPostProcessor控制BeanDefinition类似，在实例化阶段，Spring提供了BeanPostProcessor处理器来对已经装配好的实例进行操作，以完成可能需要的改动：、</p>
+<p>这里举个例子来说明，定义一个BeanPostProcessor的实现类，实现其中的方法postProcessAfterInitialization和postProcessBeforeInitialization来定义对在bean实例装配之后和之前分别进行的操作，在BeanFactory添加了这个处理器后就会在每次调用getBean方法装配实例的时候，都会传入根据“图纸”装配出的bean实例（包括装配过程中创建的依赖实例bean）调用这两个方法，这些方法可以对这些bean实例实施修改。</p>
+<p>下面是一个这样的例子(MainModule及其依赖关系和本文之前的例子相同)：</p>
+<pre><code>class ModuleC {
+    private String x;
+
+    public String getX() {
+        return x;
+    }
+
+    public void setX(String x) {
+        this.x = x;
+    }
+
+}
+
+class ModulePostProcessor implements BeanPostProcessor{
+
+    @Override
+    public Object postProcessAfterInitialization(Object object, String string)
+            throws BeansException {
+        System.out.println(string);
+        if(object instanceof ModuleC){
+            System.out.println(string);
+            ((ModuleC)object).setX(&quot;after&quot;);
+        }
+        return object;
+    }
+
+    @Override
+    public Object postProcessBeforeInitialization(Object object, String string)
+            throws BeansException {
+        if(object instanceof ModuleC){
+            ((ModuleC)object).setX(&quot;before&quot;);
+        }
+        return object;
+    }
+
+}
+
+public class VerySimpleIOCKernal {
+    public static void main(String[] args) throws ClassNotFoundException, BeansException, InstantiationException, IllegalAccessException {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions(new ClassPathResource(&quot;Beans.xml&quot;));
+        ModulePostProcessor postProcessor = new ModulePostProcessor();
+        beanFactory.addBeanPostProcessor(postProcessor);
+        MainModule module = (MainModule) beanFactory.getBean(&quot;mainModule&quot;);
+        ModuleC moduleC = (ModuleC) beanFactory.getBean(&quot;moduleC&quot;);    
+        System.out.println(moduleC.getX());
+    }
+}
+</code></pre><p>这是bean的依赖关系配置文件：</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;mainModule&quot; class=&quot;com.rocking.demo.MainModule&quot;&gt;
+        &lt;property name=&quot;moduleA&quot;&gt;
+            &lt;ref bean=&quot;moduleA&quot;/&gt;
+        &lt;/property&gt;
+        &lt;property name=&quot;moduleB&quot;&gt;
+            &lt;ref bean=&quot;moduleB&quot;/&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;moduleA&quot; class=&quot;com.rocking.demo.DepModuleAImpl&quot;&gt;
+        &lt;property name=&quot;infoA&quot;&gt;
+            &lt;value&gt;${moduleA.infoA}&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;moduleB&quot; class=&quot;com.rocking.demo.DepModuleBImpl&quot;&gt;
+        &lt;property name=&quot;infoB&quot;&gt;
+            &lt;value&gt;info of moduleB&lt;/value&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;moduleC&quot; class=&quot;com.rocking.demo.ModuleC&quot;&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;
+</code></pre><p>从最终的结果我们可以看出，每次调用getBean方法得到的bean实例（包括因依赖关系生成的）都将被BeanPostProcessor获取进行前置和后置处理。</p>
+<p>除了类似上面的BeanPostProcessor的办法对装配好的bean再做处理外，Spring还可以通过配置init-method和destroy-method来对bean的初始化和销毁过程设置回调函数，这些回调函数也还可以灵活地提供更改bean实例的机会。</p>
+<p>整个Spring IOC的过程其实总体来说和我们自己写的IOC原型在本质上是一样的，只不过通过复杂的设计使得IOC的过程能够更灵活有效地提供给使用者更多的发挥空间，除此之外，Spring的IOC也在安全性、容器的稳定性、metadata到bean转换的高效性上做到了精美的设计，使得IOC这一Spring容器的基础得以稳固。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/31/SpringIOC的根本基础原理在哪里？/" rel="next" title="SpringIOC的根本基础原理在哪里？">
+                <i class="fa fa-chevron-left"></i> SpringIOC的根本基础原理在哪里？
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/17/Java-Access-Descriptor/" rel="prev" title="Java基础 ：细说权限描述符">
+                Java基础 ：细说权限描述符 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/11/03/SpringIOC的具体过程/"
+           data-title="SpringIOC的具体过程" data-url="http://yoursite.com/2015/11/03/SpringIOC的具体过程/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Spring-IOC：Spring-IOC-的具体过程"><span class="nav-number">1.</span> <span class="nav-text">Spring IOC：Spring IOC 的具体过程</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#容器启动阶段"><span class="nav-number">1.1.</span> <span class="nav-text">容器启动阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Bean-实例化阶段"><span class="nav-number">1.2.</span> <span class="nav-text">Bean 实例化阶段</span></a></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

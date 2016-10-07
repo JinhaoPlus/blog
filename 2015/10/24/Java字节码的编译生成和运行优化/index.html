@@ -1,0 +1,704 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/vendors/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
+Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
+我">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java字节码的编译生成和运行优化">
+<meta property="og:url" content="http://yoursite.com/2015/10/24/Java字节码的编译生成和运行优化/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
+Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
+我">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmu3yonhj30m80d2wg1.jpg">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jmu8fhhbj30ks0m80vm.jpg">
+<meta property="og:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmubhp5kj30jm0m83zu.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006y8lVajw1f8jmudmxyfj30gv0m80tx.jpg">
+<meta property="og:updated_time" content="2016-10-07T05:21:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java字节码的编译生成和运行优化">
+<meta name="twitter:description" content="Java虚拟机 ：Java字节码的编译生成和运行优化这篇文章的素材来自周志明的《深入理解Java虚拟机》。
+作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。
+Java字节码的编译生成我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？
+我">
+<meta name="twitter:image" content="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmu3yonhj30m80d2wg1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/24/Java字节码的编译生成和运行优化/"/>
+
+  <title> Java字节码的编译生成和运行优化 | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                Java字节码的编译生成和运行优化
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2015-10-24T13:18:16+08:00" content="2015-10-24">
+              2015-10-24
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2015/10/24/Java字节码的编译生成和运行优化/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/24/Java字节码的编译生成和运行优化/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h1 id="Java虚拟机-：Java字节码的编译生成和运行优化"><a href="#Java虚拟机-：Java字节码的编译生成和运行优化" class="headerlink" title="Java虚拟机 ：Java字节码的编译生成和运行优化"></a>Java虚拟机 ：Java字节码的编译生成和运行优化</h1><p>这篇文章的素材来自周志明的《深入理解Java虚拟机》。</p>
+<p>作为Java开发人员，一定程度了解JVM虚拟机的的运作方式非常重要，本文就一些简单的虚拟机的相关概念和运作机制展开我自己的学习过程，是这个系列的第四篇。</p>
+<h2 id="Java字节码的编译生成"><a href="#Java字节码的编译生成" class="headerlink" title="Java字节码的编译生成"></a>Java字节码的编译生成</h2><p>我们讨论完了字节码的结构和活化字节码在执行引擎下的执行之后要回到字节码的原点：java的字节码是怎么形成的呢？</p>
+<p>我们这里讨论的仅仅是从程序员编写的java源代码的编译得到的字节码，但是要知道的事，字节码不仅仅可以从源文件编译生成，字节码可以通过直接用二进制的字节拼接产生，这个拼接的起点除了间接通过编译期生成，也可以通过直接写进内存，比如通过动态代理构造的临时代理类就是通过直接写入内存的二进制字节码形成的，再比如jsp通过jsp转换器可以转变为一个对应的请求处理类，等等。总之，我们在这里讨论的仅仅是通过编译期将静态的java源代码文件编译成二进制字节码。</p>
+<p>使用javac编写的java命令是编译过程的执行者，这个命令的使命就是把java源文件转换成为java二进制字节码，javac完成这一使命的步骤主要包括如下的子过程：</p>
+<ol>
+<li>解析与填充符号表</li>
+<li>插入式注解处理器的注解处理过程</li>
+<li>分析与字节码生成</li>
+</ol>
+<p>这个过程的详细数据流和控制流如下：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmu3yonhj30m80d2wg1.jpg" alt=""></p>
+<p>这些过程的目的和一般的传统的编译过程类似，因为和传统编译过程的源文件到机器代码的目的相比，java源代码到虚拟机二进制字节码的编译过程只是最终运行的平台是虚拟机，除此之外大致是一样的处理办法。</p>
+<h3 id="解析"><a href="#解析" class="headerlink" title="解析"></a>解析</h3><p>这个过程是以源代码为输入流，词法分析器和语法分析器为控制器，抽象语法树为输出流，最终生成的语法树是一个以各种语法节点（接口、包等）为顶层节点的树结构，词法分析器对输入流转换成词法元单位Token的序列，语法分析器对Token序列进行分析得到最终的语法树，顺着这个语法树的各个顶层节点，可以找到程序中所有的变量、方法甚至是注释的各种信息。语法树是后期语义分析的基础。<br>一个语法树的实例：</p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jmu8fhhbj30ks0m80vm.jpg" alt=""></p>
+<h3 id="填充符号表"><a href="#填充符号表" class="headerlink" title="填充符号表"></a>填充符号表</h3><p>在解析过后会分析生成的语法树中的各类符号，包括程序中的各类符号的信息都将存储在这个符号表里。在经历完这一步之后符号表将成为一个包含了语法树顶层节点的表，顺着这个表可以分类地寻到每个符号的信息。</p>
+<h3 id="注解处理过程"><a href="#注解处理过程" class="headerlink" title="注解处理过程"></a>注解处理过程</h3><p>在引入注解之后加入了对插入式注解处理器的编译过程，注解是形如”@XX”的语法结构，这个语法结构的目的当然不是简单的标记，而是对应到了一个对应的注解处理器之上，注解完成的任务是注解处理器定义的，因此在这个过程里注解处理器定义的任务将会以修改语法树的方式起作用。每次处理一个注解后都可能会改变语法树的结构，然后再启用符号表的填充，这个循环（round）将会是一次小规模的重建语法树和符号表，当扫描完所有的注解后语法树的结构在这个阶段将会稳定下来，然后给出一个为下面过程提供信息的To do List。实际上注解处理过程是程序员在编译过程中控制程序的很少的机会，因为其他过程大都是是编译器以无人为控制（没有程序员编写程序的指导）的情况下的处理。</p>
+<h3 id="语义分析"><a href="#语义分析" class="headerlink" title="语义分析"></a>语义分析</h3><p>能通过词法语法分析并不意味着语义上是成立的，因此这个过程是处理语义的过程，语义分析器通过对符号表索引的语法树的分析，对程序表达的语义进行分析。它包括几个字过程：</p>
+<ul>
+<li>标注检查：主要是类型对应变量声明以及常量折叠的检查；</li>
+<li>数据控制流检查：对程序上下文逻辑的检验，包括局部变量赋值、返回值和异常处理等；</li>
+<li>解语法糖：语法糖是程序员友好的语法规则，这些友好的规则还是要在这个过程中解开成为真正需要表达的意思的（装箱拆箱、泛型、遍历循环等的语法都会在底层替换称为“复杂”的实现）。</li>
+</ul>
+<h3 id="字节码生成"><a href="#字节码生成" class="headerlink" title="字节码生成"></a>字节码生成</h3><p>把语法树定义的抽象的语法结构按照class二进制字节码的规则排布成class字节码，最终我们可以看到满足虚拟机运行要求的二进制字节码被转换出来。在这个过程中还会有特定的代码添加和初级的优化，比如默认的类构造器<init>()和实例构造器<clinit>()。</clinit></init></p>
+<blockquote>
+<p>注意不是构造函数，构造函数是在填充符号表的阶段完成的，构造函数用于完成new操作，而构造器是在内存中构造出该类的基本结构，而构造函数是语法层级较高的操作，同时还会将静态代码块static{}加入类构造器，将构造代码块{}加入到实例构造器中，包括实例变量和类变量的初始化、父类构造器的调用等过程都会加入到构造器中去。</p>
+</blockquote>
+<p>上面的过程完成后，javac命令扮演的编译器就将源代码转成了结构化的二进制字节码。</p>
+<h2 id="Java字节码的运行优化"><a href="#Java字节码的运行优化" class="headerlink" title="Java字节码的运行优化"></a>Java字节码的运行优化</h2><h3 id="解释执行"><a href="#解释执行" class="headerlink" title="解释执行"></a>解释执行</h3><p>字节码的运行过程我们在第三篇的时候已经解释过了：</p>
+<p><a href="http://segmentfault.com/a/1190000003871183" target="_blank" rel="external">Java虚拟机 ：Java字节码指令的执行</a></p>
+<p>当时我们看到的是逐一把二进制命令执行，也就是说执行引擎每取一条二进制指令就执行一次，这种执行方式称为解释执行（interpreted mode），我们其实可以看出解释执行的优点在于每次执行的时候都会确知当前程序的状态，但是每次执行都要从方法区里取命令，然后再能够在堆栈中执行操作，每次都去取指令无疑是会减慢执行速度的，即便把马上要执行的命令置于高速缓冲上。</p>
+<h3 id="即时编译执行"><a href="#即时编译执行" class="headerlink" title="即时编译执行"></a>即时编译执行</h3><p>基于这个弱点就有了另一种执行模式，编译模式（compiled mode），这个模式中非常重要的参与者就是JIT即时编译器（Just Intime），编译模式的原理其实就像是C一样的编译型语言一样把源代码直接编译成机器语言然后一口气运行完，省去了每次取指令的时间（只不过C是直接把源代码编译成机器码，而java是把二进制字节码通过虚拟机的JIT即时编译器编成本地机器码）。</p>
+<p><strong>JIT触发的条件：</strong></p>
+<p>不是所有的代码被以编译模式执行都是好的，因为JIT编译本身也是费时的，所以必须在非常有必要进行编译的部分才应该去编译，这些地方就是需要反复使用的部分，因为反复使用的部分是需要进行进行最大化优化的，而只用几次的代码可能使用的时间还不及JIT编译的时间，这样做就没有“性价比”了。所以我们来看看被称为hotspot的这些反复使用的代码被编译模式执行的特点：<br>如果是多次调用的方法或者是多次执行的循环体就是hotspot的。</p>
+<p>一般虚拟机会为每个方法添加一个计数器，这个计数器用于计量方法执行的次数，当这个计数器计量这个方法调用超过某个阈值时就会触发JIT编译器对这个方法的编译，即时编译后的代码会成为本地机器码，执行速度会大大加快，同时由于这个方法使用次数非常多，所以将会大大加速程序的运行。当然这个过程不是仅仅这么简单，因为如果这样的话程序运行时间足够长的话会有很多并不那么“热”的代码也会成为hotspot的，比如某段代码运行了一段时间后陷入了“冷”状态，那么这段代码就算不上是hotspot的，因此默认情况下虚拟机查看的更是代码在一个时间内的调用频率，如果一段时间内的使用次数足够多才会说明这段代码是hotspot的。</p>
+<p>同样的，循环体会被虚拟机加入一个回边计数器用以统计循环体的使用频率。<br>下面展示的就是在JIT这套机制下的编译模式的执行流程：</p>
+<p><img src="http://ww2.sinaimg.cn/large/006y8lVajw1f8jmubhp5kj30jm0m83zu.jpg" alt=""></p>
+<p><img src="http://ww1.sinaimg.cn/large/006y8lVajw1f8jmudmxyfj30gv0m80tx.jpg" alt=""></p>
+<p>值得注意的是，JIT编译的时候并不是说线程就停在这里一直等待编译的本地机器码的结果出现，而是继续以解释模式执行，这能充分利用执行时间，等到下次执行到这里的时候再看看是否JIT编译已经有了结果，如果有了就去执行本地代码，否则还得解释执行以继续等待。</p>
+<p>JIT即时编译器在后台执行的编译任务时也会首先对字节码进行优化，包括方法内联和常量传播等策略，然后转换成高级中间代码表示，再进行一次优化，然后转为平台相关的低级中间代码表示，再进行一次优化，最后变成平台相关的机器代码。这个底层的优化过程属于相对机器层级的优化。</p>
+<p>这里所提的还有几个编译过程中的比较典型的优化技术：</p>
+<ul>
+<li>公共子表达式消除：用于消除重复计算带来的性能损失；</li>
+<li>数组边界检查消除：编译期确定的数组范围将不必要的边界检查条件去除；</li>
+<li>方法内联：避免方法调用的时候产生的栈切换和现场恢复等过程带来的损耗，由于java的因为虚方法的重载重写等问题带来的方法分派问题，内联的结果不能确定一定正确，所以才用的一般是激进优化失败退回的策略；</li>
+<li>逃逸分析：如果一个方法中的局部变量不会通过调用函数作为参数传出被外部方法或线程使用的时候，可以采用更加高效的办法优化：</li>
+</ul>
+<blockquote>
+<ul>
+<li><p>栈上分配：在栈上直接为变量对象分配空间，因为知道了这个对象不会发生逃逸被外部访问到，所以某种程度上来讲这就是一个“临时封闭在方法里”的对象，所以这种栈上分配的办法不会造成问题。使用完毕后就将它直接释放，也减小了gc的压力。</p>
+</li>
+<li><p>同步消除：同理的，不会被外部线程访问到的“临时封闭在方法里”的对象是不会发生共享的，所以可以消除它的同步标记。</p>
+</li>
+<li><p>标量替换：如果一个局部变量对象是“临时封闭在方法里”的对象，那么就完全没有必要建立一个完整的对象，只需要在栈上创建它的相关字段就可以了，这样做可以加速对真正被访问的变量的速度。</p>
+</li>
+</ul>
+</blockquote>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/10/19/Java的代理模式/" rel="next" title="Java的代理模式">
+                <i class="fa fa-chevron-left"></i> Java的代理模式
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/31/SpringIOC的根本基础原理在哪里？/" rel="prev" title="SpringIOC的根本基础原理在哪里？">
+                SpringIOC的根本基础原理在哪里？ <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2015/10/24/Java字节码的编译生成和运行优化/"
+           data-title="Java字节码的编译生成和运行优化" data-url="http://yoursite.com/2015/10/24/Java字节码的编译生成和运行优化/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">13</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java虚拟机-：Java字节码的编译生成和运行优化"><span class="nav-number">1.</span> <span class="nav-text">Java虚拟机 ：Java字节码的编译生成和运行优化</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Java字节码的编译生成"><span class="nav-number">1.1.</span> <span class="nav-text">Java字节码的编译生成</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解析"><span class="nav-number">1.1.1.</span> <span class="nav-text">解析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#填充符号表"><span class="nav-number">1.1.2.</span> <span class="nav-text">填充符号表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注解处理过程"><span class="nav-number">1.1.3.</span> <span class="nav-text">注解处理过程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#语义分析"><span class="nav-number">1.1.4.</span> <span class="nav-text">语义分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#字节码生成"><span class="nav-number">1.1.5.</span> <span class="nav-text">字节码生成</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Java字节码的运行优化"><span class="nav-number">1.2.</span> <span class="nav-text">Java字节码的运行优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#解释执行"><span class="nav-number">1.2.1.</span> <span class="nav-text">解释执行</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#即时编译执行"><span class="nav-number">1.2.2.</span> <span class="nav-text">即时编译执行</span></a></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/vendors/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/vendors/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -84,22 +84,16 @@
 
 
 
-<meta name="description" content="父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以">
+<meta name="description" content="Java基础 ：Java的代理模式代理的目的到底是什么呢？字面意思上就可以解释：代理就是“代人理事”，也就是说当实现某个操作的时候发现根本不能使用相关的对象或者使用这个对象的效果不好的时候就建立一个“代它理事”的代理对象，让代理对象去完成任务，因为我们关注的是完成任务本身，至于是谁完成了这个任务是不重要的。在这种逻辑下，只要建立的代理对象能够实现像原来那个对象一样的方法就行，更进一步说，我们新建的">
 <meta property="og:type" content="article">
-<meta property="og:title" content="java-polymorphism">
-<meta property="og:url" content="http://yoursite.com/2014/12/03/java-polymorphism/index.html">
+<meta property="og:title" content="Java的代理模式">
+<meta property="og:url" content="http://yoursite.com/2015/10/19/Java的代理模式/index.html">
 <meta property="og:site_name" content="new JinhaoPlus()">
-<meta property="og:description" content="父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以">
-<meta property="og:updated_time" content="2016-10-07T04:05:02.000Z">
+<meta property="og:description" content="Java基础 ：Java的代理模式代理的目的到底是什么呢？字面意思上就可以解释：代理就是“代人理事”，也就是说当实现某个操作的时候发现根本不能使用相关的对象或者使用这个对象的效果不好的时候就建立一个“代它理事”的代理对象，让代理对象去完成任务，因为我们关注的是完成任务本身，至于是谁完成了这个任务是不重要的。在这种逻辑下，只要建立的代理对象能够实现像原来那个对象一样的方法就行，更进一步说，我们新建的">
+<meta property="og:updated_time" content="2016-10-07T05:23:18.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="java-polymorphism">
-<meta name="twitter:description" content="父类对象被定义成子类类型（家族的具体化)既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。
-反过来子类对象不能被定义成父类类型
-子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以">
+<meta name="twitter:title" content="Java的代理模式">
+<meta name="twitter:description" content="Java基础 ：Java的代理模式代理的目的到底是什么呢？字面意思上就可以解释：代理就是“代人理事”，也就是说当实现某个操作的时候发现根本不能使用相关的对象或者使用这个对象的效果不好的时候就建立一个“代它理事”的代理对象，让代理对象去完成任务，因为我们关注的是完成任务本身，至于是谁完成了这个任务是不重要的。在这种逻辑下，只要建立的代理对象能够实现像原来那个对象一样的方法就行，更进一步说，我们新建的">
 
 
 
@@ -120,9 +114,9 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2014/12/03/java-polymorphism/"/>
+  <link rel="canonical" href="http://yoursite.com/2015/10/19/Java的代理模式/"/>
 
-  <title> java-polymorphism | new JinhaoPlus() </title>
+  <title> Java的代理模式 | new JinhaoPlus() </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -262,7 +256,7 @@
             
             
               
-                java-polymorphism
+                Java的代理模式
               
             
           </h1>
@@ -274,8 +268,8 @@
               <i class="fa fa-calendar-o"></i>
             </span>
             <span class="post-meta-item-text">发表于</span>
-            <time itemprop="dateCreated" datetime="2014-12-03T20:39:30+08:00" content="2014-12-03">
-              2014-12-03
+            <time itemprop="dateCreated" datetime="2015-10-19T13:22:35+08:00" content="2015-10-19">
+              2015-10-19
             </time>
           </span>
 
@@ -285,8 +279,8 @@
             
               <span class="post-comments-count">
                 &nbsp; | &nbsp;
-                <a href="/2014/12/03/java-polymorphism/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2014/12/03/java-polymorphism/" itemprop="commentsCount"></span>
+                <a href="/2015/10/19/Java的代理模式/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2015/10/19/Java的代理模式/" itemprop="commentsCount"></span>
                 </a>
               </span>
             
@@ -309,133 +303,112 @@
       
 
       
-        <h2 id="父类对象被定义成子类类型（家族的具体化"><a href="#父类对象被定义成子类类型（家族的具体化" class="headerlink" title="父类对象被定义成子类类型（家族的具体化)"></a>父类对象被定义成子类类型（家族的具体化)</h2><p>既然子类继承父类，所以子类更能代表这一个家族的具体表现，一个父类的对象被定义成子类类型时就具有了父类的属性和方法。</p>
-<p><strong>反过来子类对象不能被定义成父类类型</strong></p>
-<p>子类对象为什么不能被定义成父类类型呢？因为子类继承于父类，因此子类拥有的方法很可能比父类多，因为除了继承自父类的全部属性和方法外，子类有可能定义了其他的方法，所以大体上看子类的量级要比父类大，所以父类对象可以定义成子类对象，因为多出来的方法可以直接使用子类的，而反过来的话就不行了，因为子类对象不知道如何砍掉那些多出来的方法。</p>
-<blockquote>
-<p>所以，一句话就是小盒子（父类对象）可以套进大盒子（子类）里，大盒子（子类对象）不能套进小盒子（父类）里。</p>
-</blockquote>
-<p><strong>同理，父类对象可以被子类对象赋值（被定义成子类类型），子类对象不能被父类对象赋值。</strong></p>
-<p>父类对象只有当明确转换为子类对象时才可以直接控制对象中的属性，只是通过赋值来使父类对象变成子类类型的办法不能使父类对象完全控制对象中的属性。</p>
-<pre><code>public class ParentChildTest {
-    public static void main(String[] args)
-     {
-        Parent parent=new Parent();
-        parent.printValue();
-        Child child=new Child();
-        child.printValue();
-
-        System.out.println(parent.getClass().getName());
-        parent=child;
-        ((Parent)parent).printValue();
-        System.out.println(parent.getClass().getName());
-
-        parent.myValue++;
-        ((Parent)parent).printValue();
-
-        ((Child)parent).myValue++;
-        parent.printValue();
-
-    }
+        <h1 id="Java基础-：Java的代理模式"><a href="#Java基础-：Java的代理模式" class="headerlink" title="Java基础 ：Java的代理模式"></a>Java基础 ：Java的代理模式</h1><p>代理的目的到底是什么呢？字面意思上就可以解释：代理就是“代人理事”，也就是说当实现某个操作的时候发现根本不能使用相关的对象或者使用这个对象的效果不好的时候就建立一个“代它理事”的代理对象，让代理对象去完成任务，因为我们关注的是完成任务本身，至于是谁完成了这个任务是不重要的。在这种逻辑下，只要建立的代理对象能够实现像原来那个对象一样的方法就行，更进一步说，我们新建的这个代理对象有足够大的自由度，不仅可以完成原来那个对象的功能，还能完成其他我们附加上的功能。<br>举两个例子：</p>
+<ul>
+<li>如果那个对象是一个是很大的图片,需要花费很长时间才能显示出来,那么当这个图片包含在文档中时,使用编辑器或浏览器打开这个文档,打开文档必须很迅速,不能等待大图片处理完成,这时需要做个图片Proxy来代替真正的图片。</li>
+<li>如果那个对象在Internet的某个远端服务器上,直接操作这个对象因为网络速度原因可能比较慢,那我们可以先用Proxy来代替那个对象。</li>
+</ul>
+<p>我们来说说静态代理和动态代理：<br><strong>静态代理：</strong>我们的代理对象是手动创建的，代理对象内部是有一个被代理对象对应的类的对象的，所以如果想要执行某些被代理对象的方法时就可以使用这个新建的代理对象的同名方法去执行，这个时候执行的逻辑里面其实就可以用这个内部对象的同名方法。</p>
+<pre><code>interface Subject{
+        public void operate();
 }
 
-class Parent{
-    public int myValue=100;
-    public void printValue() {
-        System.out.println(&quot;Parent.printValue(),myValue=&quot;+myValue);
-    }
-}
-class Child extends Parent{
-    public int myValue=200;
-    public void printValue() {
-        System.out.println(&quot;Child.printValue(),myValue=&quot;+myValue);
-        super.printValue();
-    }
-}
-</code></pre><p><strong>如果子类与父类有相同的字段,则子类中的字段会代替或隐藏父类的字段，子类方法中访问的是子类中的字段（而不是父类中的字段）。</strong><br>换言之，一旦子类父类具有相同名称的字段，就会使继承的情况变得复杂，子类中的父类同名变量或方法就会褪色而不易被调用。</p>
-<p>比如，父类子类都有名为F的属性或方法，那么在继承时，子类就会有两个F属性或方法，一个继承于父类（由父类定义），而另一个由子类自己定义。生成一个子类对象时，子类对象一旦调用F属性或执行F方法就会优先使用子类自己的F属性或执行子类自己的F方法，如果要强行使用父类的F属性或执行父类F方法，得在子类定义中使用super.F()来调用。<br>![图片描述][2]</p>
-<p><strong>多态的本质是父类对象引用子类对象。</strong><br>利用抽象类和接口，不直接定义那些抽象的父类方法，子类方法分别个性化地重写各自的方法。<br>当要构建一批继承于同一父类的对象时，只需要使得父类对象引用子类对象，就可以使得构造出的这批子类对象的类型一致（父类类型），这样做可以大大简化后续操作，因为子类化的父类对象调用的都是子类的属性和方法。所以，导致这些对象调用的属性和方法依据它的真实类型（引用的子类型）而定，即变成不同的属性和方法，固称多态。</p>
-<p>![图片描述][3]</p>
-<pre><code>public class FeedTest 
-{
-    public static void main(String[] Args)
-    {
-        Administrator adm = new Administrator();
-        Animal[] animalFactory = new Animal[100];
-        for(int i = 0;i&lt;10;i++)
-        {
-            animalFactory[i]=new Monkey();
-            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
-            animalFactory[i].eat();
-        }
-        for(int i = 10;i&lt;20;i++)
-        {
-            animalFactory[i]=new Lion();
-            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
-            animalFactory[i].eat();
-        }
-        for(int i = 20;i&lt;30;i++)
-        {
-            animalFactory[i]=new Pigeon();
-            System.out.println(&quot;动物工厂正在生产&quot;+animalFactory[i].variety);
-            animalFactory[i].eat();
-        }
-        adm.feedAnimal(animalFactory);
-    }
+class SubjectImpl implements Subject{
+        @Override
+        public void operate() {
+              System. out.println( &quot;real operate&quot;);
+       }
 }
 
-abstract class Animal
-{
-    public String variety;
-    public abstract void eat();
+class SubjProxy implements Subject{
+       SubjectImpl subjectImpl = new SubjectImpl();
+        @Override
+        public void operate() {
+              System. out.println( &quot;proxy starts&quot;);
+               subjectImpl.operate();
+       }
 }
 
-class Monkey extends Animal
-{
-    Monkey() 
-    {
-        this.variety = &quot;猴子&quot;;
-    }
-    public void eat()
-    {
-
-        System.out.println(&quot;猴子吃桃子&quot;);
-    }
+public class TestClass {
+        public static void main(String[] args) {
+              SubjProxy proxy = new SubjProxy();
+              proxy.operate();
+       }
+}
+</code></pre><p>通过上面的例子我们可以看出来新建的代理对象拥有和原对象相同的接口，所以可以像操作原对象一样地去操作代理对象，代理对象的方法还可以做出拓展，做到原对象做不了的事情。</p>
+<p><strong>动态代理：</strong>通过查看静态类型的例子，我们有了新的问题：我们其实并想要一个准确的内部对象来完成实际的动作，我们想要的就是原对象的类结构，然后通过重写这个类结构中的相关方法去直接完成任务，在java中，我们完全可以通过反射去解决这个问题，完全不需要再去在代理对象内部搞一个原对象类型的对象出来。</p>
+<pre><code>interface Subject{
+        public void operate();
 }
 
-class Lion extends Animal
-{
-    Lion()
-    {
-        this.variety = &quot;狮子&quot;;
-    }
-    public void eat()
-    {
-        this.variety = &quot;狮子&quot;;
-        System.out.println(&quot;狮子吃肉&quot;);
-    }
+class SubjectImpl implements Subject{
+        @Override
+        public void operate() {
+              System. out.println( &quot;real operate&quot;);
+       }
 }
 
-class Pigeon extends Animal
-{
-    public Pigeon() 
-    {
-        this.variety = &quot;鸽子&quot;;
-    }
-    public void eat()
-    {
-        System.out.println(&quot;鸽子吃玉米粒&quot;);
-    }
+public class TestClass {
+        public static void main(String[] args) {
+              Subject subject = (Subject)Proxy.newProxyInstance(SubjectImpl. class.getClassLoader(), SubjectImpl.class.getInterfaces(), new InvocationHandler() {
+                      @Override
+                      public Object invoke(Object proxy, Method method, Object[] args)
+                                   throws Throwable {
+                                  System. out.println( &quot;Proxy operate&quot;);
+                            return null;
+                     }
+              });
+              subject.operate();
+       }
+}
+</code></pre><p>动态代理的方式其实是反射的一种体现，为了让最后的代理对象能够真的去执行被代理的对象才能完成的任务，代理对象必须要得到被代理对象的类的结构，这样就能获取到被代理对象的方法，截获这个方法后可以使得方法重定向到代理对象的invoke方法上执行被重写的代理方法。所以新建代理对象实例的时候要将被代理类的类加载器、类实现的接口和重写被代理类方法的处理器对象作为参数构造代理对象，类加载器用以在后面使用这个代理对象的时候能够由被代理类的类加载器所加载，类的实现接口用以使得这个代理对象可以对外宣称自己实现了这些接口，重写方法的处理器用于真正地重写那些需要代理的方法，这样一来我们可以像使用被代理对象一样去使用代理对象，实现了代理对象能够真的做到“代人理事”。</p>
+<pre><code>interface Subject{
+        public void operate();
+        public int func();
 }
 
-class Administrator
-{
-    public String name = &quot;小王&quot;;
-    public void feedAnimal(Animal[] af)
-    {
-        System.out.println(&quot;Feeding&quot;);
-    }
+class SubjectImpl implements Subject{
+        @Override
+        public void operate() {
+              System. out.println( &quot;real operate&quot;);
+       }
 
+        @Override
+        public int func() {
+              System. out.println( &quot;func&quot;);
+               return 2;
+       }
+
+}
+
+public class TestClass {
+        public static void main(String[] args) {
+              Subject subject = (Subject)Proxy.newProxyInstance(SubjectImpl. class.getClassLoader(), SubjectImpl.class.getInterfaces(), new InvocationHandler() {
+                      @Override
+                      public Object invoke(Object proxy, Method method, Object[] args)
+                                   throws Throwable {
+                            if(method.getName().equals( &quot;operate&quot;))
+                                  System. out.println( &quot;Proxy operate&quot;);
+                            else {
+                                  System. out.println( &quot;func&quot;);
+                                   return new Integer(1);
+                           }
+                            return null;
+                     }
+              });
+              subject.operate();
+              System. out.println(subject.func());
+       }
+}
+</code></pre><p>代理模式在虚拟机中的实现其实也不复杂，在运行期在字节码的基础上新创建一个临时代理类，临时代理类的各方法其实就是被代理类的同名方法的反射，执行这些方法的时候就会执行被代理的类中的反射出的同名方法。这种在运行期直接通过虚拟机加入二进制字节码的方法是实现动态代理的手段：</p>
+<pre><code>public final class $Proxy0 extends java.lang.reflect.Proxy implements Subject{
+    public $Proxy0(java.lang.reflect.InvocationHandler)       throws ;
+    public final int func()       throws ;
+    public final boolean equals(java.lang.Object)       throws ;
+    public final int hashCode()       throws ;
+    public final void operate()       throws ;
+    public final java.lang.String toString()       throws ;
+    static {}       throws ;
 }
 </code></pre>
       
@@ -462,12 +435,16 @@ class Administrator
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2015/09/29/黑客与画家/" rel="next" title="黑客与画家">
+                <i class="fa fa-chevron-left"></i> 黑客与画家
+              </a>
+            
           </div>
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/09/29/黑客与画家/" rel="prev" title="黑客与画家">
-                黑客与画家 <i class="fa fa-chevron-right"></i>
+              <a href="/2015/10/24/Java字节码的编译生成和运行优化/" rel="prev" title="Java字节码的编译生成和运行优化">
+                Java字节码的编译生成和运行优化 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -494,8 +471,8 @@ class Administrator
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2014/12/03/java-polymorphism/"
-           data-title="java-polymorphism" data-url="http://yoursite.com/2014/12/03/java-polymorphism/">
+      <div class="ds-thread" data-thread-key="2015/10/19/Java的代理模式/"
+           data-title="Java的代理模式" data-url="http://yoursite.com/2015/10/19/Java的代理模式/">
       </div>
     
   </div>
@@ -601,7 +578,7 @@ class Administrator
               
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#父类对象被定义成子类类型（家族的具体化"><span class="nav-number">1.</span> <span class="nav-text">父类对象被定义成子类类型（家族的具体化)</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Java基础-：Java的代理模式"><span class="nav-number">1.</span> <span class="nav-text">Java基础 ：Java的代理模式</span></a></li></ol></div>
             
           </div>
         </section>
