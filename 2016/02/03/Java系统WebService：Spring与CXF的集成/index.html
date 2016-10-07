@@ -92,13 +92,13 @@ WebService的实现基本原理就是选">
 <meta property="og:site_name" content="new JinhaoPlus()">
 <meta property="og:description" content="Java系统WebService：Spring与CXF的集成WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。
 WebService的实现基本原理就是选">
-<meta property="og:image" content="http://jinhaoplus.top/img/bVsFt7">
-<meta property="og:updated_time" content="2016-10-07T07:50:13.000Z">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg">
+<meta property="og:updated_time" content="2016-10-07T08:16:34.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java系统WebService：Spring与CXF的集成">
 <meta name="twitter:description" content="Java系统WebService：Spring与CXF的集成WebService是什么呢？顾名思义，是Web系统提供的服务，其目的呢，往大了说：是系统实现多异构模块协同合作，服务实现SOA（Services oriented Architecture面向服务的体系结构），往小了说：我们的系统模块能够定义一些功能开放给其他模块，也可以调用其他模块的一些功能。
 WebService的实现基本原理就是选">
-<meta name="twitter:image" content="http://jinhaoplus.top/img/bVsFt7">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg">
 
 
 
@@ -347,9 +347,32 @@ public class WeatherServiceImpl implements WeatherService{
 <li>Spring IOC容器使用ContextLoaderListener监听器来注入需要的bean，bean的配置详情写在classpath下的applicationContext-server.xml（实际也就是src下的applicationContext-server.xml，在构建后classpath下就会出现这个配置文件）。</li>
 <li>同所有的servlet一样，servlet存在的目的就是将web前端的URL请求映射到后台的处理器中去，因此web.xml中需要配置映射原则，这里我们可以看到CXFServlet用于映射带有ws标识的URL到自己的处理范围里，也就是说，一旦满足这样模式的URL，都将请求WebService。</li>
 </ul>
-<p>web.xml:<br>    &lt;?xml version=”1.0” encoding=”UTF-8”?&gt;<br>    <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemalocation="http://java.sun.com/xml/ns/javaee
-        http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"><br>        <display-name>HowIsTheWeather</display-name><br>        <context-param><br>            <param-name>contextConfigLocation</param-name><br>            <param-value>classpath:applicationContext-server.xml</param-value><br>        </context-param><br>        <listener><br>            <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class><br>        </listener><br>        <servlet><br>            <servlet-name>CXFServlet</servlet-name><br>            <display-name>CXFServlet</display-name><br>            <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class><br>            <load-on-startup>1</load-on-startup><br>        </servlet><br>        <servlet-mapping><br>            <servlet-name>CXFServlet</servlet-name><br>            <url-pattern>/ws/*</url-pattern><br>        </servlet-mapping><br>    </web-app></p>
-<p>applicationContext-server.xml则负责Spring容器中的bean注入的详情，这里配置的bean都将在容器启动的时候装配注入进去，jaxws可以看作是一种特殊的bean，WebService服务实体bean，这是CXF框架为Spring提供的集成支持，在这里我们可以看到，当URL的请求地址为/getWeather时，将会调用我们已经注入的服务bean处理这个请求，进而完成外界对系统开放的WebService的调用。</p>
+<p>web.xml:</p>
+<pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app version=&quot;3.0&quot; xmlns=&quot;http://java.sun.com/xml/ns/javaee&quot;
+    xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+    xsi:schemaLocation=&quot;http://java.sun.com/xml/ns/javaee
+    http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd&quot;&gt;
+    &lt;display-name&gt;HowIsTheWeather&lt;/display-name&gt;
+    &lt;context-param&gt;
+        &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+        &lt;param-value&gt;classpath:applicationContext-server.xml&lt;/param-value&gt;
+    &lt;/context-param&gt;
+    &lt;listener&gt;
+        &lt;listener-class&gt;org.springframework.web.context.ContextLoaderListener&lt;/listener-class&gt;
+    &lt;/listener&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;CXFServlet&lt;/servlet-name&gt;
+        &lt;display-name&gt;CXFServlet&lt;/display-name&gt;
+        &lt;servlet-class&gt;org.apache.cxf.transport.servlet.CXFServlet&lt;/servlet-class&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;CXFServlet&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/ws/*&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;
+</code></pre><p>applicationContext-server.xml则负责Spring容器中的bean注入的详情，这里配置的bean都将在容器启动的时候装配注入进去，jaxws可以看作是一种特殊的bean，WebService服务实体bean，这是CXF框架为Spring提供的集成支持，在这里我们可以看到，当URL的请求地址为/getWeather时，将会调用我们已经注入的服务bean处理这个请求，进而完成外界对系统开放的WebService的调用。</p>
 <p>applicationContext-server.xml:</p>
 <pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
@@ -364,7 +387,7 @@ public class WeatherServiceImpl implements WeatherService{
         address=&quot;/getWeather&quot; /&gt;
 &lt;/beans&gt;
 </code></pre><p>将我们的工程部署到Tomcat服务器中去，启动服务器查看如下URL：<a href="http://localhost:8080/HowIsTheWeather/ws" target="_blank" rel="external">http://localhost:8080/HowIsTheWeather/ws</a><br>在这里浏览器会返回CXF渲染的web页面用以说明当前的CXFServlet能够导向的服务有哪些：WeatherService使用/getWeather的URL就可以调用。<br>我们再使用这样的URL来查看这个服务具体的定义：<a href="http://localhost:8080/HowIsTheWeather/ws/getWeather?wsdl" target="_blank" rel="external">http://localhost:8080/HowIsTheWeather/ws/getWeather?wsdl</a><br>这个URL用以通过WSDL（WebService Description Language）查看Web服务：也就是我们开头所说的用通用格式来描述WebService的功能、入参和返回值，使我们的调用者明白服务的使用方法：具体详情可以查看我们的这个服务的WSDL页面。</p>
-<p><img src="/img/bVsFt7" alt="clipboard.png"></p>
+<p><img src="http://ww3.sinaimg.cn/large/006y8lVajw1f8jryl9di5j30m80algn0.jpg" alt=""></p>
 <p>至此，说明我们的服务已经部署到我们的服务器上了，接下来需要有客户端来调用这个服务，我们仍然使用Spring的依赖注入来处理：</p>
 <pre><code>public class Client {
     public static void main(String[] args) {
