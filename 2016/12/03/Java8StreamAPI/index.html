@@ -1,0 +1,715 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/libs/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/libs/font-awesome/css/font-awesome.min.css?v=4.4.0" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.0.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.0.1" />
+
+
+
+
+
+
+<meta name="description" content="Java8引入了与此前完全不同的函数式编程方法，通过Lambda表达式和StreamAPI来为Java下的函数式编程提供动力。本文是Java8新特性的第二篇，旨在展示Stream API是如何简化程序编写并且体现出函数式编程的美感的，在Stream的世界里面，数据在概念上不再只是内存中存储的字节，而更像是流动的活跃生物。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="把数据流化：Stream API">
+<meta property="og:url" content="http://jinhaoplus.top/2016/12/03/Java8StreamAPI/index.html">
+<meta property="og:site_name" content="new JinhaoPlus()">
+<meta property="og:description" content="Java8引入了与此前完全不同的函数式编程方法，通过Lambda表达式和StreamAPI来为Java下的函数式编程提供动力。本文是Java8新特性的第二篇，旨在展示Stream API是如何简化程序编写并且体现出函数式编程的美感的，在Stream的世界里面，数据在概念上不再只是内存中存储的字节，而更像是流动的活跃生物。">
+<meta property="og:image" content="http://ww3.sinaimg.cn/large/006tNc79jw1f9yfybgoufj30kx0q5jx1.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/006tNc79jw1fae2ii3l9jj30ge0ey0us.jpg">
+<meta property="og:image" content="http://ww4.sinaimg.cn/large/65e4f1e6jw1fae3suiimgj210y0tc77d.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/65e4f1e6jw1fae3swv3lzj21fl0tk79v.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/65e4f1e6jw1faern0etgoj204s037dfy.jpg">
+<meta property="og:image" content="http://ww1.sinaimg.cn/large/65e4f1e6jw1faern0aa1ej205n040glu.jpg">
+<meta property="og:updated_time" content="2016-12-04T08:55:52.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="把数据流化：Stream API">
+<meta name="twitter:description" content="Java8引入了与此前完全不同的函数式编程方法，通过Lambda表达式和StreamAPI来为Java下的函数式编程提供动力。本文是Java8新特性的第二篇，旨在展示Stream API是如何简化程序编写并且体现出函数式编程的美感的，在Stream的世界里面，数据在概念上不再只是内存中存储的字节，而更像是流动的活跃生物。">
+<meta name="twitter:image" content="http://ww3.sinaimg.cn/large/006tNc79jw1f9yfybgoufj30kx0q5jx1.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    scheme: 'Pisces',
+    sidebar: {"position":"right","display":"post"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: 0,
+      author: '我'
+    }
+  };
+</script>
+
+
+
+
+  <link rel="canonical" href="http://jinhaoplus.top/2016/12/03/Java8StreamAPI/"/>
+
+  <title> 把数据流化：Stream API | new JinhaoPlus() </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-right page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">new JinhaoPlus()</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+  <p class="site-subtitle"></p>
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            我
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                把数据流化：Stream API
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            <span class="post-meta-item-icon">
+              <i class="fa fa-calendar-o"></i>
+            </span>
+            <span class="post-meta-item-text">发表于</span>
+            <time itemprop="dateCreated" datetime="2016-12-03T23:41:43+08:00" content="2016-12-03">
+              2016-12-03
+            </time>
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                &nbsp; | &nbsp;
+                <a href="/2016/12/03/Java8StreamAPI/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/03/Java8StreamAPI/" itemprop="commentsCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+
+          
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <blockquote>
+<p>Java8引入了与此前完全不同的函数式编程方法，通过Lambda表达式和StreamAPI来为Java下的函数式编程提供动力。本文是Java8新特性的第二篇，旨在展示Stream API是如何简化程序编写并且体现出函数式编程的美感的，在Stream的世界里面，数据在概念上不再只是内存中存储的字节，而更像是流动的活跃生物。</p>
+</blockquote>
+<a id="more"></a>
+<blockquote>
+<p>最近在读这本图灵的新书：<em>Java 8 in Action</em> ，本书作者的目的在于向Java程序员介绍Java8带来的新特性，鼓励使用新特性来完成更简洁有力的Java编程。本系列的文章的主要思路也来源于本书。</p>
+</blockquote>
+<p><img src="http://ww3.sinaimg.cn/large/006tNc79jw1f9yfybgoufj30kx0q5jx1.jpg" alt=""></p>
+<h1 id="内部迭代的引入"><a href="#内部迭代的引入" class="headerlink" title="内部迭代的引入"></a>内部迭代的引入</h1><p>我们上回说到Java 8函数式编程的基础其实就是“策略对象的传递”，换言之就是行为的参数化，在实现上就是匿名类来实现接口定义的抽象方法，从而把匿名类的对象进行传递就形成了行为参数化，上篇对这个过程的推演进行了详细的描述。<br>和实现了函数式接口的匿名类对象等价的Lambda表达式作为参数，即可简洁高效地完成上述工作。<br>行为参数化虽然可以让我们只传递策略对象本身，但是每次都书写相同的迭代逻辑并不优雅，那么我们如果要从中解放出来，就应该把这些迭代逻辑从显式的外部移到API的内部，让我们在调用API的过程中就可以完成这些繁琐重复的迭代，这样一来：</p>
+<blockquote>
+<p>内部迭代 + 行为参数化 = 优雅的函数式编程</p>
+</blockquote>
+<p>我们来回顾下上次我们提到的写法：</p>
+<p>我们在上文介绍的这个函数式接口（其实也就是API中的Predicate<t>接口）：</t></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">interface</span> <span class="title">ChooseStrategy</span>&lt;<span class="title">T</span>&gt;</span>&#123;</div><div class="line">    <span class="function"><span class="keyword">public</span> Boolean <span class="title">test</span><span class="params">(T t)</span></span>;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>同时我们需要一个泛化的filter方法：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="keyword">static</span> &lt;T&gt; <span class="function">List&lt;T&gt; <span class="title">filter</span><span class="params">(List&lt;T&gt; ts, ChooseStrategy&lt;T&gt; strategy)</span></span>&#123;</div><div class="line">    ArrayList&lt;T&gt; resList = <span class="keyword">new</span> ArrayList&lt;&gt;();</div><div class="line">    <span class="keyword">for</span> (T t</div><div class="line">            : ts) &#123;</div><div class="line">        <span class="keyword">if</span>(strategy.test(t))</div><div class="line">            resList.add(t);</div><div class="line">    &#125;</div><div class="line">    <span class="keyword">return</span> resList;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;Apple&gt; redApples = filter(apples, apple -&gt; <span class="string">"red"</span>.equals(apple.getColor()));</div></pre></td></tr></table></figure>
+<p>在这个过程中，<code>apple -&gt; &quot;red&quot;.equals(apple.getColor())</code>就是参数化的行为，亦即ChooseStrategy<t>函数式接口匿名实现类的对象，实现的test方法即为Lambda表达式描述的那样。而这个<code>filter</code>方法就是我们提到的内部迭代，因为在我们真正调用的时候并未显式地再做迭代，而是把迭代隐藏在filter方法内部。<br>类似的，其实API只要定义几个这样的通用内部迭代方法，比如用于筛选的filter操作、用于映射的map操作、用于规约的reduce操作，就可以完成我们上文提到的优雅的函数式编程方法。但是，Java8并未停步于此，而是开发了一整套全新的Stream API接口，通过这个接口，不仅定义了一系列的内部迭代操作，还将数据流化，利于更便捷地再多核机器上并行执行程序。</t></p>
+<h1 id="什么是Stream流呢"><a href="#什么是Stream流呢" class="headerlink" title="什么是Stream流呢"></a>什么是Stream流呢</h1><p>流在JavaIO的概念里面实际上不是新的概念，在JavaIO的世界里面，文件、网络等IO设备上的数据如果想要进入内存或者从内存写进IO就开辟一个IO和内存的通道，这个通道就是JavaIO提到的流。在感官上，IO流和我们在Java8 StreamAPI里面看到的Stream流其实比较接近–数据通道。</p>
+<p>在Stream流的世界里，数据在概念上不再是存在内存中的字节（之所以说是概念上，是因为数据处理显然无法脱离内存而存在），而更像是流动在管道中的活跃生物。这些活跃的数据生物排队依次进入处理单元，而经过的处理单元可以在函数式的编程作用下形成一关关的流水线依次对数据生物进行处理，而在并行程序中数据生物甚至可以被发送到在不同的处理器核心上去。这样的理念无疑是非常令人振奋的。</p>
+<p>Stream API定义的一系列处理单元其实就是我们上面提到的内部迭代操作：<br><img src="http://ww1.sinaimg.cn/large/006tNc79jw1fae2ii3l9jj30ge0ey0us.jpg" alt=""></p>
+<p>有了这些内部迭代操作，我们就彻底从无聊冗余的外部迭代中解放出来了。</p>
+<p>下面以filter为例来看看StreamAPI定义的操作和我们上面自己写的filter操作有什么区别：</p>
+<p>先来看我们自己写的：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;Apple&gt; redApples = filter(apples, apple -&gt; <span class="string">"red"</span>.equals(apple.getColor()));</div></pre></td></tr></table></figure>
+<p>我们处理的就是内存中的List。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">List&lt;Apple&gt; redApples = apples.stream().filter(apple -&gt; <span class="string">"red"</span>.equals(apple.getColor())).collect(Collectors.toList());</div></pre></td></tr></table></figure>
+<p>而Stream API会将内存中的List先流化为Stream再做处理。下图展示了这两种方式的区别：</p>
+<p><img src="http://ww4.sinaimg.cn/large/65e4f1e6jw1fae3suiimgj210y0tc77d.jpg" alt=""></p>
+<p>如果是流水线式的处理，有时就会更加清晰，Stream化的数据始终是以流的形式进行处理的：</p>
+<p><img src="http://ww1.sinaimg.cn/large/65e4f1e6jw1fae3swv3lzj21fl0tk79v.jpg" alt=""></p>
+<h1 id="像执行SQL一样编写查询：使用Stream流来进行函数式编程"><a href="#像执行SQL一样编写查询：使用Stream流来进行函数式编程" class="headerlink" title="像执行SQL一样编写查询：使用Stream流来进行函数式编程"></a>像执行SQL一样编写查询：使用Stream流来进行函数式编程</h1><p>其实我们使用SQL来进行数据库查询的时候，就是一种典型的函数式查询。我们不需要显式地去说明如何在表中的一条条数据中间迭代，而只是使用SQL内建的关键词即可完成查询，SQL的内建关键词会在查询的过程中执行内部迭代，它的具体操作对于编写SQL的我们来说是透明的，这也就是函数式编程最终达到的效果–隐藏细节。<br>使用Stream API也可以完成这一点，复杂的内部迭代过程隐去，我们只需要编写最核心的操作策略，也就是这些内部迭代操作需要传入的Lambda表达式：策略对象参数。<br>为了表示Stream API如何使用，仍然不能免俗地引入一个例子，本例来源于<em>Java 8 in Action</em>一书。为了说明使用Stream API带来的简洁，我们将试图模拟使用SQL来对照这些例子。</p>
+<p>有几个执行交易的交易员。交易员的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Trader</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String name;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> String city;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Trader</span><span class="params">(String n, String c)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.name = n;</div><div class="line">        <span class="keyword">this</span>.city = c;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getName</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.name;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">getCity</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">this</span>.city;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Trader:"</span> + <span class="keyword">this</span>.name + <span class="string">" in "</span> + <span class="keyword">this</span>.city;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>有几个这些交易员参与的交易。交易的定义：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div></pre></td><td class="code"><pre><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">Transaction</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> Trader trader;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> year;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">int</span> value;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">Transaction</span><span class="params">(Trader trader, <span class="keyword">int</span> year, <span class="keyword">int</span> value)</span> </span>&#123;</div><div class="line">        <span class="keyword">this</span>.trader = trader;</div><div class="line">        <span class="keyword">this</span>.year = year;</div><div class="line">        <span class="keyword">this</span>.value = value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> Trader <span class="title">getTrader</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> trader;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getYear</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> year;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">int</span> <span class="title">getValue</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> value;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> String <span class="title">toString</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">return</span> <span class="string">"Transaction&#123;"</span> +</div><div class="line">                <span class="string">"trader="</span> + trader +</div><div class="line">                <span class="string">", year="</span> + year +</div><div class="line">                <span class="string">", value="</span> + value +</div><div class="line">                <span class="string">'&#125;'</span>;</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>给定几个交易员和几场交易：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">Trader raoul = <span class="keyword">new</span> Trader(<span class="string">"Raoul"</span>, <span class="string">"Cambridge"</span>);</div><div class="line">Trader mario = <span class="keyword">new</span> Trader(<span class="string">"Mario"</span>, <span class="string">"Milan"</span>);</div><div class="line">Trader alan = <span class="keyword">new</span> Trader(<span class="string">"Alan"</span>, <span class="string">"Cambridge"</span>);</div><div class="line">Trader brian = <span class="keyword">new</span> Trader(<span class="string">"Brian"</span>, <span class="string">"Cambridge"</span>);</div><div class="line">List&lt;Transaction&gt; transactions = Arrays.asList(</div><div class="line">      <span class="keyword">new</span> Transaction(brian, <span class="number">2011</span>, <span class="number">300</span>),</div><div class="line">      <span class="keyword">new</span> Transaction(raoul, <span class="number">2012</span>, <span class="number">1000</span>),</div><div class="line">      <span class="keyword">new</span> Transaction(raoul, <span class="number">2011</span>, <span class="number">400</span>),</div><div class="line">      <span class="keyword">new</span> Transaction(mario, <span class="number">2012</span>, <span class="number">710</span>),</div><div class="line">      <span class="keyword">new</span> Transaction(mario, <span class="number">2012</span>, <span class="number">700</span>),</div><div class="line">      <span class="keyword">new</span> Transaction(alan, <span class="number">2012</span>, <span class="number">950</span>)</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>你的经理让你进行几个查询。<br>为了我们说明Stream API编程和SQL查询的相似之处，我们模拟这样的数据表来匹配上面的数据(以MySQL数据库为例)：<br>TRADER表：<br><img src="http://ww1.sinaimg.cn/large/65e4f1e6jw1faern0etgoj204s037dfy.jpg" alt=""><br>Transaction表：<br><img src="http://ww1.sinaimg.cn/large/65e4f1e6jw1faern0aa1ej205n040glu.jpg" alt=""></p>
+<p>我们需要进行的查询：</p>
+<h4 id="1-找出2011年发生的所有交易，并按交易额排序-从低到高-。"><a href="#1-找出2011年发生的所有交易，并按交易额排序-从低到高-。" class="headerlink" title="(1) 找出2011年发生的所有交易，并按交易额排序(从低到高)。"></a>(1) 找出2011年发生的所有交易，并按交易额排序(从低到高)。</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//找出2011年发生的所有交易，并按交易额排序(从低到高)。</span></div><div class="line">List&lt;Transaction&gt; resTransactions = transactions.stream()</div><div class="line">                .filter(tr -&gt; tr.getYear() == <span class="number">2011</span>)</div><div class="line">                .sorted(Comparator.comparing(Transaction::getValue))</div><div class="line">                .collect(Collectors.toList());</div><div class="line"><span class="comment">//打印出每一个交易</span></div><div class="line">resTransactions.forEach(tr -&gt; System.out.println(tr));</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    *</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">    ts.year = <span class="number">2011</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> ts.value</div></pre></td></tr></table></figure>
+<p>不难看出，Stream API里的内部迭代操作和我们熟悉的SQL中的内建关键词存在着对应的联系，我们可以使用诸如：filter方法对应where关键词，sorted方法对应ORDER BY关键词。通过Stream API的内部迭代方法，我们确实可以实现只说明操作而不显式说明操作的具体做法，即可完成我们的任务，正如SQL实现的那样。</p>
+<h4 id="2-交易员都在哪些不同的城市工作过"><a href="#2-交易员都在哪些不同的城市工作过" class="headerlink" title="(2) 交易员都在哪些不同的城市工作过?"></a>(2) 交易员都在哪些不同的城市工作过?</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//交易员都在哪些不同的城市工作过?</span></div><div class="line">List&lt;String&gt; cities = transactions.stream().map(Transaction::getTrader).map(Trader::getCity).distinct().collect(Collectors.toList());</div><div class="line"><span class="comment">//打印出每一个城市</span></div><div class="line">cities.forEach(c -&gt; System.out.println(c));</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    <span class="keyword">distinct</span> td.city</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts,</div><div class="line">    Trader td</div><div class="line"><span class="keyword">WHERE</span> ts.traderid = td.id</div></pre></td></tr></table></figure>
+<p>本例中，两个map操作得到每个交易的交易员的城市，最终效果等同于多表联合查询加上SELECT城市得到每个交易的交易员城市。distinct方法对应distinct关键字。</p>
+<h4 id="3-查找所有来自于剑桥的交易员，并按姓名排序。"><a href="#3-查找所有来自于剑桥的交易员，并按姓名排序。" class="headerlink" title="(3) 查找所有来自于剑桥的交易员，并按姓名排序。"></a>(3) 查找所有来自于剑桥的交易员，并按姓名排序。</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//查找所有来自于剑桥的交易员，并按姓名排序。</span></div><div class="line">List&lt;Trader&gt; traders = transactions.stream().map(Transaction::getTrader).distinct().filter(trader -&gt; <span class="string">"Cambridge"</span>.equals(trader.getCity())).sorted(Comparator.comparing(Trader::getName)).collect(Collectors.toList());</div><div class="line"><span class="comment">///打印出每一个交易员</span></div><div class="line">traders.forEach(trader -&gt; System.out.println(trader));</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    <span class="keyword">distinct</span> td.*</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts,</div><div class="line">    Trader td</div><div class="line"><span class="keyword">WHERE</span> ts.traderid = td.id</div><div class="line"><span class="keyword">AND</span> td.city = <span class="string">'Cambridge'</span></div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> td.name</div></pre></td></tr></table></figure>
+<h4 id="4-返回所有交易员的姓名字符串，按字母顺序排序。"><a href="#4-返回所有交易员的姓名字符串，按字母顺序排序。" class="headerlink" title="(4) 返回所有交易员的姓名字符串，按字母顺序排序。"></a>(4) 返回所有交易员的姓名字符串，按字母顺序排序。</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//返回所有交易员的姓名字符串，按字母顺序排序。</span></div><div class="line">String nameStr = transactions.stream().map(transaction -&gt; transaction.getTrader().getName()).distinct().sorted().reduce(<span class="string">""</span>,(n1,n2)-&gt;n1+<span class="string">","</span>+n2);</div><div class="line"><span class="comment">//打印出字符串</span></div><div class="line">System.out.println(nameStr);</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    <span class="keyword">GROUP_CONCAT</span>(<span class="keyword">DISTINCT</span> td.name)</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts,</div><div class="line">    Trader td</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">    ts.traderid = td.id</div><div class="line"><span class="keyword">ORDER</span> <span class="keyword">BY</span> td.name</div></pre></td></tr></table></figure>
+<p>reduce方法在SQL中的对应情形不唯一，因为SQL未对归约操作作出统一的函数定义，而是给出了一系列的工具方法，这样做对于实用性有帮助，因为SQL其实并不会太多做这样的操作，归约操作更应在前端进行。</p>
+<h4 id="5-有没有交易员是在米兰工作的"><a href="#5-有没有交易员是在米兰工作的" class="headerlink" title="(5) 有没有交易员是在米兰工作的?"></a>(5) 有没有交易员是在米兰工作的?</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//有没有交易员是在米兰工作的?</span></div><div class="line">Boolean yes = transactions.stream().map(transaction -&gt; transaction.getTrader().getCity()).anyMatch(city-&gt;<span class="string">"Milan"</span>.equals(city));</div><div class="line"><span class="comment">//打印结果</span></div><div class="line">System.out.println(yes);</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    *</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    Trader</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">    <span class="keyword">EXISTS</span>( <span class="keyword">SELECT</span> </div><div class="line">            td.id</div><div class="line">        <span class="keyword">FROM</span></div><div class="line">            <span class="keyword">Transaction</span> ts,</div><div class="line">            Trader td</div><div class="line">        <span class="keyword">WHERE</span></div><div class="line">            ts.traderid = td.id</div><div class="line">                <span class="keyword">AND</span> td.city = <span class="string">'Milan'</span>)</div></pre></td></tr></table></figure>
+<h4 id="6-打印生活在剑桥的交易员的所有交易额。"><a href="#6-打印生活在剑桥的交易员的所有交易额。" class="headerlink" title="(6) 打印生活在剑桥的交易员的所有交易额。"></a>(6) 打印生活在剑桥的交易员的所有交易额。</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//打印生活在剑桥的交易员的所有交易额。</span></div><div class="line">transactions.stream().filter(transaction -&gt; <span class="string">"Cambridge"</span>.equals(transaction.getTrader().getCity())).forEach(transaction -&gt; System.out.println(transaction.getValue()));</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    ts.value</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts,</div><div class="line">    Trader td</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">	ts.traderid = td.id</div><div class="line"><span class="keyword">AND</span></div><div class="line">    td.city = <span class="string">'Cambridge'</span></div></pre></td></tr></table></figure>
+<h4 id="7-所有交易中，最高的交易额是多少"><a href="#7-所有交易中，最高的交易额是多少" class="headerlink" title="(7) 所有交易中，最高的交易额是多少?"></a>(7) 所有交易中，最高的交易额是多少?</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//所有交易中，最高的交易额是多少?</span></div><div class="line">Optional&lt;Integer&gt; maxValue = transactions.stream().map(Transaction::getValue).reduce(Integer::max);</div><div class="line"><span class="comment">//查看是否存在（在无交易的时候会有用）</span></div><div class="line">System.out.println(maxValue.isPresent());</div><div class="line">System.out.println(maxValue.get());</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    <span class="keyword">max</span>(ts.value)</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts</div></pre></td></tr></table></figure>
+<p>max对应了reduce的归约操作。</p>
+<h4 id="8-找到交易额最小的交易。"><a href="#8-找到交易额最小的交易。" class="headerlink" title="(8) 找到交易额最小的交易。"></a>(8) 找到交易额最小的交易。</h4><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//找到交易额最小的交易。</span></div><div class="line">Optional&lt;Transaction&gt; minValueTrasaction = transactions.stream().reduce((tr1, tr2) -&gt; &#123;</div><div class="line">  <span class="keyword">if</span> (tr1.getValue() &gt; tr2.getValue()) <span class="keyword">return</span> tr2;</div><div class="line">  <span class="keyword">else</span> <span class="keyword">return</span> tr1;</div><div class="line">&#125;);</div><div class="line"><span class="comment">//查看是否存在（在无交易的时候会有用）</span></div><div class="line">System.out.println(minValueTrasaction.isPresent());</div><div class="line">System.out.println(minValueTrasaction.get());</div></pre></td></tr></table></figure>
+<p>如果是数据表，可用这样的SQL来做类似的操作：</p>
+<figure class="highlight sql"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">SELECT</span> </div><div class="line">    ts.*</div><div class="line"><span class="keyword">FROM</span></div><div class="line">    <span class="keyword">Transaction</span> ts</div><div class="line"><span class="keyword">WHERE</span></div><div class="line">    ts.value = (<span class="keyword">SELECT</span> </div><div class="line">            <span class="keyword">MAX</span>(ts.value)</div><div class="line">        <span class="keyword">FROM</span></div><div class="line">            <span class="keyword">Transaction</span> ts)</div></pre></td></tr></table></figure>
+<p>这就是Stream API的核心做法，拥有了这一系列的操作，内部迭代得以在高效的Stream流的作用下组成流水线，使得函数式编程更方便地实现。</p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/11/20/Java8Lambda/" rel="next" title="Ummm... Java8和lambda">
+                <i class="fa fa-chevron-left"></i> Ummm... Java8和lambda
+              </a>
+            
+          </div>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2016/12/03/Java8StreamAPI/"
+           data-title="把数据流化：Stream API" data-url="http://jinhaoplus.top/2016/12/03/Java8StreamAPI/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel ">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/images/avatar.png"
+               alt="羅金浩" />
+          <p class="site-author-name" itemprop="name">羅金浩</p>
+          <p class="site-description motion-element" itemprop="description">金浩的［賅］博客</br>写点我想明白的</p>
+        </div>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">32</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          
+
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+            
+              <span class="links-of-author-item">
+                <a href="https://github.com/JinhaoPlus" target="_blank" title="GitHub">
+                  
+                    <i class="fa fa-fw fa-github"></i>
+                  
+                  GitHub
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="http://weibo.com/JinhaoTek/" target="_blank" title="Weibo">
+                  
+                    <i class="fa fa-fw fa-weibo"></i>
+                  
+                  Weibo
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="https://segmentfault.com/u/jinhaoplus" target="_blank" title="SegmentFault">
+                  
+                    <i class="fa fa-fw fa-laptop"></i>
+                  
+                  SegmentFault
+                </a>
+              </span>
+            
+              <span class="links-of-author-item">
+                <a href="mailto:rocking2013@hotmail.com" target="_blank" title="Mail">
+                  
+                    <i class="fa fa-fw fa-envelope"></i>
+                  
+                  Mail
+                </a>
+              </span>
+            
+          
+        </div>
+
+        
+        
+
+        
+        
+
+      </section>
+
+      
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+            
+              
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#内部迭代的引入"><span class="nav-number">1.</span> <span class="nav-text">内部迭代的引入</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#什么是Stream流呢"><span class="nav-number">2.</span> <span class="nav-text">什么是Stream流呢</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#像执行SQL一样编写查询：使用Stream流来进行函数式编程"><span class="nav-number">3.</span> <span class="nav-text">像执行SQL一样编写查询：使用Stream流来进行函数式编程</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-找出2011年发生的所有交易，并按交易额排序-从低到高-。"><span class="nav-number">3.0.0.1.</span> <span class="nav-text">(1) 找出2011年发生的所有交易，并按交易额排序(从低到高)。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-交易员都在哪些不同的城市工作过"><span class="nav-number">3.0.0.2.</span> <span class="nav-text">(2) 交易员都在哪些不同的城市工作过?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-查找所有来自于剑桥的交易员，并按姓名排序。"><span class="nav-number">3.0.0.3.</span> <span class="nav-text">(3) 查找所有来自于剑桥的交易员，并按姓名排序。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-返回所有交易员的姓名字符串，按字母顺序排序。"><span class="nav-number">3.0.0.4.</span> <span class="nav-text">(4) 返回所有交易员的姓名字符串，按字母顺序排序。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-有没有交易员是在米兰工作的"><span class="nav-number">3.0.0.5.</span> <span class="nav-text">(5) 有没有交易员是在米兰工作的?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-打印生活在剑桥的交易员的所有交易额。"><span class="nav-number">3.0.0.6.</span> <span class="nav-text">(6) 打印生活在剑桥的交易员的所有交易额。</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-所有交易中，最高的交易额是多少"><span class="nav-number">3.0.0.7.</span> <span class="nav-text">(7) 所有交易中，最高的交易额是多少?</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-找到交易额最小的交易。"><span class="nav-number">3.0.0.8.</span> <span class="nav-text">(8) 找到交易额最小的交易。</span></a></li></ol></li></ol></li></ol></li></ol></div>
+            
+          </div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">羅金浩</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/libs/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/libs/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/libs/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/libs/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.0.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.0.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.0.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.0.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.0.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.0.1"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"jinhaoplus"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+    <script src="/libs/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
